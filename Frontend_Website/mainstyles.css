@@ -42,8 +42,8 @@ body {
 }
 
 .top-logo {
-  height: 50px;
-  width: 50px;
+  height: 100px;
+  width: 100px;
   object-fit: contain;
 }
 
@@ -1076,5 +1076,106 @@ body {
   .sectionfranchise p {
     font-size: 1.05rem;
     padding: 0 10px;
+  }
+}
+
+/* ================================
+   ABOUT VALUES SECTION
+================================ */
+.about-values {
+  text-align: center;
+  margin-top: 70px;
+  padding: 20px;
+}
+
+/* Heading */
+.about-values h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0a2d4e;
+  margin-bottom: 25px;
+}
+
+/* Grid Layout */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* Value Card */
+.value-item {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 30px 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: 0.35s ease;
+  border: 1px solid #e8eef5;
+}
+
+/* Icon Circle */
+.value-icon {
+  font-size: 2.4rem;
+  background: #eaf4ff;
+  width: 65px;
+  height: 65px;
+  line-height: 65px;
+  border-radius: 50%;
+  margin: auto;
+  margin-bottom: 15px;
+  color: #005fcc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.35s;
+}
+
+/* Title */
+.value-item h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #072a4f;
+}
+
+/* Description */
+.value-item p {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.55;
+}
+
+/* Hover Effects */
+.value-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.value-item:hover .value-icon {
+  background: #005fcc;
+  color: white;
+  transform: scale(1.1);
+}
+
+
+/* ==================================
+            Responsive
+================================== */
+
+@media (max-width: 992px) {
+  .values-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-values h3 {
+    font-size: 1.7rem;
   }
 }
