@@ -1,0 +1,125 @@
+/* franchise_benefits.css */
+
+.benefits-header {
+    background: linear-gradient(rgba(24, 74, 85, 0.9), rgba(24, 74, 85, 0.8)), url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1920&q=80') center/cover;
+    color: var(--ivory);
+    padding: 100px 0;
+    text-align: center;
+}
+
+.benefits-header h1 {
+    font-family: 'Merriweather', serif;
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.benefits-header p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: auto;
+    opacity: 0.95;
+}
+
+.benefits-intro {
+    padding: 80px 20px 40px;
+    text-align: center;
+}
+
+.intro-text h2 {
+    font-family: 'Merriweather', serif;
+    color: var(--deep-blue);
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+
+.intro-text p {
+    max-width: 800px;
+    margin: auto;
+    color: var(--muted);
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 40px 20px 80px;
+}
+
+.benefit-card {
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #f0f0f0;
+    text-align: center;
+}
+
+.benefit-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    border-color: transparent;
+}
+
+.icon-box {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    display: inline-block;
+    background: #f4f9ff;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+.benefit-card:hover .icon-box {
+    background: #e0efff;
+}
+
+.benefit-card h3 {
+    color: var(--deep-blue);
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.benefit-card p {
+    color: var(--muted);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.cta-section {
+    background: linear-gradient(135deg, var(--deep-blue), #11333e);
+    color: var(--ivory);
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.cta-section h2 {
+    font-family: 'Merriweather', serif;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: var(--gold);
+}
+
+.cta-section p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+@media (max-width: 992px) {
+    .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+}

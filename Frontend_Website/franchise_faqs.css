@@ -1,0 +1,110 @@
+/* franchise_faqs.css */
+
+.faqs-header {
+    background: linear-gradient(rgba(24, 74, 85, 0.9), rgba(24, 74, 85, 0.8)), url('https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1920&q=80') center/cover;
+    color: var(--ivory);
+    padding: 100px 0;
+    text-align: center;
+}
+
+.faqs-header h1 {
+    font-family: 'Merriweather', serif;
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.faqs-header p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: auto;
+    opacity: 0.95;
+}
+
+.faqs-section {
+    padding: 80px 20px;
+    max-width: 800px;
+}
+
+.faq-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.faq-item {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    border: 1px solid #eee;
+    transition: all 0.3s ease;
+}
+
+.faq-item.active {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border-color: var(--gold);
+}
+
+.faq-question {
+    width: 100%;
+    text-align: left;
+    padding: 20px 25px;
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--deep-blue);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.faq-question:hover {
+    color: var(--terracotta);
+}
+
+.toggle-icon {
+    font-size: 1.5rem;
+    color: var(--gold);
+    font-weight: 300;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background: #f9fbff;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 200px;
+    /* Adjust based on content */
+    border-top: 1px solid #eee;
+}
+
+.faq-answer p {
+    padding: 20px 25px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.still-questions {
+    text-align: center;
+    padding: 60px 20px 100px;
+    background: var(--ivory);
+}
+
+.still-questions h3 {
+    font-family: 'Merriweather', serif;
+    color: var(--deep-blue);
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.still-questions p {
+    color: var(--muted);
+    margin-bottom: 30px;
+}

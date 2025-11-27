@@ -1,0 +1,176 @@
+/* careers.css */
+
+.careers-header {
+    background: linear-gradient(rgba(24, 74, 85, 0.9), rgba(24, 74, 85, 0.8)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80') center/cover;
+    color: var(--ivory);
+    padding: 100px 0;
+    text-align: center;
+}
+
+.careers-header h1 {
+    font-family: 'Merriweather', serif;
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.careers-header p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: auto;
+    opacity: 0.95;
+}
+
+.careers-intro {
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.intro-content h2 {
+    font-family: 'Merriweather', serif;
+    color: var(--deep-blue);
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+
+.intro-content>p {
+    max-width: 800px;
+    margin: 0 auto 50px;
+    color: var(--muted);
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.perks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.perk-item {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s;
+}
+
+.perk-item:hover {
+    transform: translateY(-5px);
+}
+
+.perk-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.perk-item h4 {
+    color: var(--deep-blue);
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.perk-item p {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+/* Openings Section */
+.openings {
+    padding: 60px 20px 100px;
+    max-width: 900px;
+}
+
+.section-heading {
+    font-family: 'Merriweather', serif;
+    color: var(--deep-blue);
+    font-size: 2rem;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.jobs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.job-card {
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 30px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.job-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border-color: transparent;
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.job-header h3 {
+    color: var(--deep-blue);
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.job-type {
+    background: #eaf4ff;
+    color: #005fcc;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.job-location {
+    color: var(--terracotta);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.job-desc {
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.cta-section {
+    background: var(--ivory);
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.cta-section h3 {
+    color: var(--deep-blue);
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    font-family: 'Merriweather', serif;
+}
+
+.cta-section p {
+    color: var(--muted);
+    margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+    .perks-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .job-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}

@@ -1,0 +1,115 @@
+/* policies.css */
+
+.page-header {
+    background: linear-gradient(rgba(24, 74, 85, 0.9), rgba(24, 74, 85, 0.8)), url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1920&q=80') center/cover;
+    color: var(--ivory);
+    padding: 80px 0;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.page-header h1 {
+    font-family: 'Merriweather', serif;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.page-header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: auto;
+}
+
+.policies-content {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 60px;
+    margin-bottom: 100px;
+    align-items: start;
+}
+
+/* Sidebar Navigation */
+.policies-nav {
+    position: sticky;
+    top: 100px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+}
+
+.policies-nav ul {
+    list-style: none;
+}
+
+.policies-nav li {
+    margin-bottom: 10px;
+}
+
+.policies-nav a {
+    display: block;
+    padding: 10px 15px;
+    color: var(--text-dark);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.policies-nav a:hover,
+.policies-nav a.active {
+    background: var(--deep-blue);
+    color: var(--ivory);
+}
+
+/* Policy Text */
+.policy-section {
+    margin-bottom: 60px;
+    scroll-margin-top: 120px;
+}
+
+.policy-section h2 {
+    font-family: 'Merriweather', serif;
+    color: var(--deep-blue);
+    font-size: 2rem;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--gold);
+}
+
+.policy-section h3 {
+    color: var(--terracotta);
+    font-size: 1.3rem;
+    margin: 25px 0 15px;
+}
+
+.policy-section p,
+.policy-section li {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 1.05rem;
+    margin-bottom: 15px;
+}
+
+.policy-section ul {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.policy-section li {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .policies-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .policies-nav {
+        position: static;
+        margin-bottom: 20px;
+    }
+}
