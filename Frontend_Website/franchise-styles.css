@@ -1,0 +1,122 @@
+/* Franchise Section */
+.franchise {
+    background: linear-gradient(135deg, var(--deep-blue) 0%, #2a6f7e 100%);
+    padding: 100px 0;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.franchise::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(210, 127, 32, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.franchise::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -5%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.franchise-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.franchise h2 {
+    font-family: 'Merriweather', serif;
+    font-size: 3rem;
+    margin-bottom: 25px;
+    color: #fff;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.franchise p {
+    font-size: 1.25rem;
+    opacity: 0.95;
+    margin-bottom: 45px;
+    line-height: 1.8;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.franchise-cta {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.franchise-cta .btn {
+    padding: 18px 45px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.franchise-cta .btn.primary {
+    background: var(--gold);
+    color: #fff;
+    border: 2px solid var(--gold);
+}
+
+.franchise-cta .btn.primary:hover {
+    background: #fff;
+    color: var(--deep-blue);
+    border-color: #fff;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3);
+}
+
+.franchise-cta .btn.large {
+    padding: 20px 50px;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .franchise {
+        padding: 80px 0;
+    }
+
+    .franchise h2 {
+        font-size: 2.2rem;
+    }
+
+    .franchise p {
+        font-size: 1.1rem;
+    }
+
+    .franchise-cta {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .franchise-cta .btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+}

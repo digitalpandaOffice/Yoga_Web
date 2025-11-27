@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Syllabus - Edvayu Educational Foundations</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Montserrat:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="mainstyles.css">
+    <style>
+        /* Page specific styles */
+        .page-hero {
+            background: linear-gradient(rgba(11, 37, 69, 0.7), rgba(11, 37, 69, 0.8)), url('https://images.unsplash.com/photo-1544367563-12123d8965cd?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ivory);
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-hero h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .syllabus-section {
+            padding: 0 0 80px;
+        }
+
+        .syllabus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .syllabus-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid var(--gold);
+            transition: transform 0.3s ease;
+        }
+
+        .syllabus-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .syllabus-card h3 {
+            color: var(--deep-blue);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .syllabus-card p {
+            color: var(--muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .syllabus-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #7a869a;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--deep-blue);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: var(--terracotta);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Logo and Name Section -->
+    <div class="top-banner">
+        <img src="./images/AdvayuLogo.png" alt="Assam Art and Culture Organization Logo" class="top-logo" />
+        <div class="top-title-group">
+            <h1 class="top-title">Edvayu Educational Foundations</h1>
+            <div class="top-subtitle">CULTURAL EXAMINATION BOARD</div>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <nav class="navbar">
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="has-dropdown">
+                    <a href="#student">Student Area</a>
+                    <ul class="dropdown">
+                        <li><a href="index.html#student-admissions">Admissions</a></li>
+                        <li><a href="syllabus.html">Syllabus</a></li>
+                        <li><a href="index.html#student-results">Results</a></li>
+                        <li><a href="index.html#student-resources">Resources</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
+                    <a href="#teacher">Teacher Area</a>
+                    <ul class="dropdown">
+                        <li><a href="index.html#teacher-login">Login</a></li>
+                        <li><a href="index.html#teacher-curriculum">Curriculum</a></li>
+                        <li><a href="index.html#teacher-training">Training</a></li>
+                        <li><a href="index.html#teacher-resources">Resources</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
+                    <a href="#courses">Diploma Exam</a>
+                    <ul class="dropdown">
+                        <li><a href="index.html#exam-dates">Exam Dates</a></li>
+                        <li><a href="index.html#exam-eligibility">Eligibility</a></li>
+                        <li><a href="syllabus.html">Syllabus</a></li>
+                        <li><a href="admit_card.html">Download Admit Card</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
+                    <a href="#franchise">Franchise Registration</a>
+                    <ul class="dropdown">
+                        <li><a href="franchiseRegistrationform.html">Become a Partner</a></li>
+                        <li><a href="franchiseRegistrationform.html">Franchise Status</a></li>
+                        <li><a href="index.html#franchise-benefits">Benefits</a></li>
+                        <li><a href="index.html#franchise-process">Process</a></li>
+                        <li><a href="index.html#franchise-faqs">FAQs</a></li>
+                    </ul>
+                </li>
+                <li><a href="./gallarysection.html">Gallery</a></li>
+                <li><a href="index.html#upcomingevents">Upcoming Events</a></li>
+                <li class="has-dropdown">
+                    <a href="#other">Other</a>
+                    <ul class="dropdown">
+                        <li><a href="index.html#policies">Policies</a></li>
+                        <li><a href="index.html#alumni">Alumni</a></li>
+                        <li><a href="index.html#careers">Careers</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- HERO -->
+        <section class="page-hero">
+            <div class="container">
+                <h1>Course Syllabus</h1>
+                <p class="lead">Comprehensive curriculum details for all our diploma and certificate programs.</p>
+            </div>
+        </section>
+
+        <!-- SYLLABUS CONTENT -->
+        <section class="syllabus-section container">
+            <div class="syllabus-grid">
+                <!-- Card 1 -->
+                <div class="syllabus-card">
+                    <h3>Fine Arts Diploma</h3>
+                    <p>Detailed syllabus covering sketching, oil painting, watercolours, and art history.</p>
+                    <div class="syllabus-meta">
+                        <span>Year: 2025</span>
+                        <span>Level: All Levels</span>
+                    </div>
+                    <a href="#" class="download-btn">
+                        Download PDF <span>↓</span>
+                    </a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="syllabus-card">
+                    <h3>Classical Dance (Bharatanatyam)</h3>
+                    <p>Curriculum for theory and practicals, including Adavus, Margam, and Abhinaya.</p>
+                    <div class="syllabus-meta">
+                        <span>Year: 2025</span>
+                        <span>Level: Diploma</span>
+                    </div>
+                    <a href="#" class="download-btn">
+                        Download PDF <span>↓</span>
+                    </a>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="syllabus-card">
+                    <h3>Hindustani Classical Vocal</h3>
+                    <p>Syllabus for Raga studies, Taal system, voice culture, and performance.</p>
+                    <div class="syllabus-meta">
+                        <span>Year: 2025</span>
+                        <span>Level: Advanced</span>
+                    </div>
+                    <a href="#" class="download-btn">
+                        Download PDF <span>↓</span>
+                    </a>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="syllabus-card">
+                    <h3>Theatre Arts</h3>
+                    <p>Coursework for acting, direction, stagecraft, and production design.</p>
+                    <div class="syllabus-meta">
+                        <span>Year: 2025</span>
+                        <span>Level: Certificate</span>
+                    </div>
+                    <a href="#" class="download-btn">
+                        Download PDF <span>↓</span>
+                    </a>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="syllabus-card">
+                    <h3>Instrumental Music (Tabla)</h3>
+                    <p>Complete guide to Kayda, Rela, Peshkar, and accompaniment techniques.</p>
+                    <div class="syllabus-meta">
+                        <span>Year: 2025</span>
+                        <span>Level: Diploma</span>
+                    </div>
+                    <a href="#" class="download-btn">
+                        Download PDF <span>↓</span>
+                    </a>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="syllabus-card">
+                    <h3>Yoga & Meditation</h3>
+                    <p>Syllabus for Asanas, Pranayama, meditation techniques, and philosophy.</p>
+                    <div class="syllabus-meta">
+                        <span>Year: 2025</span>
+                        <span>Level: Beginner</span>
+                    </div>
+                    <a href="#" class="download-btn">
+                        Download PDF <span>↓</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer id="other" class="site-footer">
+            <div class="container footer-grid">
+                <div>
+                    <h3>Edvayu Educational Foundations</h3>
+                    <p>Morigaon 782105, Assam, India<br />Phone: +91 98765 43210<br />Email: contact@niac.edu.in</p>
+                </div>
+                <div class="social">
+                    <h4>Follow Us</h4>
+                    <ul>
+                        <li><a href="#" aria-label="Facebook">Facebook</a></li>
+                        <li><a href="#" aria-label="Instagram">Instagram</a></li>
+                        <li><a href="#" aria-label="YouTube">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">© 2025 Edvayu Educational Foundations.</div>
+        </footer>
+    </main>
+
+    <script>
+        // Mobile nav toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('open');
+            navLinks.classList.toggle('open');
+        });
+
+        // Dropdown toggle for mobile
+        const dropdownParents = document.querySelectorAll('.has-dropdown');
+        dropdownParents.forEach(parent => {
+            const trigger = parent.querySelector('a');
+            const menu = parent.querySelector('.dropdown');
+            trigger.addEventListener('click', (e) => {
+                if (menu && window.matchMedia('(max-width: 768px)').matches) {
+                    e.preventDefault();
+                    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

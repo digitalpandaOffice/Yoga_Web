@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admissions 2025-26 | Edvayu Educational Foundations</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Montserrat:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="mainstyles.css">
+    <style>
+        /* Page Specific Styles */
+        .page-hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--ivory);
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+
+        .page-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Merriweather', serif;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--deep-blue);
+            margin-bottom: 40px;
+            font-family: 'Merriweather', serif;
+        }
+
+        /* Process Steps */
+        .process-section {
+            padding: 80px 0;
+            background: #fff;
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 30px;
+            background: #f9f9f9;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--gold);
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .step-card h3 {
+            margin-bottom: 15px;
+            color: var(--deep-blue);
+        }
+
+        /* Eligibility Table */
+        .eligibility-section {
+            padding: 80px 0;
+            background: #f4f4f4;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: var(--deep-blue);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Fees Section */
+        .fees-section {
+            padding: 80px 0;
+            background: #fff;
+        }
+
+        .fee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .fee-card {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .fee-card:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--gold);
+        }
+
+        .fee-amount {
+            font-size: 2.5rem;
+            color: var(--deep-blue);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        /* Important Dates */
+        .dates-section {
+            padding: 80px 0;
+            background: var(--deep-blue);
+            color: #fff;
+        }
+
+        .dates-section .section-title {
+            color: #fff;
+        }
+
+        .dates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .date-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .date-val {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        /* Downloads & CTA */
+        .downloads-section {
+            padding: 80px 0;
+            text-align: center;
+            background: #fff;
+        }
+
+        .btn-download {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #f4f4f4;
+            color: #333;
+            text-decoration: none;
+            border-radius: 50px;
+            margin: 10px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .btn-download:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .btn-apply {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--gold);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-apply:hover {
+            background: #d4af37;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Logo and Name Section -->
+    <div class="top-banner">
+        <img src="./images/AdvayuLogo.png" alt="Assam Art and Culture Organization Logo" class="top-logo" />
+        <div class="top-title-group">
+            <h1 class="top-title">Edvayu Educational Foundations</h1>
+            <div class="top-subtitle">CULTURAL EXAMINATION BOARD</div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="site-header">
+        <nav class="navbar">
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="has-dropdown">
+                    <a href="index.html#student" class="active">Student Area</a>
+                    <ul class="dropdown">
+                        <li><a href="admissions.html">Admissions</a></li>
+                        <li><a href="syllabus.html">Syllabus</a></li>
+                        <li><a href="results.html">Results</a></li>
+                        <li><a href="index.html#student-resources">Resources</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
+                    <a href="index.html#teacher">Teacher Area</a>
+                    <ul class="dropdown">
+                        <li><a href="index.html#teacher-login">Login</a></li>
+                        <li><a href="index.html#teacher-curriculum">Curriculum</a></li>
+                        <li><a href="index.html#teacher-training">Training</a></li>
+                        <li><a href="index.html#teacher-resources">Resources</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
+                    <a href="index.html#courses">Diploma Exam</a>
+                    <ul class="dropdown">
+                        <li><a href="index.html#exam-dates">Exam Dates</a></li>
+                        <li><a href="index.html#exam-eligibility">Eligibility</a></li>
+                        <li><a href="syllabus.html">Syllabus</a></li>
+                        <li><a href="admit_card.html">Download Admit Card</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
+                    <a href="index.html#franchise">Franchise Registration</a>
+                    <ul class="dropdown">
+                        <li><a href="franchiseRegistrationform.html">Become a Partner</a></li>
+                        <li><a href="franchise_status.html">Franchise Status</a></li>
+                        <li><a href="index.html#franchise-benefits">Benefits</a></li>
+                        <li><a href="index.html#franchise-process">Process</a></li>
+                        <li><a href="index.html#franchise-faqs">FAQs</a></li>
+                    </ul>
+                </li>
+                <li><a href="gallarysection.html">Gallery</a></li>
+                <li><a href="upcoming_events.html">Upcoming Events</a></li>
+                <li class="has-dropdown">
+                    <a href="index.html#other">Other</a>
+                    <ul class="dropdown">
+                        <li><a href="policies.html">Policies</a></li>
+                        <li><a href="alumni.html">Alumni</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- PAGE HERO -->
+        <section class="page-hero">
+            <div class="container">
+                <h1>Admissions 2025-26</h1>
+                <p>Begin Your Artistic Journey with Edvayu</p>
+            </div>
+        </section>
+
+        <!-- ADMISSION PROCESS -->
+        <section class="process-section">
+            <div class="container">
+                <h2 class="section-title">Admission Process</h2>
+                <div class="process-steps">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3>Online Registration</h3>
+                        <p>Fill out the online application form with your personal and academic details.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3>Document Verification</h3>
+                        <p>Upload necessary documents or visit our center for physical verification.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3>Fee Payment</h3>
+                        <p>Pay the admission fee securely online or via bank challan to confirm your seat.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ELIGIBILITY -->
+        <section class="eligibility-section">
+            <div class="container">
+                <h2 class="section-title">Eligibility Criteria</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Course Name</th>
+                                <th>Duration</th>
+                                <th>Minimum Age</th>
+                                <th>Prerequisites</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Diploma in Fine Arts</td>
+                                <td>1 Year</td>
+                                <td>10 Years</td>
+                                <td>None</td>
+                            </tr>
+                            <tr>
+                                <td>Diploma in Kathak</td>
+                                <td>2 Years</td>
+                                <td>8 Years</td>
+                                <td>Basic Rhythm Sense</td>
+                            </tr>
+                            <tr>
+                                <td>Diploma in Bharatanatyam</td>
+                                <td>2 Years</td>
+                                <td>8 Years</td>
+                                <td>Basic Rhythm Sense</td>
+                            </tr>
+                            <tr>
+                                <td>Hindustani Vocal</td>
+                                <td>1 Year</td>
+                                <td>6 Years</td>
+                                <td>None</td>
+                            </tr>
+                            <tr>
+                                <td>Theatre & Dramatics</td>
+                                <td>1 Year</td>
+                                <td>12 Years</td>
+                                <td>None</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEES -->
+        <section class="fees-section">
+            <div class="container">
+                <h2 class="section-title">Fee Structure</h2>
+                <div class="fee-grid">
+                    <div class="fee-card">
+                        <h3>Junior Diploma</h3>
+                        <div class="fee-amount">₹2,500</div>
+                        <p>Per Year</p>
+                        <p>Includes Exam Fee</p>
+                    </div>
+                    <div class="fee-card">
+                        <h3>Senior Diploma</h3>
+                        <div class="fee-amount">₹3,500</div>
+                        <p>Per Year</p>
+                        <p>Includes Exam Fee</p>
+                    </div>
+                    <div class="fee-card">
+                        <h3>Visharad (Degree)</h3>
+                        <div class="fee-amount">₹5,000</div>
+                        <p>Per Year</p>
+                        <p>Includes Exam Fee</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- IMPORTANT DATES -->
+        <section class="dates-section">
+            <div class="container">
+                <h2 class="section-title">Important Dates</h2>
+                <div class="dates-grid">
+                    <div class="date-item">
+                        <div class="date-val">1st April 2025</div>
+                        <p>Applications Open</p>
+                    </div>
+                    <div class="date-item">
+                        <div class="date-val">30th June 2025</div>
+                        <p>Last Date to Apply</p>
+                    </div>
+                    <div class="date-item">
+                        <div class="date-val">15th July 2025</div>
+                        <p>Session Begins</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DOWNLOADS & CTA -->
+        <section class="downloads-section">
+            <div class="container">
+                <h2 class="section-title">Ready to Apply?</h2>
+                <p style="margin-bottom: 30px; color: #666;">Download the prospectus for more details or apply directly
+                    online.</p>
+                <div>
+                    <a href="#" class="btn-download">Download Prospectus 2025</a>
+                    <a href="#" class="btn-download">Download Offline Form</a>
+                </div>
+                <a href="contact.html" class="btn-apply">Apply Now</a>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="container footer-grid">
+                <div>
+                    <h3>Edvayu Educational Foundations</h3>
+                    <p>Morigaon 782105, Assam, India<br />Phone: +91 98765 43210<br />Email: contact@niac.edu.in</p>
+                </div>
+                <div class="social">
+                    <h4>Follow Us</h4>
+                    <ul>
+                        <li><a href="#" aria-label="Facebook">Facebook</a></li>
+                        <li><a href="#" aria-label="Instagram">Instagram</a></li>
+                        <li><a href="#" aria-label="YouTube">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">© 2025 Edvayu Educational Foundations.</div>
+        </footer>
+    </main>
+
+    <script>
+        // Mobile nav toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('open');
+            navLinks.classList.toggle('open');
+        });
+
+        // Dropdown toggle for mobile
+        const dropdownParents = document.querySelectorAll('.has-dropdown');
+        dropdownParents.forEach(parent => {
+            const trigger = parent.querySelector('a');
+            const menu = parent.querySelector('.dropdown');
+            trigger.addEventListener('click', (e) => {
+                if (menu && window.matchMedia('(max-width: 768px)').matches) {
+                    e.preventDefault();
+                    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

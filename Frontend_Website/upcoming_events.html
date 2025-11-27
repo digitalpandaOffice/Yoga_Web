@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Upcoming Events | Edvayu Educational Foundations</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Montserrat:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="mainstyles.css">
+    <style>
+        /* Page Specific Styles */
+        .page-hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1514525253440-b393452e3383?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--ivory);
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+
+        .page-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Merriweather', serif;
+        }
+
+        .events-section {
+            padding: 60px 0;
+            min-height: 60vh;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .event-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .event-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .event-content {
+            padding: 25px;
+        }
+
+        .event-date {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .event-title {
+            font-size: 1.5rem;
+            color: var(--deep-blue);
+            margin-bottom: 10px;
+            font-family: 'Merriweather', serif;
+        }
+
+        .event-location {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .event-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .btn-event {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--deep-blue);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-event:hover {
+            background: #1e3a8a;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Logo and Name Section -->
+    <div class="top-banner">
+        <img src="./images/AdvayuLogo.png" alt="Assam Art and Culture Organization Logo" class="top-logo" />
+        <div class="top-title-group">
+            <h1 class="top-title">Edvayu Educational Foundations</h1>
+            <div class="top-subtitle">CULTURAL EXAMINATION BOARD</div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="site-header">
+        <nav class="navbar">
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="has-dropdown">
+                    <a href="index.html#student">Student Area</a>
+                    <ul class="dropdown">
+                        <li><a href="index.html#student-admissions">Admissions</a></li>
+                        <li><a href="syllabus.html">Syllabus</a></li>
+                        <li><a href="results.html">Results</a></li>
+                        <li><a href="index.html#student-resources">Resources</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
+                    <a href="index.html#teacher">Teacher Area</a>
+                    <ul class="dropdown">
+                        <li><a href="index.html#teacher-login">Login</a></li>
+                        <li><a href="index.html#teacher-curriculum">Curriculum</a></li>
+                        <li><a href="index.html#teacher-training">Training</a></li>
+                        <li><a href="index.html#teacher-resources">Resources</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
+                    <a href="index.html#courses">Diploma Exam</a>
+                    <ul class="dropdown">
+                        <li><a href="index.html#exam-dates">Exam Dates</a></li>
+                        <li><a href="index.html#exam-eligibility">Eligibility</a></li>
+                        <li><a href="syllabus.html">Syllabus</a></li>
+                        <li><a href="admit_card.html">Download Admit Card</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
+                    <a href="index.html#franchise">Franchise Registration</a>
+                    <ul class="dropdown">
+                        <li><a href="franchiseRegistrationform.html">Become a Partner</a></li>
+                        <li><a href="franchiseRegistrationform.html">Franchise Status</a></li>
+                        <li><a href="index.html#franchise-benefits">Benefits</a></li>
+                        <li><a href="index.html#franchise-process">Process</a></li>
+                        <li><a href="index.html#franchise-faqs">FAQs</a></li>
+                    </ul>
+                </li>
+                <li><a href="gallarysection.html">Gallery</a></li>
+                <li><a href="upcoming_events.html" class="active">Upcoming Events</a></li>
+                <li class="has-dropdown">
+                    <a href="index.html#other">Other</a>
+                    <ul class="dropdown">
+                        <li><a href="index.html#policies">Policies</a></li>
+                        <li><a href="index.html#alumni">Alumni</a></li>
+                        <li><a href="index.html#careers">Careers</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- PAGE HERO -->
+        <section class="page-hero">
+            <div class="container">
+                <h1>Upcoming Events</h1>
+                <p>Join us for workshops, festivals, and cultural celebrations</p>
+            </div>
+        </section>
+
+        <!-- EVENTS LIST SECTION -->
+        <section class="events-section">
+            <div class="container">
+                <div class="events-grid">
+                    <!-- Event 1 -->
+                    <div class="event-card">
+                        <img src="https://www.thepresidiumschool.com/common/images/gallery/pages/Events/Annual-Fest/annual-day-0001.jpg"
+                            alt="Annual Dance Festival" class="event-image">
+                        <div class="event-content">
+                            <span class="event-date">March 15-20, 2025</span>
+                            <h3 class="event-title">Annual Dance Festival</h3>
+                            <div class="event-location">📍 Main Auditorium, New Delhi</div>
+                            <p class="event-description">A week-long celebration of classical Indian dance forms
+                                featuring student performances and guest artists.</p>
+                            <a href="#" class="btn-event">Register Now</a>
+                        </div>
+                    </div>
+
+                    <!-- Event 2 -->
+                    <div class="event-card">
+                        <img src="https://govtcollegeofart.assam.gov.in/sites/default/files/swf_utility_folder/departments/artncraftcollege_medhassu_in_oid_8/this_comm/c41.JPG"
+                            alt="Student Art Exhibition" class="event-image">
+                        <div class="event-content">
+                            <span class="event-date">February 10, 2025</span>
+                            <h3 class="event-title">Student Art Exhibition</h3>
+                            <div class="event-location">📍 Campus Gallery, Morigaon</div>
+                            <p class="event-description">Showcasing the finest works of our Fine Arts diploma students.
+                                Open to public.</p>
+                            <a href="#" class="btn-event">View Details</a>
+                        </div>
+                    </div>
+
+                    <!-- Event 3 -->
+                    <div class="event-card">
+                        <img src="https://images.unsplash.com/photo-1472653431158-6364773b2a56?auto=format&fit=crop&w=1000&q=60"
+                            alt="Instrumental Workshop" class="event-image">
+                        <div class="event-content">
+                            <span class="event-date">January 25, 2025</span>
+                            <h3 class="event-title">Classical Music Workshop</h3>
+                            <div class="event-location">📍 Music Studio, Block B</div>
+                            <p class="event-description">An intensive one-day workshop on Hindustani Classical vocals
+                                and instruments.</p>
+                            <a href="#" class="btn-event">Book Seat</a>
+                        </div>
+                    </div>
+
+                    <!-- Event 4 -->
+                    <div class="event-card">
+                        <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1000&q=60"
+                            alt="Cultural Festival" class="event-image">
+                        <div class="event-content">
+                            <span class="event-date">December 20, 2024</span>
+                            <h3 class="event-title">Winter Cultural Fest</h3>
+                            <div class="event-location">📍 Main Campus Grounds</div>
+                            <p class="event-description">Food, music, dance, and art come together in our annual winter
+                                celebration.</p>
+                            <a href="#" class="btn-event">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="container footer-grid">
+                <div>
+                    <h3>Edvayu Educational Foundations</h3>
+                    <p>Morigaon 782105, Assam, India<br />Phone: +91 98765 43210<br />Email: contact@niac.edu.in</p>
+                </div>
+                <div class="social">
+                    <h4>Follow Us</h4>
+                    <ul>
+                        <li><a href="#" aria-label="Facebook">Facebook</a></li>
+                        <li><a href="#" aria-label="Instagram">Instagram</a></li>
+                        <li><a href="#" aria-label="YouTube">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">© 2025 Edvayu Educational Foundations.</div>
+        </footer>
+    </main>
+
+    <script>
+        // Mobile nav toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('open');
+            navLinks.classList.toggle('open');
+        });
+
+        // Dropdown toggle for mobile
+        const dropdownParents = document.querySelectorAll('.has-dropdown');
+        dropdownParents.forEach(parent => {
+            const trigger = parent.querySelector('a');
+            const menu = parent.querySelector('.dropdown');
+            trigger.addEventListener('click', (e) => {
+                if (menu && window.matchMedia('(max-width: 768px)').matches) {
+                    e.preventDefault();
+                    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
