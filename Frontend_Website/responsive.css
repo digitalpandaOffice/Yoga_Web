@@ -1,0 +1,323 @@
+/* responsive.css - Mobile Responsiveness for Homepage */
+
+/* =========================================
+   General Mobile Adjustments
+   ========================================= */
+@media (max-width: 768px) {
+    :root {
+        --max-width: 100%;
+    }
+
+    .container {
+        padding: 0 20px;
+    }
+
+    /* Top Banner */
+    .top-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+        gap: 10px;
+    }
+
+    .top-logo {
+        height: 70px;
+        width: 70px;
+    }
+
+    .top-title {
+        font-size: 1.3rem;
+    }
+
+    .top-subtitle {
+        font-size: 0.8rem;
+    }
+
+    /* Navbar */
+    .site-header {
+        padding: 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .navbar {
+        padding: 10px 20px;
+    }
+
+    /* Toggle Button - Fixed Position */
+    .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 1002;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+    }
+
+    .nav-toggle span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background: var(--deep-blue);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+
+    /* Change toggle color when menu is open */
+    .nav-toggle.open span {
+        background: var(--ivory);
+    }
+
+    .nav-toggle.open span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .nav-toggle.open span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .nav-toggle.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -8px);
+    }
+
+    /* Sidebar Navigation */
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: auto;
+        width: 280px;
+        height: 100vh;
+        background: var(--deep-blue);
+        padding: 80px 0 40px;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+        transform: translateX(100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1001;
+        overflow-y: auto;
+    }
+
+    .nav-links.open {
+        transform: translateX(0);
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: left;
+        opacity: 0;
+        transform: translateX(20px);
+        transition: all 0.3s ease;
+    }
+
+    .nav-links.open li {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.1s;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 15px 30px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        font-size: 1.1rem;
+        color: var(--ivory);
+    }
+
+    /* Dropdowns in Sidebar */
+    .dropdown {
+        position: static;
+        background: rgba(0, 0, 0, 0.15);
+        box-shadow: none;
+        display: none;
+        min-width: 100%;
+        padding: 0;
+    }
+
+    .dropdown a {
+        padding-left: 50px;
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.8);
+        border-bottom: none;
+    }
+
+    .dropdown a:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--gold);
+    }
+
+    /* Hero Section */
+    .hero {
+        height: auto;
+        min-height: 500px;
+        padding: 100px 0 60px;
+        text-align: center;
+    }
+
+    .hero h1.eyebrow {
+        font-size: 1.8rem;
+        line-height: 1.3;
+    }
+
+    .hero p.lead {
+        font-size: 1rem;
+        padding: 0;
+        margin-bottom: 30px;
+    }
+
+    .hero-cta {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+    }
+
+    /* About Section */
+    .section-about-container {
+        padding: 50px 0;
+    }
+
+    .about-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .mission-vision {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .about-collage {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 15px;
+        height: auto;
+    }
+
+    .collage-item {
+        height: 250px;
+        grid-column: auto !important;
+        grid-row: auto !important;
+    }
+
+    .notice-tile {
+        height: auto;
+        min-height: 300px;
+    }
+
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Courses Section */
+    .cards-grid {
+        grid-template-columns: 1fr;
+        padding: 0;
+    }
+
+    .course-filters {
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        justify-content: flex-start;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .course-filters .filter-btn {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+        flex-shrink: 0;
+    }
+
+    /* Highlights Section */
+    .highlights-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* Franchise Section */
+    .sectionfranchise {
+        padding: 60px 0;
+    }
+
+    .franchise-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .sectionfranchise h2 {
+        font-size: 1.8rem;
+    }
+
+    .sectionfranchise p {
+        font-size: 1rem;
+    }
+
+    /* Footer */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 40px;
+    }
+
+    .social ul {
+        justify-content: center;
+    }
+
+    /* Modal */
+    .modal-dialog {
+        width: 90%;
+        margin: 20px auto;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-title {
+        font-size: 1.1rem;
+    }
+
+    .top-subtitle {
+        font-size: 0.7rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1.eyebrow {
+        font-size: 1.5rem;
+    }
+
+    .collage-item {
+        height: 200px;
+    }
+}
