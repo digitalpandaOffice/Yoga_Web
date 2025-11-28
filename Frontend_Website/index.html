@@ -493,50 +493,8 @@
     </footer>
   </main>
 
+  <script src="script.js"></script>
   <script>
-    // Mobile nav toggle
-    const navToggle = document.querySelector('.nav-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    navToggle.addEventListener('click', () => {
-      navToggle.classList.toggle('open');
-      navLinks.classList.toggle('open');
-    });
-
-    // Dropdown toggle for mobile and keyboard accessibility
-    const dropdownParents = document.querySelectorAll('.has-dropdown');
-
-    dropdownParents.forEach(parent => {
-      const trigger = parent.querySelector('a');
-      const menu = parent.querySelector('.dropdown');
-
-      // Open on click in mobile mode
-      trigger.addEventListener('click', (e) => {
-        // Only prevent default if hash link and dropdown exists
-        if (menu) {
-          const isMobile = window.matchMedia('(max-width: 768px)').matches;
-          if (isMobile) {
-            e.preventDefault();
-            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-          }
-        }
-      });
-
-      // Keyboard navigation
-      trigger.addEventListener('keydown', (e) => {
-        if ((e.key === 'Enter' || e.key === ' ') && menu) {
-          e.preventDefault();
-          menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-        }
-      });
-    });
-
-    // Close dropdowns when clicking outside (mobile)
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.has-dropdown')) {
-        document.querySelectorAll('.dropdown').forEach(d => d.style.display = 'none');
-      }
-    });
-
     // Smooth scrolling for internal links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
@@ -545,6 +503,8 @@
           e.preventDefault();
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
           // close mobile menu
+          const navLinks = document.querySelector('.nav-links');
+          const navToggle = document.querySelector('.nav-toggle');
           if (navLinks.classList.contains('open')) {
             navLinks.classList.remove('open'); navToggle.classList.remove('open');
           }

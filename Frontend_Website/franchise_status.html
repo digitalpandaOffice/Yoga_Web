@@ -172,7 +172,7 @@
                 <li class="has-dropdown">
                     <a href="index.html#student">Student Area</a>
                     <ul class="dropdown">
-                        <li><a href="index.html#student-admissions">Admissions</a></li>
+                        <li><a href="admissions.html">Admissions</a></li>
                         <li><a href="syllabus.html">Syllabus</a></li>
                         <li><a href="results.html">Results</a></li>
                         <li><a href="index.html#student-resources">Resources</a></li>
@@ -201,20 +201,20 @@
                     <ul class="dropdown">
                         <li><a href="franchiseRegistrationform.html">Become a Partner</a></li>
                         <li><a href="franchise_status.html" class="active">Franchise Status</a></li>
-                        <li><a href="index.html#franchise-benefits">Benefits</a></li>
-                        <li><a href="index.html#franchise-process">Process</a></li>
-                        <li><a href="index.html#franchise-faqs">FAQs</a></li>
+                        <li><a href="franchise_benefits.html">Benefits</a></li>
+                        <li><a href="franchise_process.html">Process</a></li>
+                        <li><a href="franchise_faqs.html">FAQs</a></li>
                     </ul>
                 </li>
                 <li><a href="gallarysection.html">Gallery</a></li>
                 <li><a href="upcoming_events.html">Upcoming Events</a></li>
                 <li class="has-dropdown">
-                    <a href="index.html#other">Other</a>
+                    <a href="#other">Other</a>
                     <ul class="dropdown">
-                        <li><a href="index.html#policies">Policies</a></li>
-                        <li><a href="index.html#alumni">Alumni</a></li>
-                        <li><a href="index.html#careers">Careers</a></li>
-                        <li><a href="index.html#contact">Contact</a></li>
+                        <li><a href="policies.html">Policies</a></li>
+                        <li><a href="alumni.html">Alumni</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </li>
             </ul>
@@ -285,28 +285,8 @@
         </footer>
     </main>
 
+    <script src="script.js"></script>
     <script>
-        // Mobile nav toggle
-        const navToggle = document.querySelector('.nav-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        navToggle.addEventListener('click', () => {
-            navToggle.classList.toggle('open');
-            navLinks.classList.toggle('open');
-        });
-
-        // Dropdown toggle for mobile
-        const dropdownParents = document.querySelectorAll('.has-dropdown');
-        dropdownParents.forEach(parent => {
-            const trigger = parent.querySelector('a');
-            const menu = parent.querySelector('.dropdown');
-            trigger.addEventListener('click', (e) => {
-                if (menu && window.matchMedia('(max-width: 768px)').matches) {
-                    e.preventDefault();
-                    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-                }
-            });
-        });
-
         // Mock Status Check Logic
         document.getElementById('statusForm').addEventListener('submit', function (e) {
             e.preventDefault();
