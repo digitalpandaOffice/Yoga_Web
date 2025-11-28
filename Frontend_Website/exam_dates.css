@@ -1,0 +1,161 @@
+/* exam_dates.css */
+
+/* Page Hero Override */
+.page-hero {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1600&q=80');
+    background-size: cover;
+    background-position: center;
+    color: var(--ivory);
+    padding: 120px 0 60px;
+    text-align: center;
+}
+
+.page-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-family: 'Merriweather', serif;
+}
+
+/* Dates Section */
+.dates-section {
+    padding: 80px 0;
+    background: #f9f9f9;
+}
+
+.dates-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 50px;
+}
+
+.dates-intro h2 {
+    color: var(--deep-blue);
+    font-family: 'Merriweather', serif;
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+}
+
+.dates-intro p {
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Table Styling */
+.dates-table-container {
+    overflow-x: auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    margin-bottom: 50px;
+}
+
+.dates-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.dates-table th,
+.dates-table td {
+    padding: 20px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.dates-table th {
+    background: var(--deep-blue);
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+.dates-table tr:last-child td {
+    border-bottom: none;
+}
+
+.dates-table tr:hover {
+    background-color: #f8fbff;
+}
+
+.dates-table td {
+    color: #444;
+    font-size: 1rem;
+}
+
+/* Status Badges */
+.status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status.closed {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.status.open {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status.upcoming {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+/* Download Schedule CTA */
+.download-schedule {
+    text-align: center;
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    max-width: 600px;
+    margin: 0 auto;
+    border: 1px solid #eee;
+}
+
+.download-schedule h3 {
+    color: var(--deep-blue);
+    font-family: 'Merriweather', serif;
+    margin-bottom: 10px;
+}
+
+.download-schedule p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.btn-download-pdf {
+    display: inline-block;
+    padding: 12px 30px;
+    background: var(--gold);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-download-pdf:hover {
+    background: #b56d1b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page-hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .dates-table th,
+    .dates-table td {
+        padding: 15px;
+        font-size: 0.9rem;
+    }
+}

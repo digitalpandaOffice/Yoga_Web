@@ -99,7 +99,7 @@
 
 /* Registration Section */
 .alumni-register {
-    background: var(--deep-blue);
+    background: linear-gradient(rgba(1, 61, 54, 0.85), rgba(24, 74, 85, 0.75));
     color: var(--ivory);
     padding: 80px 0;
 }
