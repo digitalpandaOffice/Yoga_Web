@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Student Resources | Edvayu Educational Foundations</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Montserrat:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="mainstyles.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="student_resources.css">
+</head>
+
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <img src="./images/AdvayuLogo.png" alt="Edvayu Educational Foundations Logo" class="top-logo" />
+        <div class="top-title-group">
+            <h1 class="top-title">Edvayu Educational Foundations</h1>
+            <div class="top-subtitle">CULTURAL EXAMINATION BOARD</div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="site-header">
+        <nav class="navbar">
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="has-dropdown">
+                    <a href="index.html#student">Student Area</a>
+                    <ul class="dropdown">
+                        <li><a href="admissions.html">Admissions</a></li>
+                        <li><a href="syllabus.html">Syllabus</a></li>
+                        <li><a href="results.html">Results</a></li>
+                        <li><a href="student_resources.html" class="active">Resources</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
+                    <a href="index.html#teacher">Teacher Area</a>
+                    <ul class="dropdown">
+                        <li><a href="teacher_login.html">Login</a></li>
+                        <li><a href="teacher_curriculum.html">Curriculum</a></li>
+                        <li><a href="teacher_training.html">Training</a></li>
+                        <li><a href="teacher_resources.html">Resources</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
+                    <a href="index.html#courses">Diploma Exam</a>
+                    <ul class="dropdown">
+                        <li><a href="index.html#exam-dates">Exam Dates</a></li>
+                        <li><a href="index.html#exam-eligibility">Eligibility</a></li>
+                        <li><a href="syllabus.html">Syllabus</a></li>
+                        <li><a href="admit_card.html">Download Admit Card</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
+                    <a href="index.html#franchise">Franchise Registration</a>
+                    <ul class="dropdown">
+                        <li><a href="franchiseRegistrationform.html">Become a Partner</a></li>
+                        <li><a href="franchise_status.html">Franchise Status</a></li>
+                        <li><a href="franchise_benefits.html">Benefits</a></li>
+                        <li><a href="franchise_process.html">Process</a></li>
+                        <li><a href="franchise_faqs.html">FAQs</a></li>
+                    </ul>
+                </li>
+                <li><a href="gallarysection.html">Gallery</a></li>
+                <li><a href="upcoming_events.html">Upcoming Events</a></li>
+                <li class="has-dropdown">
+                    <a href="#other">Other</a>
+                    <ul class="dropdown">
+                        <li><a href="policies.html">Policies</a></li>
+                        <li><a href="alumni.html">Alumni</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Page Hero -->
+        <section class="page-hero">
+            <div class="container">
+                <h1>Student Resources</h1>
+                <p>Access study materials, practice papers, and learning guides.</p>
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section class="resources-section">
+            <div class="container">
+                <!-- Search Bar -->
+                <div class="resource-search">
+                    <input type="text" placeholder="Search for resources (e.g., 'Kathak notes', 'Art theory')..."
+                        class="search-input">
+                    <button class="btn primary">Search</button>
+                </div>
+
+                <!-- Categories -->
+                <div class="resource-categories">
+                    <button class="cat-btn active">All</button>
+                    <button class="cat-btn">Study Notes</button>
+                    <button class="cat-btn">Question Papers</button>
+                    <button class="cat-btn">Video Tutorials</button>
+                    <button class="cat-btn">Audio Tracks</button>
+                </div>
+
+                <!-- Resource Grid -->
+                <div class="resource-grid">
+                    <!-- Item 1 -->
+                    <div class="resource-card">
+                        <div class="res-icon pdf">📄</div>
+                        <div class="res-content">
+                            <h3>Fine Arts Theory - Year 1</h3>
+                            <p>Comprehensive notes on color theory and history of Indian Art.</p>
+                            <div class="res-meta">
+                                <span>PDF</span> • <span>2.5 MB</span>
+                            </div>
+                            <a href="#" class="btn-download">Download</a>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="resource-card">
+                        <div class="res-icon video">🎥</div>
+                        <div class="res-content">
+                            <h3>Kathak Footwork Basics</h3>
+                            <p>Video tutorial covering Tatkar and basic Todas.</p>
+                            <div class="res-meta">
+                                <span>MP4</span> • <span>15 Mins</span>
+                            </div>
+                            <a href="#" class="btn-download">Watch Now</a>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="resource-card">
+                        <div class="res-icon audio">🎵</div>
+                        <div class="res-content">
+                            <h3>Raag Yaman - Practice Track</h3>
+                            <p>Accompaniment track for vocal practice (Tanpura + Tabla).</p>
+                            <div class="res-meta">
+                                <span>MP3</span> • <span>10 Mins</span>
+                            </div>
+                            <a href="#" class="btn-download">Play/Download</a>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="resource-card">
+                        <div class="res-icon pdf">📄</div>
+                        <div class="res-content">
+                            <h3>Previous Year Question Paper 2024</h3>
+                            <p>Diploma in Hindustani Vocal - Final Examination.</p>
+                            <div class="res-meta">
+                                <span>PDF</span> • <span>1.2 MB</span>
+                            </div>
+                            <a href="#" class="btn-download">Download</a>
+                        </div>
+                    </div>
+
+                    <!-- Item 5 -->
+                    <div class="resource-card">
+                        <div class="res-icon pdf">📄</div>
+                        <div class="res-content">
+                            <h3>Theatre Scripting Guide</h3>
+                            <p>A guide to writing effective scripts for stage plays.</p>
+                            <div class="res-meta">
+                                <span>PDF</span> • <span>3.0 MB</span>
+                            </div>
+                            <a href="#" class="btn-download">Download</a>
+                        </div>
+                    </div>
+
+                    <!-- Item 6 -->
+                    <div class="resource-card">
+                        <div class="res-icon video">🎥</div>
+                        <div class="res-content">
+                            <h3>Watercolor Techniques</h3>
+                            <p>Master class on wet-on-wet and dry brush techniques.</p>
+                            <div class="res-meta">
+                                <span>MP4</span> • <span>25 Mins</span>
+                            </div>
+                            <a href="#" class="btn-download">Watch Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <h3>Edvayu Educational Foundations</h3>
+                <p>Morigaon 782105, Assam, India<br />Phone: +91 98765 43210<br />Email: contact@niac.edu.in</p>
+            </div>
+            <div class="social">
+                <h4>Follow Us</h4>
+                <ul>
+                    <li><a href="#" aria-label="Facebook">Facebook</a></li>
+                    <li><a href="#" aria-label="Instagram">Instagram</a></li>
+                    <li><a href="#" aria-label="YouTube">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">© 2025 Edvayu Educational Foundations.</div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

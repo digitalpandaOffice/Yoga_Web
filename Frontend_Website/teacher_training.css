@@ -1,0 +1,177 @@
+/* teacher_training.css */
+
+/* Page Hero Override */
+.page-hero {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1544531586-fde5298cdd40?auto=format&fit=crop&w=1600&q=80');
+    background-size: cover;
+    background-position: center;
+    color: var(--ivory);
+    padding: 120px 0 60px;
+    text-align: center;
+}
+
+.page-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-family: 'Merriweather', serif;
+}
+
+/* Training Section */
+.training-section {
+    padding: 80px 0;
+    background: #f9fbff;
+}
+
+.training-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 50px;
+}
+
+.training-intro h2 {
+    color: var(--deep-blue);
+    font-family: 'Merriweather', serif;
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+}
+
+.training-intro p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Training List */
+.training-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.training-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.training-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.date-box {
+    background: var(--ivory);
+    padding: 15px 20px;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 90px;
+    border: 2px solid var(--gold);
+}
+
+.date-box .day {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--deep-blue);
+    line-height: 1;
+}
+
+.date-box .month {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-top: 5px;
+}
+
+.training-content {
+    flex: 1;
+}
+
+.training-content h3 {
+    color: var(--deep-blue);
+    font-family: 'Merriweather', serif;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+}
+
+.training-content .meta {
+    font-size: 0.9rem;
+    color: #888;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.training-content .desc {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.tags {
+    display: flex;
+    gap: 10px;
+}
+
+.tags span {
+    background: #eaf4ff;
+    color: var(--deep-blue);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.training-action {
+    min-width: 150px;
+    text-align: right;
+}
+
+.btn-register {
+    display: inline-block;
+    padding: 12px 25px;
+    background: var(--deep-blue);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-register:hover {
+    background: var(--gold);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .training-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .training-action {
+        width: 100%;
+        text-align: left;
+    }
+
+    .date-box {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        padding: 10px 15px;
+        width: 100%;
+    }
+
+    .page-hero h1 {
+        font-size: 2.2rem;
+    }
+}
