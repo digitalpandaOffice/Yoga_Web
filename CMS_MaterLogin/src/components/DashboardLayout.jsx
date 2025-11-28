@@ -70,7 +70,7 @@ const DashboardLayout = () => {
                 { label: 'Exam Dates', path: '/dashboard/diploma-exam/dates' },
                 { label: 'Eligibility', path: '/dashboard/diploma-exam/eligibility' },
                 { label: 'Syllabus', path: '/dashboard/diploma-exam/syllabus' },
-                { label: 'Applications', path: '/dashboard/diploma-exam/applications' },
+                { label: 'Issue Admit Card', path: '/dashboard/diploma-exam/admit-card' },
             ]
         },
         {
