@@ -4,57 +4,58 @@ namespace App\Controllers;
 use Core\Controller;
 
 class Content extends Controller {
-    private $contentModel;
-
-    public function __construct() {
-        $this->contentModel = $this->model('PageContent');
-    }
-
-    // GET /api/content/get/{page_slug}
-    public function get($pageSlug = '') {
-        if (empty($pageSlug)) {
-            $this->json(['error' => 'Page slug required'], 400);
+    
+    // GET /content/home
+    public function home() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            $this->json(['error' => 'Method not allowed'], 405);
         }
 
-        $content = $this->contentModel->getByPage($pageSlug);
-        
-        // Format as key-value pairs
-        $formatted = [];
-        foreach ($content as $item) {
-            $formatted[$item['section_key']] = [
-                'text' => $item['content_value'],
-                'image' => $item['image_url']
+        $contentModel = $this->model('Content');
+        $data = $contentModel->getContentByPage('home');
+
+        // Return empty object if no data found (frontend expects objects)
+        if (empty($data)) {
+            $data = [
+                'hero' => [],
+                'about' => [],
+                'stats' => [],
+                'features' => [],
+                'values' => [],
+                'highlights' => [],
+                'footer' => []
             ];
         }
-        
-        $this->json($formatted);
+
+        $this->json($data);
     }
 
-    // POST /api/content/update
+    // POST /content/update
     public function update() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $this->json(['error' => 'Method not allowed'], 405);
         }
 
-        $data = json_decode(file_get_contents("php://input"), true);
+        $input = json_decode(file_get_contents("php://input"), true);
         
-        if (empty($data['page_slug']) || empty($data['sections'])) {
-            $this->json(['error' => 'Missing required fields'], 400);
+        if (!$input) {
+            $this->json(['error' => 'Invalid JSON data'], 400);
         }
 
-        $pageSlug = $data['page_slug'];
-        $sections = $data['sections']; // Array of key => {text, image}
+        $contentModel = $this->model('Content');
+        $pageSlug = 'home'; // Defaulting to home for now, can be dynamic later
 
-        $successCount = 0;
-        foreach ($sections as $key => $values) {
-            $text = isset($values['text']) ? $values['text'] : '';
-            $image = isset($values['image']) ? $values['image'] : null;
-            
-            if ($this->contentModel->updateSection($pageSlug, $key, $text, $image)) {
-                $successCount++;
+        $success = true;
+        foreach ($input as $sectionKey => $contentValue) {
+            if (!$contentModel->updateContent($pageSlug, $sectionKey, $contentValue)) {
+                $success = false;
             }
         }
 
-        $this->json(['message' => "Updated $successCount sections for $pageSlug"]);
+        if ($success) {
+            $this->json(['message' => 'Content updated successfully']);
+        } else {
+            $this->json(['error' => 'Some content failed to update'], 500);
+        }
     }
 }

@@ -6,5 +6,6 @@ export const endpoints = {
     resetPassword: `${API_BASE_URL}/auth/resetPassword`,
     courses: `${API_BASE_URL}/courses`,
     settings: `${API_BASE_URL}/settings`,
-    content: `${API_BASE_URL}/content`,
+    content: `${API_BASE_URL}/content/home`,
+    updateContent: `${API_BASE_URL}/content/update`,
 };

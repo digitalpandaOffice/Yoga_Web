@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import { Save, Image, Type, BarChart2, Star, Heart, Calendar, Layout, Plus, Trash2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Save, Image, Type, BarChart2, Star, Heart, Calendar, Layout, Plus, Trash2, Loader2 } from 'lucide-react';
+import { endpoints } from '../config';
 
 const HomeContent = () => {
     const [activeTab, setActiveTab] = useState('hero');
     const [isSaving, setIsSaving] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [showSuccess, setShowSuccess] = useState(false);
+    const [error, setError] = useState('');
 
-    // Initial State (Mock Data)
+    // Initial State (Mock Data - will be overwritten by fetch)
     const [heroData, setHeroData] = useState({
         title: 'Preserving Tradition. Inspiring Creativity.',
         subtitle: 'Diploma courses and training programs in Indian Art, Music & Culture — where heritage meets contemporary practice.',
@@ -58,17 +61,70 @@ const HomeContent = () => {
         youtube: '#'
     });
 
-    const handleSave = () => {
+    useEffect(() => {
+        fetchContent();
+    }, []);
+
+    const fetchContent = async () => {
+        setIsLoading(true);
+        try {
+            const response = await fetch(endpoints.content);
+            const data = await response.json();
+
+            if (data) {
+                if (data.hero && Object.keys(data.hero).length > 0) setHeroData(data.hero);
+                if (data.about && Object.keys(data.about).length > 0) setAboutData(data.about);
+                if (data.stats && Object.keys(data.stats).length > 0) setStatsData(data.stats);
+                if (data.features && data.features.length > 0) setFeaturesData(data.features);
+                if (data.values && data.values.length > 0) setValuesData(data.values);
+                if (data.highlights && data.highlights.length > 0) setHighlightsData(data.highlights);
+                if (data.footer && Object.keys(data.footer).length > 0) setFooterData(data.footer);
+            }
+        } catch (err) {
+            console.error("Failed to fetch content:", err);
+            setError("Failed to load content. Using default values.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleSave = async () => {
         setIsSaving(true);
-        // Simulate API call
-        setTimeout(() => {
-            console.log('Saved Data:', {
-                heroData, aboutData, statsData, featuresData, valuesData, highlightsData, footerData
+        setError('');
+        setShowSuccess(false);
+
+        const payload = {
+            hero: heroData,
+            about: aboutData,
+            stats: statsData,
+            features: featuresData,
+            values: valuesData,
+            highlights: highlightsData,
+            footer: footerData
+        };
+
+        try {
+            const response = await fetch(endpoints.updateContent, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
             });
+
+            if (response.ok) {
+                setShowSuccess(true);
+                setTimeout(() => setShowSuccess(false), 3000);
+            } else {
+                const errorData = await response.json();
+                setError(errorData.error || 'Failed to save changes.');
+            }
+        } catch (err) {
+            console.error("Save error:", err);
+            setError("Network error. Failed to save.");
+        } finally {
             setIsSaving(false);
-            setShowSuccess(true);
-            setTimeout(() => setShowSuccess(false), 3000);
-        }, 1000);
+        }
     };
 
     // Helper functions for dynamic lists
