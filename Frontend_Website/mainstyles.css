@@ -1343,3 +1343,35 @@ body {
     height: 210px;
   }
 }
+
+.hero {
+  background: linear-gradient(rgba(11, 37, 69, 0.55), rgba(11, 37, 69, 0.65)), url('https://mapmygenome.in/cdn/shop/articles/The_Science_Behind_Yoga_and_Its_Benefits_for_Mental_Health.jpg?v=1738302589&width=1780') center/cover no-repeat;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ivory);
+  text-align: center;
+  position: relative;
+}
+
+.hero {
+  background: linear-gradient(rgba(11, 37, 69, 0.55), rgba(11, 37, 69, 0.65)), url('https://mapmygenome.in/cdn/shop/articles/The_Science_Behind_Yoga_and_Its_Benefits_for_Mental_Health.jpg?v=1738302589&width=1780') center/cover no-repeat;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ivory);
+  text-align: center;
+  position: relative;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent 50%, rgba(6, 34, 40, 0.95) 100%);
+  z-index: 1;
+}

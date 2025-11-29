@@ -7,6 +7,8 @@ import DashboardLayout from './components/DashboardLayout';
 import DashboardHome from './pages/DashboardHome';
 import HomeContent from './pages/HomeContent';
 import FileManager from './pages/FileManager';
+import SyllabusContent from './pages/SyllabusContent';
+import ResultsContent from './pages/ResultsContent';
 import Admissions from './pages/Admissions';
 import PlaceholderPage from './pages/PlaceholderPage';
 
@@ -24,6 +26,8 @@ function App() {
 
           {/* Student Area */}
           <Route path="student-area/admissions" element={<Admissions />} />
+          <Route path="student-area/syllabus" element={<SyllabusContent />} />
+          <Route path="student-area/results" element={<ResultsContent />} />
           <Route path="student-area/*" element={<PlaceholderPage />} />
 
           {/* Teacher Area */}

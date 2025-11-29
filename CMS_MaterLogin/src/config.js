@@ -7,5 +7,10 @@ export const endpoints = {
     courses: `${API_BASE_URL}/courses`,
     settings: `${API_BASE_URL}/settings`,
     content: `${API_BASE_URL}/content/home`,
+    syllabusContent: `${API_BASE_URL}/content/syllabus`,
+    resultsContent: `${API_BASE_URL}/content/results`,
+    resultsList: `${API_BASE_URL}/results`,
+    resultsCreate: `${API_BASE_URL}/results/create`,
+    resultsDelete: `${API_BASE_URL}/results/delete`,
     updateContent: `${API_BASE_URL}/content/update`,
 };

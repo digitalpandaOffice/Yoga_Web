@@ -7,24 +7,64 @@ class Content extends Controller {
     
     // GET /content/home
     public function home() {
+        $this->handleGetContent('home', [
+            'hero' => [],
+            'about' => [],
+            'stats' => [],
+            'features' => [],
+            'values' => [],
+            'highlights' => [],
+            'footer' => []
+        ]);
+    }
+
+    // GET /content/syllabus
+    public function syllabus() {
+        $this->handleGetContent('syllabus', [
+            'hero' => [
+                'title' => 'Course Syllabus',
+                'subtitle' => 'Comprehensive curriculum details for all our diploma and certificate programs.',
+                'backgroundImage' => ''
+            ],
+            'syllabus_cards' => []
+        ]);
+    }
+
+    // GET /content/results
+    public function results() {
+        $this->handleGetContent('results', [
+            'hero' => [
+                'title' => 'Examination Results',
+                'subtitle' => 'Check your diploma and certificate course results online',
+                'backgroundImage' => ''
+            ],
+            'form_options' => [
+                'courses' => [
+                    ['value' => 'fine-arts', 'label' => 'Diploma in Fine Arts'],
+                    ['value' => 'kathak', 'label' => 'Diploma in Kathak'],
+                    ['value' => 'bharatanatyam', 'label' => 'Diploma in Bharatanatyam'],
+                    ['value' => 'vocal', 'label' => 'Hindustani Vocal'],
+                    ['value' => 'theatre', 'label' => 'Theatre & Dramatics']
+                ],
+                'years' => [
+                    ['value' => '2024-25', 'label' => '2024-2025'],
+                    ['value' => '2023-24', 'label' => '2023-2024'],
+                    ['value' => '2022-23', 'label' => '2022-2023']
+                ]
+            ]
+        ]);
+    }
+
+    private function handleGetContent($page, $defaultStructure) {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
             $this->json(['error' => 'Method not allowed'], 405);
         }
 
         $contentModel = $this->model('Content');
-        $data = $contentModel->getContentByPage('home');
+        $data = $contentModel->getContentByPage($page);
 
-        // Return empty object if no data found (frontend expects objects)
         if (empty($data)) {
-            $data = [
-                'hero' => [],
-                'about' => [],
-                'stats' => [],
-                'features' => [],
-                'values' => [],
-                'highlights' => [],
-                'footer' => []
-            ];
+            $data = $defaultStructure;
         }
 
         $this->json($data);
@@ -43,7 +83,7 @@ class Content extends Controller {
         }
 
         $contentModel = $this->model('Content');
-        $pageSlug = 'home'; // Defaulting to home for now, can be dynamic later
+        $pageSlug = $_GET['page'] ?? 'home'; 
 
         $success = true;
         foreach ($input as $sectionKey => $contentValue) {
