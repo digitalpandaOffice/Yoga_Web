@@ -1,63 +1,90 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Folder, File, Image, Upload, Trash2, Search, Filter, MoreVertical, Copy, Check } from 'lucide-react';
+import { endpoints } from '../config';
 
 const FileManager = () => {
     const [activeFilter, setActiveFilter] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const [copiedId, setCopiedId] = useState(null);
+    const [files, setFiles] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const fileInputRef = useRef(null);
 
-    // Mock Data
-    const [files, setFiles] = useState([
-        { id: 1, name: 'hero-banner.jpg', type: 'image', size: '2.4 MB', date: '2025-10-12', url: 'https://mapmygenome.in/cdn/shop/articles/The_Science_Behind_Yoga_and_Its_Benefits_for_Mental_Health.jpg' },
-        { id: 2, name: 'prospectus-2025.pdf', type: 'document', size: '4.1 MB', date: '2025-10-10', url: '#' },
-        { id: 3, name: 'annual-fest.png', type: 'image', size: '1.8 MB', date: '2025-09-28', url: 'https://www.thepresidiumschool.com/common/images/gallery/pages/Events/Annual-Fest/annual-day-0001.jpg' },
-        { id: 4, name: 'student-list.xlsx', type: 'document', size: '125 KB', date: '2025-09-25', url: '#' },
-        { id: 5, name: 'logo-transparent.png', type: 'image', size: '450 KB', date: '2025-09-20', url: './assets/images/AdvayuLogo.png' },
-        { id: 6, name: 'course-syllabus.pdf', type: 'document', size: '1.2 MB', date: '2025-09-15', url: '#' },
-        { id: 7, name: 'gallery-event-1.jpg', type: 'image', size: '3.2 MB', date: '2025-09-10', url: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4' },
-        { id: 8, name: 'policy-doc.docx', type: 'document', size: '85 KB', date: '2025-09-05', url: '#' },
-    ]);
+    useEffect(() => {
+        fetchFiles();
+    }, []);
+
+    const fetchFiles = async () => {
+        setIsLoading(true);
+        try {
+            const response = await fetch(endpoints.mediaList);
+            const data = await response.json();
+            if (Array.isArray(data)) {
+                setFiles(data);
+            }
+        } catch (error) {
+            console.error('Error fetching files:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const handleUploadClick = () => {
         fileInputRef.current.click();
     };
 
-    const handleFileChange = (event) => {
+    const handleFileChange = async (event) => {
         const file = event.target.files[0];
         if (!file) return;
 
         setIsUploading(true);
+        const formData = new FormData();
+        formData.append('file', file);
 
-        // Simulate upload delay
-        setTimeout(() => {
-            const newFile = {
-                id: Date.now(), // Use timestamp for unique ID
-                name: file.name,
-                type: file.type.startsWith('image/') ? 'image' : 'document',
-                size: formatFileSize(file.size),
-                date: new Date().toISOString().split('T')[0],
-                url: URL.createObjectURL(file) // Create local preview URL
-            };
-            setFiles([newFile, ...files]);
+        try {
+            const response = await fetch(endpoints.mediaUpload, {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+
+            if (response.ok) {
+                // Add new file to list
+                setFiles([data.file, ...files]);
+            } else {
+                alert(data.error || 'Upload failed');
+            }
+        } catch (error) {
+            console.error('Upload error:', error);
+            alert('Upload failed due to network error');
+        } finally {
             setIsUploading(false);
-            // Reset input
-            event.target.value = null;
-        }, 1000);
+            event.target.value = null; // Reset input
+        }
     };
 
-    const formatFileSize = (bytes) => {
-        if (bytes === 0) return '0 Bytes';
-        const k = 1024;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-    };
+    const handleDelete = async (file) => {
+        if (!window.confirm(`Are you sure you want to delete "${file.name}"?`)) return;
 
-    const handleDelete = (id) => {
-        if (window.confirm('Are you sure you want to delete this file?')) {
-            setFiles(files.filter(file => file.id !== id));
+        try {
+            const response = await fetch(endpoints.mediaDelete, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ filename: file.name })
+            });
+
+            if (response.ok) {
+                setFiles(files.filter(f => f.id !== file.id));
+            } else {
+                const data = await response.json();
+                alert(data.error || 'Delete failed');
+            }
+        } catch (error) {
+            console.error('Delete error:', error);
+            alert('Delete failed due to network error');
         }
     };
 
@@ -132,46 +159,55 @@ const FileManager = () => {
                 </div>
             </div>
 
-            <div className="files-grid">
-                {filteredFiles.map(file => (
-                    <div key={file.id} className="file-card">
-                        <div className="file-preview">
-                            {file.type === 'image' ? (
-                                <img src={file.url} alt={file.name} />
-                            ) : (
-                                <div className="doc-icon">
-                                    <File size={48} />
+            {isLoading ? (
+                <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>Loading files...</div>
+            ) : (
+                <div className="files-grid">
+                    {filteredFiles.map(file => (
+                        <div key={file.id} className="file-card">
+                            <div className="file-preview">
+                                {file.type === 'image' ? (
+                                    <img src={file.url} alt={file.name} />
+                                ) : (
+                                    <div className="doc-icon">
+                                        <File size={48} />
+                                    </div>
+                                )}
+                                <div className="file-actions">
+                                    <button
+                                        className="icon-btn copy"
+                                        onClick={() => handleCopyLink(file)}
+                                        title="Copy Link"
+                                    >
+                                        {copiedId === file.id ? <Check size={16} /> : <Copy size={16} />}
+                                    </button>
+                                    <button
+                                        className="icon-btn delete"
+                                        onClick={() => handleDelete(file)}
+                                        title="Delete File"
+                                    >
+                                        <Trash2 size={16} />
+                                    </button>
                                 </div>
-                            )}
-                            <div className="file-actions">
-                                <button
-                                    className="icon-btn copy"
-                                    onClick={() => handleCopyLink(file)}
-                                    title="Copy Link"
-                                >
-                                    {copiedId === file.id ? <Check size={16} /> : <Copy size={16} />}
-                                </button>
-                                <button
-                                    className="icon-btn delete"
-                                    onClick={() => handleDelete(file.id)}
-                                    title="Delete File"
-                                >
-                                    <Trash2 size={16} />
-                                </button>
+                            </div>
+                            <div className="file-info">
+                                <div className="file-icon">
+                                    {file.type === 'image' ? <Image size={16} /> : <File size={16} />}
+                                </div>
+                                <div className="file-details">
+                                    <span className="file-name" title={file.name}>{file.name}</span>
+                                    <span className="file-meta">{file.size} • {file.date}</span>
+                                </div>
                             </div>
                         </div>
-                        <div className="file-info">
-                            <div className="file-icon">
-                                {file.type === 'image' ? <Image size={16} /> : <File size={16} />}
-                            </div>
-                            <div className="file-details">
-                                <span className="file-name" title={file.name}>{file.name}</span>
-                                <span className="file-meta">{file.size} • {file.date}</span>
-                            </div>
+                    ))}
+                    {filteredFiles.length === 0 && (
+                        <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '40px', color: '#999' }}>
+                            No files found. Upload one to get started.
                         </div>
-                    </div>
-                ))}
-            </div>
+                    )}
+                </div>
+            )}
 
             <style>{`
                 .file-manager-controls {

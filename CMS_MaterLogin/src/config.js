@@ -12,5 +12,11 @@ export const endpoints = {
     resultsList: `${API_BASE_URL}/results`,
     resultsCreate: `${API_BASE_URL}/results/create`,
     resultsDelete: `${API_BASE_URL}/results/delete`,
+    mediaList: `${API_BASE_URL}/media`,
+    mediaUpload: `${API_BASE_URL}/media/upload`,
+    mediaDelete: `${API_BASE_URL}/media/delete`,
+    resourcesList: `${API_BASE_URL}/resources`,
+    resourcesCreate: `${API_BASE_URL}/resources/create`,
+    resourcesDelete: `${API_BASE_URL}/resources/delete`,
     updateContent: `${API_BASE_URL}/content/update`,
 };
