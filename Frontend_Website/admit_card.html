@@ -165,8 +165,8 @@
         <!-- PAGE HERO -->
         <section class="page-hero">
             <div class="container">
-                <h1>Download Admit Card</h1>
-                <p>Get ready for your upcoming examinations</p>
+                <h1 id="hero-title">Download Admit Card</h1>
+                <p id="hero-subtitle">Get ready for your upcoming examinations</p>
             </div>
         </section>
 
@@ -174,7 +174,7 @@
         <section class="admit-card-section">
             <div class="container">
                 <div class="download-card">
-                    <h2 style="margin-bottom: 30px; color: var(--deep-blue);">Enter Details</h2>
+                    <h2 id="form-title" style="margin-bottom: 30px; color: var(--deep-blue);">Enter Details</h2>
                     <form id="admitCardForm">
                         <div class="form-group">
                             <label for="regNumber">Registration Number</label>
@@ -187,7 +187,8 @@
                         </div>
                         <button type="submit" class="btn-download">Download Admit Card</button>
                     </form>
-                    <p class="note">Note: Admit cards are usually available 2 weeks before the examination date.</p>
+                    <p class="note" id="form-note">Note: Admit cards are usually available 2 weeks before the
+                        examination date.</p>
                     <div id="message" style="margin-top: 20px; display: none;"></div>
                 </div>
             </div>
@@ -214,21 +215,7 @@
     </main>
 
     <script src="script.js"></script>
-    <script>
-        // Mock Download Logic
-        document.getElementById('admitCardForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const msg = document.getElementById('message');
-            msg.style.display = 'block';
-            msg.style.color = 'green';
-            msg.textContent = 'Searching for admit card... (This is a demo)';
-            setTimeout(() => {
-                alert('Admit card download started (Demo)');
-                msg.textContent = '';
-                msg.style.display = 'none';
-            }, 1500);
-        });
-    </script>
+    <script src="js/dynamic-admit-card.js"></script>
 </body>
 
 </html>

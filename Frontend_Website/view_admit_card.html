@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admit Card</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #eee;
+            padding: 20px;
+        }
+
+        .admit-card {
+            width: 210mm;
+            min-height: 297mm;
+            background: #fff;
+            margin: 0 auto;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .header img {
+            height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            margin: 5px 0;
+            font-size: 24px;
+            text-transform: uppercase;
+            color: #333;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: normal;
+            color: #666;
+            letter-spacing: 1px;
+        }
+
+        .card-title {
+            text-align: center;
+            font-weight: bold;
+            text-decoration: underline;
+            font-size: 22px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .student-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .info-left {
+            width: 70%;
+        }
+
+        .info-right {
+            width: 25%;
+            text-align: center;
+        }
+
+        .photo-box {
+            width: 130px;
+            height: 160px;
+            border: 1px solid #000;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #f9f9f9;
+        }
+
+        .photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info-row {
+            margin-bottom: 12px;
+            font-size: 16px;
+            display: flex;
+        }
+
+        .label {
+            font-weight: bold;
+            width: 160px;
+            flex-shrink: 0;
+        }
+
+        .value {
+            font-weight: 500;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #f0f0f0;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .signature {
+            text-align: center;
+            width: 200px;
+        }
+
+        .signature-line {
+            border-top: 1px solid #000;
+            margin-top: 40px;
+            margin-bottom: 5px;
+        }
+
+        .instructions {
+            font-size: 12px;
+            margin-top: 40px;
+            border-top: 1px solid #ccc;
+            padding-top: 15px;
+        }
+
+        .instructions h3 {
+            margin: 0 0 10px;
+            font-size: 14px;
+            text-decoration: underline;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .instructions li {
+            margin-bottom: 5px;
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+
+            .admit-card {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                padding: 20px;
+            }
+
+            .no-print {
+                display: none;
+            }
+        }
+
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-print:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="btn-print no-print" onclick="window.print()">Print Admit Card</button>
+
+    <div class="admit-card" id="card-content">
+        <div style="text-align: center; padding: 50px;">Loading Admit Card Details...</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = JSON.parse(localStorage.getItem('admitCardData'));
+            if (!data) {
+                document.getElementById('card-content').innerHTML = '<div style="text-align:center; color:red; padding:50px;"><h3>No data found.</h3><p>Please go back and search again.</p></div>';
+                return;
+            }
+
+            let subjects = [];
+            try {
+                subjects = typeof data.subjects === 'string' ? JSON.parse(data.subjects) : data.subjects;
+                if (!Array.isArray(subjects)) subjects = [];
+            } catch (e) { subjects = []; }
+
+            const html = `
+                <div class="header">
+                    <img src="./images/AdvayuLogo.png" alt="Logo">
+                    <h1>Edvayu Educational Foundations</h1>
+                    <h2>CULTURAL EXAMINATION BOARD</h2>
+                </div>
+                
+                <div class="card-title">ADMIT CARD / HALL TICKET</div>
+                
+                <div class="student-info">
+                    <div class="info-left">
+                        <div class="info-row"><span class="label">Name:</span> <span class="value">${data.student_name}</span></div>
+                        <div class="info-row"><span class="label">Father's Name:</span> <span class="value">${data.father_name}</span></div>
+                        <div class="info-row"><span class="label">Registration No:</span> <span class="value">${data.registration_number}</span></div>
+                        <div class="info-row"><span class="label">Roll Number:</span> <span class="value">${data.roll_number}</span></div>
+                        <div class="info-row"><span class="label">Date of Birth:</span> <span class="value">${data.dob}</span></div>
+                        <div class="info-row"><span class="label">Course:</span> <span class="value">${data.course_name}</span></div>
+                        <div class="info-row"><span class="label">Exam Center:</span> <span class="value">${data.exam_center}</span></div>
+                    </div>
+                    <div class="info-right">
+                        <div class="photo-box">
+                            <img src="${data.student_photo}" alt="Student Photo" onerror="this.src='https://via.placeholder.com/150?text=No+Photo'">
+                        </div>
+                        <p style="font-size:12px; font-weight:bold;">Candidate's Photo</p>
+                    </div>
+                </div>
+                
+                <h3 style="margin-bottom:15px;">Examination Schedule (${data.exam_session})</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">Date</th>
+                            <th style="width: 25%;">Time</th>
+                            <th style="width: 50%;">Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${subjects.length > 0 ? subjects.map(sub => `
+                            <tr>
+                                <td>${sub.date}</td>
+                                <td>${sub.time}</td>
+                                <td>${sub.subject}</td>
+                            </tr>
+                        `).join('') : '<tr><td colspan="3" style="text-align:center;">No subjects scheduled</td></tr>'}
+                    </tbody>
+                </table>
+                
+                <div class="footer">
+                    <div class="signature">
+                        <div class="signature-line"></div>
+                        <p>Candidate's Signature</p>
+                    </div>
+                    <div class="signature">
+                        <div style="height: 40px; font-family: 'Brush Script MT', cursive; font-size: 24px; color: #000;">Controller</div>
+                        <div class="signature-line" style="margin-top:0;"></div>
+                        <p>Controller of Examinations</p>
+                    </div>
+                </div>
+                
+                <div class="instructions">
+                    <h3>Important Instructions:</h3>
+                    <ol>
+                        <li>Candidates must bring this Admit Card to the examination hall.</li>
+                        <li>Report to the exam center 30 minutes before the scheduled time.</li>
+                        <li>Electronic gadgets are strictly prohibited inside the exam hall.</li>
+                        <li>Keep this admit card safe for future reference.</li>
+                        <li>This admit card is system generated and valid for the specified examination session only.</li>
+                    </ol>
+                </div>
+            `;
+
+            document.getElementById('card-content').innerHTML = html;
+        });
+    </script>
+</body>
+
+</html>

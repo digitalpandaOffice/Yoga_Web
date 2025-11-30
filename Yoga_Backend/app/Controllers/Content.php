@@ -123,6 +123,20 @@ class Content extends Controller {
         ]);
     }
 
+    // GET /content/admit-card
+    public function admitCard() {
+        $this->handleGetContent('admit-card', [
+            'hero' => [
+                'title' => 'Download Admit Card',
+                'subtitle' => 'Get ready for your upcoming examinations'
+            ],
+            'instructions' => [
+                'title' => 'Enter Details',
+                'note' => 'Note: Admit cards are usually available 2 weeks before the examination date.'
+            ]
+        ]);
+    }
+
     private function handleGetContent($page, $defaultStructure) {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
             $this->json(['error' => 'Method not allowed'], 405);
