@@ -93,76 +93,26 @@
             </div>
         </section>
 
-        <!-- Dates Section -->
-        <section class="dates-section">
+        <!-- Advanced Schedule Section -->
+        <section class="schedule-section">
             <div class="container">
-                <div class="dates-intro">
-                    <h2>Important Dates</h2>
-                    <p>Please note that these dates are tentative and subject to change. Students are advised to check
-                        the website regularly for updates.</p>
+                <div class="section-header-center">
+                    <h2>Examination Schedule 2025-2026</h2>
+                    <p>Select your course below to view the specific examination routine for your batch.</p>
                 </div>
 
-                <div class="dates-table-container">
-                    <table class="dates-table">
-                        <thead>
-                            <tr>
-                                <th>Event</th>
-                                <th>Date</th>
-                                <th>Day</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Registration Start Date</td>
-                                <td>October 15, 2025</td>
-                                <td>Wednesday</td>
-                                <td><span class="status closed">Closed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Last Date for Form Submission (Without Late Fee)</td>
-                                <td>November 30, 2025</td>
-                                <td>Sunday</td>
-                                <td><span class="status closed">Closed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Last Date for Form Submission (With Late Fee)</td>
-                                <td>December 15, 2025</td>
-                                <td>Monday</td>
-                                <td><span class="status closed">Closed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Admit Card Download Starts</td>
-                                <td>January 10, 2026</td>
-                                <td>Saturday</td>
-                                <td><span class="status open">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Theory Examinations</strong></td>
-                                <td><strong>February 10 - 15, 2026</strong></td>
-                                <td><strong>Tue - Sun</strong></td>
-                                <td><span class="status upcoming">Upcoming</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Practical Examinations</strong></td>
-                                <td><strong>February 20 - 28, 2026</strong></td>
-                                <td><strong>Fri - Sat</strong></td>
-                                <td><span class="status upcoming">Upcoming</span></td>
-                            </tr>
-                            <tr>
-                                <td>Result Declaration</td>
-                                <td>April 15, 2026</td>
-                                <td>Wednesday</td>
-                                <td><span class="status upcoming">Upcoming</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <!-- Schedule Container -->
+                <div class="schedule-container" id="schedule-container">
+                    <!-- Content will be injected dynamically -->
+                    <div style="text-align: center;">Loading schedules...</div>
                 </div>
 
                 <div class="download-schedule">
-                    <h3>Download Full Schedule</h3>
-                    <p>Get a detailed PDF copy of the examination routine including subject-wise timings.</p>
-                    <a href="#" class="btn-download-pdf">Download PDF Routine</a>
+                    <h3>Need a Hard Copy?</h3>
+                    <p>Download the complete consolidated examination routine for all departments.</p>
+                    <a href="#" class="btn-download-pdf">
+                        <span class="icon">📄</span> Download Complete Routine (PDF)
+                    </a>
                 </div>
             </div>
         </section>
@@ -188,6 +138,7 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="js/dynamic-exam-dates.js"></script>
 </body>
 
 </html>

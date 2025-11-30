@@ -2,119 +2,288 @@
 
 /* Page Hero Override */
 .page-hero {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1600&q=80');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1600&q=80');
     background-size: cover;
     background-position: center;
     color: var(--ivory);
-    padding: 120px 0 60px;
+    padding: 140px 0 80px;
     text-align: center;
+    position: relative;
 }
 
 .page-hero h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     margin-bottom: 1rem;
     font-family: 'Merriweather', serif;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Dates Section */
-.dates-section {
+.page-hero p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.9;
+}
+
+/* Schedule Section */
+.schedule-section {
     padding: 80px 0;
-    background: #f9f9f9;
+    background: #f4f6f8;
+    min-height: 60vh;
 }
 
-.dates-intro {
+.section-header-center {
     text-align: center;
     max-width: 800px;
-    margin: 0 auto 50px;
+    margin: 0 auto 60px;
 }
 
-.dates-intro h2 {
+.section-header-center h2 {
     color: var(--deep-blue);
     font-family: 'Merriweather', serif;
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     margin-bottom: 15px;
 }
 
-.dates-intro p {
+.section-header-center p {
     color: #666;
     font-size: 1.1rem;
-    line-height: 1.6;
 }
 
-/* Table Styling */
-.dates-table-container {
-    overflow-x: auto;
+/* Accordion Styling */
+.schedule-container {
+    max-width: 900px;
+    margin: 0 auto 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.course-accordion {
     background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-    margin-bottom: 50px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.dates-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 600px;
+.course-accordion:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
 }
 
-.dates-table th,
-.dates-table td {
-    padding: 20px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
+.course-accordion[open] {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    border-color: var(--gold);
 }
 
-.dates-table th {
-    background: var(--deep-blue);
+.accordion-trigger {
+    padding: 25px 30px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    /* Remove default triangle */
+    background: #fff;
+    position: relative;
+}
+
+.accordion-trigger::-webkit-details-marker {
+    display: none;
+}
+
+.trigger-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.course-icon {
+    font-size: 2.5rem;
+    background: #f0f4f8;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+.course-accordion[open] .course-icon {
+    background: var(--gold);
     color: #fff;
-    font-weight: 600;
-    text-transform: uppercase;
+}
+
+.course-details h3 {
+    font-size: 1.3rem;
+    color: var(--deep-blue);
+    margin: 0 0 5px;
+    font-weight: 700;
+}
+
+.meta-text {
     font-size: 0.9rem;
-    letter-spacing: 0.5px;
+    color: #888;
+    font-weight: 500;
 }
 
-.dates-table tr:last-child td {
-    border-bottom: none;
+/* Custom Toggle Icon */
+.icon-toggle {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    display: block;
 }
 
-.dates-table tr:hover {
-    background-color: #f8fbff;
+.icon-toggle::before,
+.icon-toggle::after {
+    content: '';
+    position: absolute;
+    background: #ccc;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
 }
 
-.dates-table td {
+.icon-toggle::before {
+    width: 2px;
+    height: 16px;
+}
+
+.icon-toggle::after {
+    width: 16px;
+    height: 2px;
+}
+
+.course-accordion[open] .icon-toggle::before {
+    transform: translate(-50%, -50%) rotate(90deg);
+    /* Turns into minus */
+    background: var(--gold);
+}
+
+.course-accordion[open] .icon-toggle::after {
+    background: var(--gold);
+}
+
+/* Accordion Body */
+.accordion-body {
+    padding: 0 30px 30px;
+    background: #fff;
+    border-top: 1px solid #f0f0f0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Batch Blocks */
+.batch-block {
+    margin-top: 30px;
+}
+
+.batch-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.batch-header h4 {
+    font-size: 1.1rem;
     color: #444;
-    font-size: 1rem;
+    font-weight: 700;
+    margin: 0;
 }
 
-/* Status Badges */
-.status {
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
+.batch-status {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 12px;
     font-weight: 700;
     text-transform: uppercase;
 }
 
-.status.closed {
-    background: #ffebee;
-    color: #c62828;
-}
-
-.status.open {
-    background: #e8f5e9;
-    color: #2e7d32;
-}
-
-.status.upcoming {
+.batch-status.upcoming {
     background: #e3f2fd;
     color: #1565c0;
 }
 
-/* Download Schedule CTA */
+.batch-status.active {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.batch-status.completed {
+    background: #ffebee;
+    color: #c62828;
+}
+
+/* Tables */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.schedule-table th {
+    text-align: left;
+    padding: 12px 15px;
+    background: #f9f9f9;
+    color: #666;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+}
+
+.schedule-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+.schedule-table tr:last-child td {
+    border-bottom: none;
+}
+
+.schedule-table tr:hover td {
+    background: #fcfcfc;
+}
+
+/* Info Notice */
+.info-notice {
+    background: #fff8e1;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+    margin-top: 20px;
+    color: #795548;
+    font-size: 0.95rem;
+}
+
+/* Download CTA */
 .download-schedule {
     text-align: center;
     background: #fff;
     padding: 40px;
-    border-radius: 12px;
+    border-radius: 16px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
     max-width: 600px;
     margin: 0 auto;
@@ -133,29 +302,52 @@
 }
 
 .btn-download-pdf {
-    display: inline-block;
-    padding: 12px 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 35px;
     background: var(--gold);
     color: #fff;
     text-decoration: none;
     border-radius: 50px;
     font-weight: 600;
-    transition: background 0.3s;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(181, 109, 27, 0.3);
 }
 
 .btn-download-pdf:hover {
     background: #b56d1b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(181, 109, 27, 0.4);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
     .page-hero h1 {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
     }
 
-    .dates-table th,
-    .dates-table td {
-        padding: 15px;
-        font-size: 0.9rem;
+    .accordion-trigger {
+        padding: 20px;
+    }
+
+    .course-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.8rem;
+    }
+
+    .course-details h3 {
+        font-size: 1.1rem;
+    }
+
+    .accordion-body {
+        padding: 0 20px 20px;
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+        padding: 10px;
+        font-size: 0.85rem;
     }
 }

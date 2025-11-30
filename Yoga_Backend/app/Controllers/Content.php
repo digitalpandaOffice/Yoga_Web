@@ -55,6 +55,25 @@ class Content extends Controller {
         ]);
     }
 
+    // GET /content/exam-dates
+    public function examDates() {
+        $this->handleGetContent('exam-dates', [
+            'hero' => [
+                'title' => 'Examination Dates',
+                'subtitle' => 'Schedule for upcoming Diploma and Certificate examinations for the academic year 2025-2026.'
+            ],
+            'schedule_header' => [
+                'title' => 'Examination Schedule 2025-2026',
+                'description' => 'Select your course below to view the specific examination routine for your batch.'
+            ],
+            'download_section' => [
+                'title' => 'Need a Hard Copy?',
+                'text' => 'Download the complete consolidated examination routine for all departments.',
+                'pdf_url' => '#'
+            ]
+        ]);
+    }
+
     private function handleGetContent($page, $defaultStructure) {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
             $this->json(['error' => 'Method not allowed'], 405);

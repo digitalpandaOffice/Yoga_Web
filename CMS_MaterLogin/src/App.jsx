@@ -10,6 +10,10 @@ import FileManager from './pages/FileManager';
 import SyllabusContent from './pages/SyllabusContent';
 import ResultsContent from './pages/ResultsContent';
 import ResourcesContent from './pages/ResourcesContent';
+import TeacherCurriculumContent from './pages/TeacherCurriculumContent';
+import TeacherTrainingContent from './pages/TeacherTrainingContent';
+import TeacherResourcesContent from './pages/TeacherResourcesContent';
+import ExamDatesContent from './pages/ExamDatesContent';
 import Admissions from './pages/Admissions';
 import PlaceholderPage from './pages/PlaceholderPage';
 
@@ -33,11 +37,14 @@ function App() {
           <Route path="student-area/*" element={<PlaceholderPage />} />
 
           {/* Teacher Area */}
-          <Route path="teacher-area" element={<PlaceholderPage />} />
-          <Route path="teacher-area/*" element={<PlaceholderPage />} />
+          <Route path="teacher-area/login" element={<PlaceholderPage />} />
+          <Route path="teacher-area/curriculum" element={<TeacherCurriculumContent />} />
+          <Route path="teacher-area/training" element={<TeacherTrainingContent />} />
+          <Route path="teacher-area/resources" element={<TeacherResourcesContent />} />
 
           {/* Diploma Exam */}
-          <Route path="diploma-exam" element={<PlaceholderPage />} />
+          <Route path="diploma-exam/dates" element={<ExamDatesContent />} />
+          <Route path="diploma-exam/eligibility" element={<PlaceholderPage />} />
           <Route path="diploma-exam/*" element={<PlaceholderPage />} />
 
           {/* Franchise */}
