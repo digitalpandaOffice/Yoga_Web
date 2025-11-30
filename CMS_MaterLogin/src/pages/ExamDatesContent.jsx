@@ -171,13 +171,13 @@ const ExamDatesContent = () => {
             <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>
                 <button
                     onClick={() => setActiveTab('schedules')}
-                    style={{ padding: '8px 16px', borderRadius: '6px', border: 'none', background: activeTab === 'schedules' ? '#000' : '#f0f0f0', color: activeTab === 'schedules' ? '#fff' : '#333', cursor: 'pointer' }}
+                    style={{ padding: '8px 16px', borderRadius: '6px', border: 'none', background: activeTab === 'schedules' ? '#047a76ff' : '#f0f0f0', color: activeTab === 'schedules' ? '#fff' : '#333', cursor: 'pointer' }}
                 >
                     Exam Schedules
                 </button>
                 <button
                     onClick={() => setActiveTab('content')}
-                    style={{ padding: '8px 16px', borderRadius: '6px', border: 'none', background: activeTab === 'content' ? '#000' : '#f0f0f0', color: activeTab === 'content' ? '#fff' : '#333', cursor: 'pointer' }}
+                    style={{ padding: '8px 16px', borderRadius: '6px', border: 'none', background: activeTab === 'content' ? '#047a76ff' : '#f0f0f0', color: activeTab === 'content' ? '#fff' : '#333', cursor: 'pointer' }}
                 >
                     Page Content
                 </button>

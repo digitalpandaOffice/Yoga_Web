@@ -74,6 +74,55 @@ class Content extends Controller {
         ]);
     }
 
+    // GET /content/exam-eligibility
+    public function examEligibility() {
+        $this->handleGetContent('exam-eligibility', [
+            'hero' => [
+                'title' => 'Examination Eligibility',
+                'subtitle' => 'Criteria and prerequisites for appearing in Diploma and Certificate examinations.'
+            ],
+            'intro' => [
+                'title' => 'Who Can Apply?',
+                'description' => 'Candidates must meet the following age and academic requirements to be eligible for the examinations.'
+            ],
+            'criteria_cards' => [
+                [
+                    'icon' => '🎂',
+                    'title' => 'Age Requirements',
+                    'items' => [
+                        'Prarambhik (Year 1): Minimum 6 years of age.',
+                        'Bhushan (Year 2): Minimum 8 years of age.',
+                        'Visharad (Year 3): Minimum 12 years of age.'
+                    ]
+                ],
+                [
+                    'icon' => '🎓',
+                    'title' => 'Academic Qualification',
+                    'items' => [
+                        'Prarambhik: No formal schooling required.',
+                        'Bhushan: Must have passed Prarambhik.',
+                        'Visharad: Must have passed Bhushan or equivalent.'
+                    ]
+                ],
+                [
+                    'icon' => '📅',
+                    'title' => 'Attendance & Training',
+                    'items' => [
+                        'Minimum 75% attendance in practical classes.',
+                        'Must be a registered student of an affiliated center.',
+                        'Completion of internal assessments is mandatory.'
+                    ]
+                ]
+            ],
+            'general_rules' => [
+                'Direct admission to higher years is possible only through a lateral entry test conducted by the board.',
+                'Students must carry their Admit Card and a valid ID proof to the examination hall.',
+                'Any malpractice or use of unfair means will lead to immediate disqualification for 3 years.',
+                'Re-evaluation requests must be submitted within 15 days of result declaration.'
+            ]
+        ]);
+    }
+
     private function handleGetContent($page, $defaultStructure) {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
             $this->json(['error' => 'Method not allowed'], 405);

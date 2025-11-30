@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const API_URL = 'http://localhost/Yoga_Web/Yoga_Backend/ExamDates';
-const CONTENT_API_URL = 'http://localhost/Yoga_Web/Yoga_Backend/content/exam-dates';
+const CONTENT_API_URL = 'http://localhost/Yoga_Web/Yoga_Backend/content/examDates';
 
 async function fetchExamSchedules() {
     try {

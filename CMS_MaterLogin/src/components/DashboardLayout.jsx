@@ -69,7 +69,7 @@ const DashboardLayout = () => {
             subItems: [
                 { label: 'Exam Dates', path: '/dashboard/diploma-exam/dates' },
                 { label: 'Eligibility', path: '/dashboard/diploma-exam/eligibility' },
-                { label: 'Syllabus', path: '/dashboard/diploma-exam/syllabus' },
+                // { label: 'Syllabus', path: '/dashboard/diploma-exam/syllabus' },
                 { label: 'Issue Admit Card', path: '/dashboard/diploma-exam/admit-card' },
             ]
         },

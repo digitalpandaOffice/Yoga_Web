@@ -14,6 +14,7 @@ import TeacherCurriculumContent from './pages/TeacherCurriculumContent';
 import TeacherTrainingContent from './pages/TeacherTrainingContent';
 import TeacherResourcesContent from './pages/TeacherResourcesContent';
 import ExamDatesContent from './pages/ExamDatesContent';
+import ExamEligibilityContent from './pages/ExamEligibilityContent';
 import Admissions from './pages/Admissions';
 import PlaceholderPage from './pages/PlaceholderPage';
 
@@ -44,7 +45,7 @@ function App() {
 
           {/* Diploma Exam */}
           <Route path="diploma-exam/dates" element={<ExamDatesContent />} />
-          <Route path="diploma-exam/eligibility" element={<PlaceholderPage />} />
+          <Route path="diploma-exam/eligibility" element={<ExamEligibilityContent />} />
           <Route path="diploma-exam/*" element={<PlaceholderPage />} />
 
           {/* Franchise */}
