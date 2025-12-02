@@ -16,6 +16,7 @@ import TeacherResourcesContent from './pages/TeacherResourcesContent';
 import ExamDatesContent from './pages/ExamDatesContent';
 import ExamEligibilityContent from './pages/ExamEligibilityContent';
 import AdmitCardManager from './pages/AdmitCardManager';
+import GalleryManager from './pages/GalleryManager';
 import Admissions from './pages/Admissions';
 import PlaceholderPage from './pages/PlaceholderPage';
 
@@ -55,7 +56,7 @@ function App() {
           <Route path="franchise/*" element={<PlaceholderPage />} />
 
           {/* Gallery & Events */}
-          <Route path="gallery" element={<PlaceholderPage />} />
+          <Route path="gallery" element={<GalleryManager />} />
           <Route path="events" element={<PlaceholderPage />} />
 
           {/* Other */}

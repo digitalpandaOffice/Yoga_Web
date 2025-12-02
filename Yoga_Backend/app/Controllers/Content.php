@@ -137,6 +137,28 @@ class Content extends Controller {
         ]);
     }
 
+    // GET /content/gallery-section
+    public function gallerySection() {
+        $this->handleGetContent('gallery-section', [
+            'hero' => [
+                'title' => 'Our Gallery',
+                'subtitle' => 'Glimpses of our events, campus, and activities.'
+            ],
+            'stats' => [
+                'stat1' => ['number' => '150+', 'label' => 'Student Performances'],
+                'stat2' => ['number' => '25+', 'label' => 'Art Exhibitions'],
+                'stat3' => ['number' => '50+', 'label' => 'Workshops Conducted'],
+                'stat4' => ['number' => '500+', 'label' => 'Happy Students']
+            ],
+            'featured' => [
+                'title' => 'Featured Highlights',
+                'item1' => ['title' => 'Best Performance of 2024', 'desc' => 'Outstanding classical dance performance.', 'image' => 'https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?auto=format&fit=crop&w=400&q=60'],
+                'item2' => ['title' => 'International Art Exhibition', 'desc' => 'Student artworks featured globally.', 'image' => 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=400&q=60'],
+                'item3' => ['title' => 'Music Excellence Award', 'desc' => 'Music department received prestigious award.', 'image' => 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=400&q=60']
+            ]
+        ]);
+    }
+
     private function handleGetContent($page, $defaultStructure) {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
             $this->json(['error' => 'Method not allowed'], 405);

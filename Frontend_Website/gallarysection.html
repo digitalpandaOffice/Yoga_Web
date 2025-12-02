@@ -439,7 +439,7 @@
   <main>
     <div class="gallery-container">
       <div class="gallery-header">
-        <h1>Our Gallery</h1>
+        <h1 id="hero-title">Our Gallery</h1>
         <p>Explore the vibrant world of cultural education through our collection of student performances, exhibitions,
           workshops, and special events.</p>
       </div>
@@ -687,126 +687,6 @@
   </footer>
 
   <script src="script.js"></script>
-  <script>
-    // Gallery functionality
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImage = document.getElementById('lightboxImage');
-    const lightboxTitle = document.getElementById('lightboxTitle');
-    const lightboxDescription = document.getElementById('lightboxDescription');
-    const lightboxDate = document.getElementById('lightboxDate');
-    const lightboxClose = document.getElementById('lightboxClose');
-    const lightboxPrev = document.getElementById('lightboxPrev');
-    const lightboxNext = document.getElementById('lightboxNext');
-
-    let currentImageIndex = 0;
-    let filteredItems = [];
-
-    // Filter functionality
-    filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        // Remove active class from all buttons
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        // Add active class to clicked button
-        button.classList.add('active');
-
-        const filter = button.getAttribute('data-filter');
-
-        galleryItems.forEach(item => {
-          if (filter === 'all' || item.getAttribute('data-category') === filter) {
-            item.style.display = 'block';
-            item.style.animation = 'fadeIn 0.5s ease-in';
-          } else {
-            item.style.display = 'none';
-          }
-        });
-      });
-    });
-
-    // Lightbox functionality
-    function openLightbox(index) {
-      currentImageIndex = index;
-      updateLightboxContent();
-      lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-      lightbox.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
-
-    function updateLightboxContent() {
-      const currentItem = filteredItems[currentImageIndex];
-      if (currentItem) {
-        const img = currentItem.querySelector('img');
-        const title = currentItem.querySelector('h3').textContent;
-        const description = currentItem.querySelector('p').textContent;
-        const date = currentItem.querySelector('.date').textContent;
-
-        lightboxImage.src = img.src;
-        lightboxImage.alt = img.alt;
-        lightboxTitle.textContent = title;
-        lightboxDescription.textContent = description;
-        lightboxDate.textContent = date;
-      }
-    }
-
-    function showNextImage() {
-      currentImageIndex = (currentImageIndex + 1) % filteredItems.length;
-      updateLightboxContent();
-    }
-
-    function showPrevImage() {
-      currentImageIndex = (currentImageIndex - 1 + filteredItems.length) % filteredItems.length;
-      updateLightboxContent();
-    }
-
-    // Event listeners for lightbox
-    lightboxClose.addEventListener('click', closeLightbox);
-    lightboxPrev.addEventListener('click', showPrevImage);
-    lightboxNext.addEventListener('click', showNextImage);
-
-    // Close lightbox when clicking outside
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) {
-        closeLightbox();
-      }
-    });
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (lightbox.classList.contains('active')) {
-        switch (e.key) {
-          case 'Escape':
-            closeLightbox();
-            break;
-          case 'ArrowLeft':
-            showPrevImage();
-            break;
-          case 'ArrowRight':
-            showNextImage();
-            break;
-        }
-      }
-    });
-
-    // Gallery item click handlers
-    galleryItems.forEach((item, index) => {
-      item.addEventListener('click', () => {
-        // Get all visible items
-        const visibleItems = Array.from(galleryItems).filter(item =>
-          item.style.display !== 'none'
-        );
-        filteredItems = visibleItems;
-
-        // Find index of clicked item in visible items
-        const clickedIndex = visibleItems.indexOf(item);
-        openLightbox(clickedIndex);
-      });
-    });
-  </script>
+  <script src="js/dynamic-gallery.js"></script>
 </body>
-
 </html>
