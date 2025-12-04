@@ -11,6 +11,7 @@
     rel="stylesheet">
   <link rel="stylesheet" href="mainstyles.css">
   <link rel="stylesheet" href="responsive.css">
+  <link rel="icon" type="image/png" href="images/AdvayuLogo.png">
 </head>
 
 <body>
@@ -633,7 +634,171 @@
       });
     });
   </script>
-  <script src="js/dynamic-home.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchHomeContent();
+    });
+
+    const API_URL = 'http://localhost/Yoga_Web/Yoga_Backend/content/home';
+
+    async function fetchHomeContent() {
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+
+        if (data) {
+          updateHero(data.hero);
+          updateAbout(data.about);
+          updateStats(data.stats);
+          updateFeatures(data.features);
+          updateValues(data.values);
+          updateHighlights(data.highlights);
+          updateFooter(data.footer);
+        }
+      } catch (error) {
+      }
+    }
+
+    function updateHero(hero) {
+      if (!hero) return;
+      if (hero.title) {
+        const titleEl = document.getElementById('hero-title');
+        if (titleEl) titleEl.textContent = hero.title;
+      }
+      if (hero.subtitle) {
+        const subtitleEl = document.getElementById('hero-subtitle');
+        if (subtitleEl) subtitleEl.textContent = hero.subtitle;
+      }
+      if (hero.ctaText) {
+        const ctaEl = document.getElementById('hero-cta-link');
+        if (ctaEl) ctaEl.textContent = hero.ctaText;
+      }
+      if (hero.ctaLink) {
+        const ctaLinkEl = document.getElementById('hero-cta-link');
+        if (ctaLinkEl) ctaLinkEl.setAttribute('href', hero.ctaLink);
+      }
+
+      // Update background image via CSS variable or direct style
+      if (hero.backgroundImage) {
+        const heroSection = document.getElementById('hero');
+        if (heroSection) {
+          heroSection.style.backgroundImage = `url('${hero.backgroundImage}')`;
+          heroSection.style.backgroundSize = 'cover';
+          heroSection.style.backgroundPosition = 'center';
+        }
+      }
+    }
+
+    function updateAbout(about) {
+      if (!about) return;
+      if (about.title) document.getElementById('about-title').textContent = about.title;
+      if (about.subtitle) document.getElementById('about-subtitle').textContent = about.subtitle;
+      if (about.story) document.getElementById('about-story').innerHTML = about.story; // Using innerHTML for bold tags
+      if (about.vision) document.getElementById('about-vision').textContent = about.vision;
+      if (about.mission) document.getElementById('about-mission').textContent = about.mission;
+    }
+
+    function updateStats(stats) {
+      if (!stats) return;
+      const container = document.getElementById('stats-grid');
+      if (!container) return;
+
+      // We can either update existing items if they have IDs, or rebuild the list.
+      // Since the CMS allows adding/removing, rebuilding is safer.
+      // However, the current CMS structure for stats is fixed fields (students, faculty, years, awards).
+      // So we can just update the numbers if we map them correctly.
+      // But the HTML structure is a list. Let's rebuild it to be safe and consistent with other lists.
+
+      // Actually, the CMS statsData is an object: { students, faculty, years, awards }
+      // So let's map these keys to labels.
+
+      const statItems = [
+        { value: stats.students, label: 'Students Trained', suffix: '+' },
+        { value: stats.faculty, label: 'Expert Faculty', suffix: '+' },
+        { value: stats.years, label: 'Years of Excellence', suffix: '+' },
+        { value: stats.awards, label: 'Awards Won', suffix: '+' }
+      ];
+
+      container.innerHTML = statItems.map(item => `
+        <div class="stat-item">
+            <div class="stat-number">${item.value}${item.suffix}</div>
+            <div class="stat-label">${item.label}</div>
+        </div>
+    `).join('');
+    }
+
+    function updateFeatures(features) {
+      if (!features || !Array.isArray(features)) return;
+      const container = document.getElementById('features-grid');
+      if (!container) return;
+
+      container.innerHTML = features.map(item => `
+        <div class="feature-item">
+            <div class="feature-icon">${item.icon}</div>
+            <h5>${item.title}</h5>
+            <p>${item.description}</p>
+        </div>
+    `).join('');
+    }
+
+    function updateValues(values) {
+      if (!values || !Array.isArray(values)) return;
+      const container = document.getElementById('values-grid');
+      if (!container) return;
+
+      container.innerHTML = values.map(item => `
+        <div class="value-item">
+            <div class="value-icon">${item.icon}</div>
+            <h4>${item.title}</h4>
+            <p>${item.description}</p>
+        </div>
+    `).join('');
+    }
+
+    function updateHighlights(highlights) {
+      if (!highlights || !Array.isArray(highlights)) return;
+      const container = document.getElementById('highlights-grid');
+      if (!container) return;
+
+      const itemsHtml = highlights.map(item => `
+        <figure class="highlight-item">
+            <img src="${item.image}" alt="${item.title}">
+            <figcaption>
+                <strong>${item.title}</strong>
+                <span>${item.date} • ${item.location}</span>
+            </figcaption>
+        </figure>
+    `).join('');
+
+      // Add the "See more" button at the end
+      const moreBtnHtml = `
+        <figure class="highlight-item more">
+            <a class="btn outline" href="gallarysection.html">See more events</a>
+        </figure>
+    `;
+
+      container.innerHTML = itemsHtml + moreBtnHtml;
+    }
+
+    function updateFooter(footer) {
+      if (!footer) return;
+
+      const contactP = document.getElementById('footer-contact');
+      if (contactP) {
+        contactP.innerHTML = `${footer.address}<br />Phone: ${footer.phone}<br />Email: ${footer.email}`;
+      }
+
+      const socialUl = document.getElementById('footer-social');
+      if (socialUl) {
+        let socialHtml = '';
+        if (footer.facebook) socialHtml += `<li><a href="${footer.facebook}" aria-label="Facebook">Facebook</a></li>`;
+        if (footer.instagram) socialHtml += `<li><a href="${footer.instagram}" aria-label="Instagram">Instagram</a></li>`;
+        if (footer.youtube) socialHtml += `<li><a href="${footer.youtube}" aria-label="YouTube">YouTube</a></li>`;
+        socialUl.innerHTML = socialHtml;
+      }
+    }
+
+  </script>
 </body>
 
 </html>
