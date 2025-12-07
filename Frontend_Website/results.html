@@ -185,7 +185,7 @@
             }
         }
     </style>
-  <link rel="icon" type="image/png" href="images/AdvayuLogo.png">
+    <link rel="icon" type="image/png" href="images/AdvayuLogo.png">
 </head>
 
 <body>
@@ -371,48 +371,387 @@
                     </ul>
                 </div>
             </div>
-            <div class="copyright">© 2025 Edvayu Educational Foundations.</div>
-        </footer>
-    </main>
+            }
+            }
 
-    <script src="script.js"></script>
-    <script src="js/dynamic-results.js"></script>
-    <script>
-        // Mock Result Logic
-        document.getElementById('resultForm').addEventListener('submit', function (e) {
-            e.preventDefault();
+            @media (max-width: 768px) {
+            .form-grid {
+            grid-template-columns: 1fr;
+            }
+            }
+            </style>
+            <link rel="icon" type="image/png" href="images/AdvayuLogo.png">
+            </head>
 
-            // Get values
-            const course = document.getElementById('courseSelect');
-            const year = document.getElementById('yearSelect');
-            const roll = document.getElementById('rollNumber').value;
-            const courseName = course.options[course.selectedIndex].text;
-            const yearText = year.options[year.selectedIndex].text;
+            <body>
+                <!-- Top Logo and Name Section -->
+                <div class="top-banner">
+                    <img src="./images/AdvayuLogo.png" alt="Assam Art and Culture Organization Logo" class="top-logo" />
+                    <div class="top-title-group">
+                        <h1 class="top-title">Edvayu Educational Foundations</h1>
+                        <div class="top-subtitle">CULTURAL EXAMINATION BOARD</div>
+                    </div>
+                </div>
 
-            // Simulate loading
-            const btn = this.querySelector('.btn-check');
-            const originalText = btn.textContent;
-            btn.textContent = 'Searching...';
-            btn.disabled = true;
+                <!-- HEADER -->
+                <header class="site-header">
+                    <nav class="navbar">
+                        <button class="nav-toggle" aria-label="Toggle navigation">
+                            <span></span><span></span><span></span>
+                        </button>
+                        <ul class="nav-links">
+                            <li><a href="index.html">Home</a></li>
+                            <li class="has-dropdown">
+                                <a href="index.html#student">Student Area</a>
+                                <ul class="dropdown">
+                                    <li><a href="admissions.html">Admissions</a></li>
+                                    <li><a href="syllabus.html">Syllabus</a></li>
+                                    <li><a href="results.html">Results</a></li>
+                                    <li><a href="index.html#student-resources">Resources</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-dropdown">
+                                <a href="index.html#teacher">Teacher Area</a>
+                                <ul class="dropdown">
+                                    <li><a href="index.html#teacher-login">Login</a></li>
+                                    <li><a href="index.html#teacher-curriculum">Curriculum</a></li>
+                                    <li><a href="index.html#teacher-training">Training</a></li>
+                                    <li><a href="index.html#teacher-resources">Resources</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-dropdown">
+                                <a href="index.html#courses">Diploma Exam</a>
+                                <ul class="dropdown">
+                                    <li><a href="index.html#exam-dates">Exam Dates</a></li>
+                                    <li><a href="index.html#exam-eligibility">Eligibility</a></li>
+                                    <li><a href="syllabus.html">Syllabus</a></li>
+                                    <li><a href="admit_card.html">Download Admit Card</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-dropdown">
+                                <a href="index.html#franchise">Franchise Registration</a>
+                                <ul class="dropdown">
+                                    <li><a href="franchiseRegistrationform.html">Become a Partner</a></li>
+                                    <li><a href="franchise_status.html">Franchise Status</a></li>
+                                    <li><a href="franchise_benefits.html">Benefits</a></li>
+                                    <li><a href="franchise_process.html">Process</a></li>
+                                    <li><a href="franchise_faqs.html">FAQs</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="gallarysection.html">Gallery</a></li>
+                            <li><a href="upcoming_events.html">Upcoming Events</a></li>
+                            <li class="has-dropdown">
+                                <a href="#other">Other</a>
+                                <ul class="dropdown">
+                                    <li><a href="policies.html">Policies</a></li>
+                                    <li><a href="alumni.html">Alumni</a></li>
+                                    <li><a href="careers.html">Careers</a></li>
+                                    <li><a href="contact.html">Contact</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </header>
 
-            setTimeout(() => {
-                // Show result
-                document.getElementById('studentName').textContent = "Rahul Sharma"; // Mock name
-                document.getElementById('displayRoll').textContent = roll;
-                document.getElementById('displayCourse').textContent = courseName;
-                document.getElementById('displayYear').textContent = yearText;
+                <main>
+                    <!-- PAGE HERO -->
+                    <section class="page-hero" id="results-hero">
+                        <div class="container">
+                            <h1 id="results-hero-title">Examination Results</h1>
+                            <p id="results-hero-subtitle">Check your diploma and certificate course results online</p>
+                        </div>
+                    </section>
 
-                document.getElementById('resultDisplay').style.display = 'block';
+                    <!-- RESULTS FORM SECTION -->
+                    <section class="results-section">
+                        <div class="container">
+                            <div class="results-container">
+                                <form id="resultForm">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="courseSelect">Select Course</label>
+                                            <select id="courseSelect" class="form-control" required>
+                                                <option value="">Loading courses...</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="yearSelect">Select Year/Session</label>
+                                            <select id="yearSelect" class="form-control" required>
+                                                <option value="">Loading years...</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group full-width">
+                                            <label for="rollNumber">Roll Number</label>
+                                            <input type="text" id="rollNumber" class="form-control"
+                                                placeholder="Enter your Roll Number (e.g., ART/2024/001)" required>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn-check">Check Result</button>
+                                </form>
 
-                // Reset button
-                btn.textContent = originalText;
-                btn.disabled = false;
+                                <!-- RESULT DISPLAY (Hidden initially) -->
+                                <div id="resultDisplay" class="result-card">
+                                    <div class="result-header">
+                                        <div class="student-info">
+                                            <h3 id="studentName">Student Name</h3>
+                                            <p><strong>Roll No:</strong> <span id="displayRoll"></span></p>
+                                            <p><strong>Course:</strong> <span id="displayCourse"></span></p>
+                                            <p><strong>Session:</strong> <span id="displayYear"></span></p>
+                                        </div>
+                                        <div class="result-status">
+                                            <span class="result-badge">PASSED</span>
+                                        </div>
+                                    </div>
 
-                // Scroll to result
-                document.getElementById('resultDisplay').scrollIntoView({ behavior: 'smooth' });
-            }, 1000);
-        });
-    </script>
-</body>
+                                    <table class="marks-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Subject Code</th>
+                                                <th>Subject Name</th>
+                                                <th>Max Marks</th>
+                                                <th>Obtained</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>TH-101</td>
+                                                <td>Theory of Art & Culture</td>
+                                                <td>100</td>
+                                                <td>85</td>
+                                            </tr>
+                                            <tr>
+                                                <td>PR-101</td>
+                                                <td>Practical Performance</td>
+                                                <td>100</td>
+                                                <td>92</td>
+                                            </tr>
+                                            <tr>
+                                                <td>VV-101</td>
+                                                <td>Viva Voce</td>
+                                                <td>50</td>
+                                                <td>45</td>
+                                            </tr>
+                                            <tr class="total-row">
+                                                <td colspan="2">Total</td>
+                                                <td>250</td>
+                                                <td>222</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="result-actions">
+                                        <button class="btn primary" onclick="window.print()">Print Result</button>
+                                        <button class="btn outline"
+                                            onclick="document.getElementById('resultDisplay').style.display='none'">Check
+                                            Another</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- FOOTER -->
+                    <footer class="site-footer">
+                        <div class="container footer-grid">
+                            <div>
+                                <h3>Edvayu Educational Foundations</h3>
+                                <p>Morigaon 782105, Assam, India<br />Phone: +91 98765 43210<br />Email:
+                                    contact@niac.edu.in</p>
+                            </div>
+                            <div class="social">
+                                <h4>Follow Us</h4>
+                                <ul>
+                                    <li><a href="#" aria-label="Facebook">Facebook</a></li>
+                                    <li><a href="#" aria-label="Instagram">Instagram</a></li>
+                                    <li><a href="#" aria-label="YouTube">YouTube</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="copyright">© 2025 Edvayu Educational Foundations.</div>
+                    </footer>
+                </main>
+
+                <script src="script.js"></script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        fetchResultsContent();
+                        setupResultForm();
+                    });
+
+                    const API_BASE = 'http://localhost/Yoga_Web/Yoga_Backend';
+                    const CONTENT_URL = `${API_BASE}/content/results`;
+                    const CHECK_URL = `${API_BASE}/results/check`;
+
+                    async function fetchResultsContent() {
+                        try {
+                            const response = await fetch(CONTENT_URL);
+                            const data = await response.json();
+
+                            if (data) {
+                                updateHero(data.hero);
+                                updateFormOptions(data.form_options);
+                            }
+                        } catch (error) {
+                            console.error('Error fetching results content:', error);
+                        }
+                    }
+
+                    function updateHero(hero) {
+                        if (!hero) return;
+                        if (hero.title) {
+                            const titleEl = document.getElementById('results-hero-title');
+                            if (titleEl) titleEl.textContent = hero.title;
+                        }
+                        if (hero.subtitle) {
+                            const subtitleEl = document.getElementById('results-hero-subtitle');
+                            if (subtitleEl) subtitleEl.textContent = hero.subtitle;
+                        }
+                        if (hero.backgroundImage) {
+                            const heroSection = document.getElementById('results-hero');
+                            if (heroSection) {
+                                heroSection.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${hero.backgroundImage}')`;
+                                heroSection.style.backgroundSize = 'cover';
+                                heroSection.style.backgroundPosition = 'center';
+                            }
+                        }
+                    }
+
+                    function updateFormOptions(options) {
+                        if (!options) return;
+
+                        if (options.courses && Array.isArray(options.courses)) {
+                            const courseSelect = document.getElementById('courseSelect');
+                            if (courseSelect) {
+                                courseSelect.innerHTML = '<option value="">-- Select Course --</option>' +
+                                    options.courses.map(item => `<option value="${item.value}">${item.label}</option>`).join('');
+                            }
+                        }
+
+                        if (options.years && Array.isArray(options.years)) {
+                            const yearSelect = document.getElementById('yearSelect');
+                            if (yearSelect) {
+                                yearSelect.innerHTML = '<option value="">-- Select Year --</option>' +
+                                    options.years.map(item => `<option value="${item.value}">${item.label}</option>`).join('');
+                            }
+                        }
+                    }
+
+                    function setupResultForm() {
+                        const form = document.getElementById('resultForm');
+                        if (!form) return;
+
+                        form.addEventListener('submit', async (e) => {
+                            e.preventDefault();
+
+                            const courseId = document.getElementById('courseSelect').value;
+                            const year = document.getElementById('yearSelect').value;
+                            const rollNumber = document.getElementById('rollNumber').value;
+                            const btn = form.querySelector('.btn-check');
+                            const resultDisplay = document.getElementById('resultDisplay');
+
+                            if (!courseId || !year || !rollNumber) {
+                                alert('Please fill in all fields');
+                                return;
+                            }
+
+                            // UI Loading State
+                            const originalText = btn.textContent;
+                            btn.textContent = 'Searching...';
+                            btn.disabled = true;
+                            resultDisplay.style.display = 'none';
+
+                            try {
+                                const response = await fetch(CHECK_URL, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ course_id: courseId, year: year, roll_number: rollNumber })
+                                });
+
+                                const data = await response.json();
+
+                                if (response.ok) {
+                                    displayResult(data);
+                                } else {
+                                    alert(data.error || 'Result not found. Please check your details.');
+                                }
+                            } catch (error) {
+                                console.error('Error checking result:', error);
+                                alert('Failed to connect to the server. Please try again later.');
+                            } finally {
+                                btn.textContent = originalText;
+                                btn.disabled = false;
+                            }
+                        });
+                    }
+
+                    function displayResult(data) {
+                        const resultDisplay = document.getElementById('resultDisplay');
+
+                        // Basic Info
+                        document.getElementById('studentName').textContent = data.student_name;
+                        document.getElementById('displayRoll').textContent = data.roll_number;
+
+                        // Get Course Label from select if possible, else use ID
+                        const courseSelect = document.getElementById('courseSelect');
+                        const courseLabel = courseSelect.options[courseSelect.selectedIndex]?.text || data.course_id;
+                        document.getElementById('displayCourse').textContent = courseLabel;
+
+                        document.getElementById('displayYear').textContent = data.year;
+
+                        // Status Badge
+                        const badge = resultDisplay.querySelector('.result-badge');
+                        badge.textContent = data.status;
+                        if (data.status === 'FAIL') {
+                            badge.classList.add('fail');
+                            badge.style.background = '#fee2e2';
+                            badge.style.color = '#991b1b';
+                        } else {
+                            badge.classList.remove('fail');
+                            badge.style.background = '#dcfce7';
+                            badge.style.color = '#166534';
+                        }
+
+                        // Marks Table
+                        const tbody = resultDisplay.querySelector('.marks-table tbody');
+                        let rowsHtml = '';
+
+                        if (data.marks_data && Array.isArray(data.marks_data)) {
+                            data.marks_data.forEach((subject, index) => {
+                                rowsHtml += `
+                        <tr>
+                            <td>SUB-${index + 101}</td>
+                            <td>${subject.subject}</td>
+                            <td>${subject.max_marks}</td>
+                            <td>${subject.marks}</td>
+                        </tr>
+                    `;
+                            });
+                        }
+
+                        // Total Row
+                        rowsHtml += `
+                <tr class="total-row">
+                    <td colspan="2">Total</td>
+                    <td>${data.total_marks}</td>
+                    <td>${data.obtained_marks} (${parseFloat(data.percentage).toFixed(2)}%)</td>
+                </tr>
+            `;
+
+                        // Add Grade Row
+                        rowsHtml += `
+                <tr class="total-row" style="background: #fff; border-top: 2px solid #eee;">
+                    <td colspan="3" style="text-align: right;">Grade</td>
+                    <td style="color: var(--deep-blue); font-size: 1.1rem;">${data.grade}</td>
+                </tr>
+            `;
+
+                        tbody.innerHTML = rowsHtml;
+
+                        // Show Result
+                        resultDisplay.style.display = 'block';
+                        resultDisplay.scrollIntoView({ behavior: 'smooth' });
+                    }
+                </script>
+            </body>
 
 </html>
