@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Submission Successful - Edvayu Educational Foundations</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Montserrat:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="mainstyles.css">
+    <style>
+        body {
+            background-color: #f9f9f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .success-container {
+            max-width: 800px;
+            margin: 60px auto;
+            background: #fff;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #4CAF50;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 30px;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .success-title {
+            font-family: 'Merriweather', serif;
+            color: var(--deep-blue);
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        .success-message {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .ref-box {
+            background: #f0f7ff;
+            border: 2px dashed #2196F3;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            display: inline-block;
+            min-width: 300px;
+        }
+
+        .ref-label {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .ref-number {
+            color: #2196F3;
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .download-btn {
+            padding: 15px 25px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--deep-blue);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #1a2c4e;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--gold);
+            color: var(--deep-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--terracotta);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top-banner" style="text-align: center; padding: 20px; background: #fff; border-bottom: 1px solid #eee;">
+        <img src="./images/AdvayuLogo.png" alt="Logo" style="height: 60px;">
+    </div>
+
+    <div class="success-container">
+        <div class="success-icon">✓</div>
+        <h1 class="success-title">Application Submitted!</h1>
+        <p class="success-message">
+            Thank you for your interest in partnering with Edvayu Educational Foundations.
+            Your application has been successfully received and is under review.
+        </p>
+
+        <div class="ref-box">
+            <div class="ref-label">Temporary Reference No</div>
+            <div class="ref-number" id="refDisplay">Generating...</div>
+        </div>
+
+        <div class="action-buttons">
+            <button onclick="downloadApplication()" class="download-btn btn-primary">
+                <span>📄</span> Download Submitted Form
+            </button>
+            <a href="assets/annexure_I_form.pdf" download class="download-btn btn-secondary"
+                onclick="alert('Demo: Annexure PDF download started')">
+                <span>📎</span> Download Required Annexure I Form
+            </a>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <a href="index.html" style="color: #666; text-decoration: underline;">Return to Home</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get Ref No from URL or generate random
+            const urlParams = new URLSearchParams(window.location.search);
+            const refNo = urlParams.get('ref') || 'TEMP-' + Math.floor(Math.random() * 100000);
+            document.getElementById('refDisplay').textContent = refNo;
+        });
+
+        function downloadApplication() {
+            // New window for printing
+            const printWindow = window.open('', '_blank');
+            const htmlContent = sessionStorage.getItem('franchisePreviewHTML');
+
+            if (htmlContent) {
+                printWindow.document.write(`
+          <html>
+            <head>
+              <title>Franchise Application Form</title>
+              <link rel="stylesheet" href="mainstyles.css">
+              <style>
+                body { padding: 40px; }
+                .btn, .form-buttons { display: none !important; }
+                input { border: none; background: transparent; }
+                @media print {
+                  body { -webkit-print-color-adjust: exact; }
+                }
+              </style>
+            </head>
+            <body>
+              <h1 style="text-align:center;">Franchise Application Form</h1>
+              ${htmlContent}
+              <script>
+                window.onload = function() { window.print(); }
+              <\/script>
+            </body>
+          </html>
+        `);
+                printWindow.document.close();
+            } else {
+                alert('Error: Application data not found.');
+            }
+        }
+    </script>
+</body>
+
+</html>

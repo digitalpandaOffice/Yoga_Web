@@ -13,7 +13,7 @@
   <style>
     /* Franchise Form Specific Styles */
     .form-container {
-      max-width: 800px;
+      max-width: 900px;
       margin: 40px auto;
       padding: 0 20px;
     }
@@ -46,16 +46,23 @@
     }
 
     .form-section {
-      margin-bottom: 35px;
+      margin-bottom: 50px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #eee;
     }
 
-    .form-section h3 {
+    .form-section:last-child {
+      border-bottom: none;
+    }
+
+    .section-title {
       color: var(--deep-blue);
       font-family: 'Merriweather', serif;
-      font-size: 1.4rem;
-      margin-bottom: 20px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid var(--gold);
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      text-align: center;
+      text-decoration: underline;
+      text-underline-offset: 10px;
     }
 
     .form-row {
@@ -81,98 +88,155 @@
       font-size: 0.95rem;
     }
 
-    .form-group label.required::after {
-      content: " *";
-      color: var(--terracotta);
-    }
-
     .form-group input,
     .form-group select,
     .form-group textarea {
       width: 100%;
-      padding: 12px 15px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
+      padding: 10px 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
       font-size: 1rem;
       font-family: 'Montserrat', sans-serif;
-      transition: all 0.3s ease;
-      background: #fafafa;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--gold);
-      background: #fff;
-      box-shadow: 0 0 0 3px rgba(210, 127, 32, 0.1);
     }
 
     .form-group textarea {
-      min-height: 120px;
+      min-height: 80px;
       resize: vertical;
     }
 
-    .checkbox-group {
+    /* Table Styles */
+    .form-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+
+    .form-table th,
+    .form-table td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .form-table th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+      color: var(--deep-blue);
+    }
+
+    .form-table input {
+      border: 1px solid #ddd;
+      padding: 8px;
+      width: 100%;
+    }
+
+    /* Photo Upload */
+    .photo-upload-container {
+      border: 2px dashed #ccc;
+      padding: 20px;
+      text-align: center;
       display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-
-    .checkbox-group input[type="checkbox"] {
-      width: auto;
-      margin: 0;
-      transform: scale(1.2);
-    }
-
-    .checkbox-group label {
-      margin: 0;
-      font-weight: 400;
-      line-height: 1.5;
-    }
-
-    .form-buttons {
-      display: flex;
-      gap: 20px;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      margin-top: 40px;
+      height: 100%;
+      min-height: 200px;
+      background: #fafafa;
+    }
+
+    .photo-label {
+      margin-bottom: 10px;
+      color: #666;
+    }
+
+    /* Profile Grid */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      gap: 20px;
+      border: 1px solid #ccc;
+      padding: 20px;
+    }
+
+    .profile-fields {
+      display: grid;
+      gap: 15px;
+    }
+
+    .profile-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    .profile-row label {
+      font-weight: 600;
+      color: var(--deep-blue);
+      margin: 0;
+    }
+
+    .signature-section {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 30px;
+      border: 1px solid #ccc;
+    }
+
+    .sig-box {
+      border-right: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .sig-box:last-child {
+      border-right: none;
+    }
+
+    .sig-header {
+      font-weight: 600;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+      background: #f5f5f5;
+    }
+
+    .sig-content {
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .btn {
       padding: 15px 30px;
       border-radius: 8px;
       border: none;
-      text-decoration: none;
       font-weight: 600;
       font-size: 1rem;
-      transition: all 0.3s ease;
       cursor: pointer;
       font-family: 'Montserrat', sans-serif;
-    }
-
-    .btn.primary {
       background: var(--gold);
       color: var(--deep-blue);
+      transition: all 0.3s ease;
     }
 
-    .btn.primary:hover {
+    .btn:hover {
       background: var(--terracotta);
       color: #fff;
-      transform: translateY(-2px);
     }
 
-    .btn.secondary {
-      background: transparent;
-      color: var(--deep-blue);
-      border: 2px solid var(--deep-blue);
+    .form-buttons {
+      text-align: center;
+      margin-top: 40px;
     }
 
-    .btn.secondary:hover {
-      background: var(--deep-blue);
-      color: #fff;
-    }
-
+    /* Benefits Section */
     .benefits-section {
       background: linear-gradient(135deg, var(--deep-blue), var(--terracotta));
       color: #fff;
@@ -208,47 +272,22 @@
       font-size: 1.1rem;
     }
 
-    .error-message {
-      color: var(--terracotta);
-      font-size: 0.9rem;
-      margin-top: 5px;
-      display: none;
-    }
-
-    .form-group.error input,
-    .form-group.error select,
-    .form-group.error textarea {
-      border-color: var(--terracotta);
-    }
-
-    .form-group.error .error-message {
-      display: block;
-    }
-
-    .success-message {
-      background: #d4edda;
-      color: #155724;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      display: none;
-    }
-
     @media (max-width: 768px) {
-      .form-row {
+      .profile-grid {
         grid-template-columns: 1fr;
       }
 
-      .form-buttons {
-        flex-direction: column;
-      }
-
-      .benefits-grid {
+      .profile-row {
         grid-template-columns: 1fr;
       }
 
-      .franchise-form {
-        padding: 20px;
+      .signature-section {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .sig-box {
+        border-right: none;
+        border-bottom: 1px solid #ccc;
       }
     }
   </style>
@@ -278,23 +317,23 @@
             <li><a href="admissions.html">Admissions</a></li>
             <li><a href="syllabus.html">Syllabus</a></li>
             <li><a href="results.html">Results</a></li>
-            <li><a href="index.html#student-resources">Resources</a></li>
+            <li><a href="student_resources.html">Resources</a></li>
           </ul>
         </li>
         <li class="has-dropdown">
           <a href="index.html#teacher">Teacher Area</a>
           <ul class="dropdown">
-            <li><a href="index.html#teacher-login">Login</a></li>
-            <li><a href="index.html#teacher-curriculum">Curriculum</a></li>
-            <li><a href="index.html#teacher-training">Training</a></li>
-            <li><a href="index.html#teacher-resources">Resources</a></li>
+            <li><a href="teacher_login.html">Login</a></li>
+            <li><a href="teacher_curriculum.html">Curriculum</a></li>
+            <li><a href="teacher_training.html">Training</a></li>
+            <li><a href="teacher_resources.html">Resources</a></li>
           </ul>
         </li>
         <li class="has-dropdown">
           <a href="index.html#courses">Diploma Exam</a>
           <ul class="dropdown">
-            <li><a href="index.html#exam-dates">Exam Dates</a></li>
-            <li><a href="index.html#exam-eligibility">Eligibility</a></li>
+            <li><a href="exam_dates.html">Exam Dates</a></li>
+            <li><a href="exam_eligibility.html">Eligibility</a></li>
             <li><a href="syllabus.html">Syllabus</a></li>
             <li><a href="admit_card.html">Download Admit Card</a></li>
           </ul>
@@ -354,182 +393,285 @@
         </div>
       </div>
 
-      <form class="franchise-form" id="franchiseForm">
-        <div class="success-message" id="successMessage">
-          Thank you for your interest! We will contact you within 2-3 business days to discuss your franchise
-          application.
+      <div style="text-align: center; margin-bottom: 40px;">
+        <button id="openFormBtn" class="btn" style="font-size: 1.2rem; padding: 20px 40px;">Open Franchise Registration
+          Form</button>
+      </div>
+
+      <div id="formContainer" style="display: none;">
+        <form class="franchise-form" id="franchiseForm">
+
+          <!-- SECTION 1: Application For Centre Authorization -->
+          <div class="form-section">
+            <h2 class="section-title">Application For Centre Authorization</h2>
+
+            <div class="form-group">
+              <label>1. Name of centre/institution/organization/ngo</label>
+              <input type="text" name="centreName" required>
+            </div>
+
+            <div class="form-group">
+              <label>2. Name of owner/president/director</label>
+              <input type="text" name="ownerName" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>S/o, d/o, w/o</label>
+                <input type="text" name="ownerRelation">
+              </div>
+              <div class="form-group">
+                <label>d.o.b</label>
+                <input type="date" name="ownerDob">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>3. Address of centre/institution/organization/ngo</label>
+              <textarea name="centreAddress" required></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>4. Date of opening centre/institution/organization/ngo</label>
+                <input type="date" name="openingDate">
+              </div>
+              <div class="form-group">
+                <label>5. Centre area (in sq feet)</label>
+                <input type="number" name="centreArea">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Toilet /Urinal Available:</label>
+              <div class="checkbox-group">
+                <input type="radio" id="toiletYes" name="toiletAvailable" value="Yes">
+                <label for="toiletYes">Yes</label>
+                <input type="radio" id="toiletNo" name="toiletAvailable" value="No" style="margin-left: 20px;">
+                <label for="toiletNo">No</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>6. Number of faculty members:</label>
+              <table class="form-table">
+                <thead>
+                  <tr>
+                    <th style="width: 60px;">Sl. No.</th>
+                    <th>Name</th>
+                    <th>Qualification</th>
+                    <th>Experience</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td><input type="text" name="facultyName[]"></td>
+                    <td><input type="text" name="facultyQual[]"></td>
+                    <td><input type="text" name="facultyExp[]"></td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td><input type="text" name="facultyName[]"></td>
+                    <td><input type="text" name="facultyQual[]"></td>
+                    <td><input type="text" name="facultyExp[]"></td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td><input type="text" name="facultyName[]"></td>
+                    <td><input type="text" name="facultyQual[]"></td>
+                    <td><input type="text" name="facultyExp[]"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="form-group">
+              <label>7. Applying for centre authorization for:</label>
+              <input type="text" name="authorizationFor">
+            </div>
+
+            <div class="form-group">
+              <label>8. Authorization fee: payment details</label>
+              <table class="form-table">
+                <thead>
+                  <tr>
+                    <th>Centre Affiliation Fee</th>
+                    <th>Payment Date</th>
+                    <th>Paid Cash/Online</th>
+                    <th>Transaction Id</th>
+                    <th>Remarks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" name="affiliationFee"></td>
+                    <td><input type="date" name="paymentDate"></td>
+                    <td>
+                      <select name="paymentMode" style="border: 1px solid #ddd; padding: 8px; width: 100%;">
+                        <option value="Cash">Cash</option>
+                        <option value="Online">Online</option>
+                      </select>
+                    </td>
+                    <td><input type="text" name="txnId"></td>
+                    <td><input type="text" name="remarks"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="signature-section">
+              <div class="sig-box">
+                <div class="sig-header">Sign Of Centre Head</div>
+                <div class="sig-content">
+                  <input type="file" name="signCentreHead" accept="image/*">
+                </div>
+              </div>
+              <div class="sig-box">
+                <div class="sig-header">Left Thumb Impression</div>
+                <div class="sig-content">
+                  <input type="file" name="thumbImpression" accept="image/*">
+                </div>
+              </div>
+              <div class="sig-box">
+                <div class="sig-header">Date Of Submission</div>
+                <div class="sig-content">
+                  <input type="date" name="submissionDate" style="width: 90%;">
+                </div>
+              </div>
+              <div class="sig-box">
+                <div class="sig-header">Place</div>
+                <div class="sig-content">
+                  <input type="text" name="place" style="width: 90%;">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 2: Centre Head/Owner/Director Profile -->
+          <div class="form-section">
+            <h2 class="section-title">Centre Head/Owner/Director Profile</h2>
+
+            <div class="profile-grid">
+              <div class="profile-fields">
+                <div class="profile-row">
+                  <label>Centre Head Name</label>
+                  <input type="text" name="profileName">
+                </div>
+                <div class="profile-row">
+                  <label>Centre Head Father/Husband Name</label>
+                  <input type="text" name="profileRelationName">
+                </div>
+                <div class="profile-row">
+                  <label>Date Of Birth</label>
+                  <input type="date" name="profileDob">
+                </div>
+                <div class="profile-row">
+                  <label>Religion</label>
+                  <input type="text" name="religion">
+                </div>
+                <div class="profile-row">
+                  <label>Gender (Male/Female/Other)</label>
+                  <select name="gender" style="border: 1px solid #ccc; padding: 8px; width: 100%;">
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="profile-row">
+                  <label>Languages Known</label>
+                  <input type="text" name="languages">
+                </div>
+                <div class="profile-row">
+                  <label>Centre Head Permanent Address</label>
+                  <textarea name="permanentAddress" style="min-height: 60px;"></textarea>
+                </div>
+                <div class="profile-row">
+                  <label>Qualification (Attach Documents)</label>
+                  <div style="display: flex; gap: 10px;">
+                    <input type="text" name="qualification" placeholder="Qualification">
+                    <input type="file" name="qualificationDoc">
+                  </div>
+                </div>
+                <div class="profile-row">
+                  <label>Experience (If Any)</label>
+                  <input type="text" name="experience">
+                </div>
+                <div class="profile-row">
+                  <label>Active Email Id</label>
+                  <input type="email" name="email">
+                </div>
+                <div class="profile-row">
+                  <label>Centre Contact Numbers (At Least Two)</label>
+                  <input type="text" name="contactNumbers" placeholder="Number 1, Number 2">
+                </div>
+                <div class="profile-row">
+                  <label>Centre Head Whatsapp No.</label>
+                  <input type="tel" name="whatsapp">
+                </div>
+                <div class="profile-row">
+                  <label>Tell About Centre Your Family</label>
+                  <textarea name="aboutFamily" style="min-height: 60px;"></textarea>
+                </div>
+              </div>
+
+              <div class="photo-upload-container">
+                <div class="photo-label">Paste a Centre Head/Owner Colour Photo</div>
+                <input type="file" name="profilePhoto" accept="image/*">
+              </div>
+            </div>
+
+            <div class="signature-section">
+              <div class="sig-box">
+                <div class="sig-header">Sign Of Centre Head</div>
+                <div class="sig-content">
+                  <input type="file" name="signCentreHeadProfile" accept="image/*">
+                </div>
+              </div>
+              <div class="sig-box">
+                <div class="sig-header">Left Thumb Impression</div>
+                <div class="sig-content">
+                  <input type="file" name="thumbImpressionProfile" accept="image/*">
+                </div>
+              </div>
+              <div class="sig-box">
+                <div class="sig-header">Date Of Submission</div>
+                <div class="sig-content">
+                  <input type="date" name="submissionDateProfile" style="width: 90%;">
+                </div>
+              </div>
+              <div class="sig-box">
+                <div class="sig-header">Place</div>
+                <div class="sig-content">
+                  <input type="text" name="placeProfile" style="width: 90%;">
+                </div>
+              </div>
+
+              <div class="form-buttons" id="initialButtons">
+                <button type="button" id="previewBtn" class="btn">Preview for Final Submission</button>
+              </div>
+        </form>
+      </div>
+
+      <!-- Preview Container -->
+      <div id="previewContainer" style="display: none;">
+        <div class="form-header">
+          <h2 class="section-title">Application Preview</h2>
+          <p>Please review your details carefully before final submission.</p>
         </div>
-
-        <!-- Personal Information Section -->
-        <div class="form-section">
-          <h3>Personal Information</h3>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="firstName" class="required">First Name</label>
-              <input type="text" id="firstName" name="firstName" required>
-              <div class="error-message">Please enter your first name</div>
-            </div>
-            <div class="form-group">
-              <label for="lastName" class="required">Last Name</label>
-              <input type="text" id="lastName" name="lastName" required>
-              <div class="error-message">Please enter your last name</div>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="email" class="required">Email Address</label>
-              <input type="email" id="email" name="email" required>
-              <div class="error-message">Please enter a valid email address</div>
-            </div>
-            <div class="form-group">
-              <label for="phone" class="required">Phone Number</label>
-              <input type="tel" id="phone" name="phone" required>
-              <div class="error-message">Please enter your phone number</div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="address" class="required">Full Address</label>
-            <textarea id="address" name="address" placeholder="Street address, city, state, postal code"
-              required></textarea>
-            <div class="error-message">Please enter your complete address</div>
-          </div>
+        <div class="franchise-form" id="previewContent">
+          <!-- Preview content will be injected here -->
         </div>
-
-        <!-- Business Information Section -->
-        <div class="form-section">
-          <h3>Business Information</h3>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="businessName">Proposed Business Name</label>
-              <input type="text" id="businessName" name="businessName"
-                placeholder="e.g., Edvayu Cultural Center - [Your City]">
-            </div>
-            <div class="form-group">
-              <label for="businessType" class="required">Type of Business</label>
-              <select id="businessType" name="businessType" required>
-                <option value="">Select Business Type</option>
-                <option value="individual">Individual/Proprietorship</option>
-                <option value="partnership">Partnership</option>
-                <option value="company">Private Limited Company</option>
-                <option value="trust">Trust/Foundation</option>
-                <option value="other">Other</option>
-              </select>
-              <div class="error-message">Please select your business type</div>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="experience">Years of Experience in Education</label>
-              <select id="experience" name="experience">
-                <option value="">Select Experience Level</option>
-                <option value="0-2">0-2 years</option>
-                <option value="3-5">3-5 years</option>
-                <option value="6-10">6-10 years</option>
-                <option value="10+">10+ years</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="investment">Investment Capacity (INR)</label>
-              <select id="investment" name="investment">
-                <option value="">Select Investment Range</option>
-                <option value="5-10">₹5-10 Lakhs</option>
-                <option value="10-25">₹10-25 Lakhs</option>
-                <option value="25-50">₹25-50 Lakhs</option>
-                <option value="50+">₹50+ Lakhs</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- Location Information Section -->
-        <div class="form-section">
-          <h3>Location Information</h3>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="city" class="required">City</label>
-              <input type="text" id="city" name="city" required>
-              <div class="error-message">Please enter your city</div>
-            </div>
-            <div class="form-group">
-              <label for="state" class="required">State</label>
-              <input type="text" id="state" name="state" required>
-              <div class="error-message">Please enter your state</div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="locationDetails">Location Details</label>
-            <textarea id="locationDetails" name="locationDetails"
-              placeholder="Describe your proposed location, accessibility, nearby landmarks, etc."></textarea>
-          </div>
-        </div>
-
-        <!-- Educational Background Section -->
-        <div class="form-section">
-          <h3>Educational Background</h3>
-          <div class="form-group">
-            <label for="qualification" class="required">Highest Educational Qualification</label>
-            <select id="qualification" name="qualification" required>
-              <option value="">Select Qualification</option>
-              <option value="high-school">High School</option>
-              <option value="diploma">Diploma</option>
-              <option value="bachelor">Bachelor's Degree</option>
-              <option value="master">Master's Degree</option>
-              <option value="phd">PhD</option>
-              <option value="other">Other</option>
-            </select>
-            <div class="error-message">Please select your qualification</div>
-          </div>
-
-          <div class="form-group">
-            <label for="specialization">Area of Specialization (if any)</label>
-            <input type="text" id="specialization" name="specialization"
-              placeholder="e.g., Fine Arts, Music, Dance, Theatre">
-          </div>
-        </div>
-
-        <!-- Additional Information Section -->
-        <div class="form-section">
-          <h3>Additional Information</h3>
-          <div class="form-group">
-            <label for="motivation">Why do you want to become a franchise partner?</label>
-            <textarea id="motivation" name="motivation"
-              placeholder="Tell us about your passion for cultural education and your vision for the franchise"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="additionalInfo">Any Additional Information</label>
-            <textarea id="additionalInfo" name="additionalInfo"
-              placeholder="Any other information you'd like to share with us"></textarea>
-          </div>
-        </div>
-
-        <!-- Terms and Conditions -->
-        <div class="form-section">
-          <h3>Terms and Conditions</h3>
-          <div class="checkbox-group">
-            <input type="checkbox" id="terms" name="terms" required>
-            <label for="terms">I agree to the <a href="#" style="color: var(--gold);">Terms and Conditions</a> and <a
-                href="#" style="color: var(--gold);">Privacy Policy</a></label>
-          </div>
-          <div class="checkbox-group">
-            <input type="checkbox" id="newsletter" name="newsletter">
-            <label for="newsletter">I would like to receive updates about franchise opportunities and educational
-              programs</label>
-          </div>
-        </div>
-
         <div class="form-buttons">
-          <button type="submit" class="btn primary">Submit Application</button>
-          <button type="reset" class="btn secondary">Reset Form</button>
+          <button type="button" id="editBtn" class="btn"
+            style="background-color: #666; margin-right: 20px;">Edit</button>
+          <button type="button" id="finalSubmitBtn" class="btn">Final Submit</button>
         </div>
-      </form>
+      </div>
+
     </div>
   </main>
-
   <footer class="site-footer">
     <div class="container footer-grid">
       <div>
@@ -545,110 +687,277 @@
         </ul>
       </div>
     </div>
+
     <div class="copyright">© 2025 Edvayu Educational Foundations.</div>
   </footer>
 
-  <script src="script.js"></script>
   <script>
-    // Form validation and submission
-    const form = document.getElementById('franchiseForm');
-    const successMessage = document.getElementById('successMessage');
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('Franchise Form Script Loaded');
 
-    // Real-time validation
-    function validateField(field) {
-      const formGroup = field.closest('.form-group');
-      const errorMessage = formGroup.querySelector('.error-message');
+      // --- NAVIGATION LOGIC ---
+      const navToggle = document.querySelector('.nav-toggle');
+      const navLinks = document.querySelector('.nav-links');
 
-      // Remove previous error state
-      formGroup.classList.remove('error');
+      if (navToggle && navLinks) {
+        navToggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          navToggle.classList.toggle('open');
+          navLinks.classList.toggle('open');
+        });
 
-      // Check if field is required and empty
-      if (field.hasAttribute('required') && !field.value.trim()) {
-        formGroup.classList.add('error');
-        return false;
+        document.addEventListener('click', (e) => {
+          if (navLinks.classList.contains('open') &&
+            !navLinks.contains(e.target) &&
+            !navToggle.contains(e.target)) {
+            navToggle.classList.remove('open');
+            navLinks.classList.remove('open');
+          }
+        });
       }
 
-      // Email validation
-      if (field.type === 'email' && field.value) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(field.value)) {
-          formGroup.classList.add('error');
-          return false;
-        }
-      }
+      const dropdownParents = document.querySelectorAll('.has-dropdown');
+      dropdownParents.forEach(parent => {
+        const trigger = parent.querySelector('a');
+        const menu = parent.querySelector('.dropdown');
 
-      // Phone validation
-      if (field.type === 'tel' && field.value) {
-        const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,}$/;
-        if (!phoneRegex.test(field.value)) {
-          formGroup.classList.add('error');
-          return false;
-        }
-      }
-
-      return true;
-    }
-
-    // Add event listeners for real-time validation
-    const inputs = form.querySelectorAll('input, select, textarea');
-    inputs.forEach(input => {
-      input.addEventListener('blur', () => validateField(input));
-      input.addEventListener('input', () => {
-        const formGroup = input.closest('.form-group');
-        formGroup.classList.remove('error');
-      });
-    });
-
-    // Form submission
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      // Validate all fields
-      let isValid = true;
-      inputs.forEach(input => {
-        if (!validateField(input)) {
-          isValid = false;
+        if (trigger && menu) {
+          trigger.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+              e.preventDefault();
+              dropdownParents.forEach(otherParent => {
+                if (otherParent !== parent) {
+                  const otherMenu = otherParent.querySelector('.dropdown');
+                  if (otherMenu) otherMenu.style.display = 'none';
+                }
+              });
+              menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+            }
+          });
         }
       });
 
-      // Check terms and conditions
-      const termsCheckbox = document.getElementById('terms');
-      if (!termsCheckbox.checked) {
-        alert('Please accept the Terms and Conditions to proceed.');
-        isValid = false;
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+          if (navLinks) navLinks.classList.remove('open');
+          if (navToggle) navToggle.classList.remove('open');
+          document.querySelectorAll('.dropdown').forEach(d => d.style.display = '');
+        }
+      });
+
+      // --- FRANCHISE FORM LOGIC ---
+      const openFormBtn = document.getElementById('openFormBtn');
+      const formContainer = document.getElementById('formContainer');
+      const previewContainer = document.getElementById('previewContainer');
+      const franchiseForm = document.getElementById('franchiseForm');
+      const previewBtn = document.getElementById('previewBtn');
+      const editBtn = document.getElementById('editBtn');
+      const finalSubmitBtn = document.getElementById('finalSubmitBtn');
+      const previewContent = document.getElementById('previewContent');
+
+      // Toggle Form
+      if (openFormBtn && formContainer) {
+        openFormBtn.addEventListener('click', () => {
+          if (formContainer.style.display === 'none' && previewContainer.style.display === 'none') {
+            formContainer.style.display = 'block';
+            openFormBtn.textContent = 'Close Franchise Registration Form';
+            formContainer.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            formContainer.style.display = 'none';
+            previewContainer.style.display = 'none';
+            openFormBtn.textContent = 'Open Franchise Registration Form';
+          }
+        });
       }
 
-      if (isValid) {
-        // Show success message
-        successMessage.style.display = 'block';
-        form.style.display = 'none';
+      // Generate Preview
+      if (previewBtn) {
+        previewBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log('Preview Button Clicked');
 
-        // Scroll to success message
-        successMessage.scrollIntoView({ behavior: 'smooth' });
+          if (franchiseForm.checkValidity()) {
+            console.log('Form is Valid. Opening Preview Tab...');
+            try {
+              const html = generatePreviewHTML();
+              sessionStorage.setItem('franchisePreviewHTML', html);
 
-        // In a real application, you would send the form data to a server
-        console.log('Form submitted successfully!');
-        console.log('Form data:', new FormData(form));
+              // Open new tab
+              window.open('franchisePreview.html', '_blank');
+
+            } catch (error) {
+              console.error('Error generating preview:', error);
+              alert('An error occurred while generating the preview: ' + error.message);
+            }
+          } else {
+            console.log('Form is Invalid');
+            const invalidField = franchiseForm.querySelector(':invalid');
+            if (invalidField) {
+              let fieldName = invalidField.getAttribute('name') || invalidField.getAttribute('id') || 'a field';
+              const label = franchiseForm.querySelector(`label[for="${invalidField.id}"]`) || invalidField.previousElementSibling;
+              if (label && label.tagName === 'LABEL') {
+                fieldName = label.textContent.replace(/[.:]/g, '').trim();
+              }
+              alert(`Please fill in the required field: "${fieldName}"`);
+              invalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              invalidField.focus();
+            } else {
+              alert('Please fill in all required fields.');
+            }
+            franchiseForm.reportValidity();
+          }
+        });
       } else {
-        // Scroll to first error
-        const firstError = form.querySelector('.form-group.error');
-        if (firstError) {
-          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+        console.error('Preview Button not found');
       }
-    });
 
-    // Reset form
-    const resetButton = form.querySelector('button[type="reset"]');
-    resetButton.addEventListener('click', function () {
-      // Clear all error states
-      form.querySelectorAll('.form-group.error').forEach(group => {
-        group.classList.remove('error');
+      // Edit Button
+      if (editBtn) {
+        editBtn.addEventListener('click', () => {
+          previewContainer.style.display = 'none';
+          formContainer.style.display = 'block';
+          formContainer.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+
+      // Listen for message from Preview Tab
+      window.addEventListener('message', (event) => {
+        if (event.data === 'triggerFinalSubmit') {
+          handleFinalSubmit();
+        }
       });
 
-      // Hide success message if visible
-      successMessage.style.display = 'none';
-      form.style.display = 'block';
+      function handleFinalSubmit() {
+        console.log('Submission confirmed by preview page. Resetting form.');
+        franchiseForm.reset();
+        // Reset view
+        formContainer.style.display = 'none';
+        openFormBtn.textContent = 'Open Franchise Registration Form';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Final Submit Button
+      if (finalSubmitBtn) {
+        finalSubmitBtn.addEventListener('click', handleFinalSubmit);
+      }
+
+      function generatePreviewHTML() {
+        const formData = new FormData(franchiseForm);
+        const getVal = (name) => formData.get(name) || '-';
+
+        let html = '';
+
+        // Authorization
+        html += '<h3 class="section-title" style="font-size: 1.5rem; margin-top: 0;">Application For Centre Authorization</h3>';
+        html += `<div class="profile-grid" style="margin-bottom: 30px;">
+          <div class="profile-fields">
+            <div class="profile-row"><label>Centre Name:</label> <span>${getVal('centreName')}</span></div>
+            <div class="profile-row"><label>Owner Name:</label> <span>${getVal('ownerName')}</span></div>
+            <div class="profile-row"><label>Relation (S/o, d/o, w/o):</label> <span>${getVal('ownerRelation')}</span></div>
+            <div class="profile-row"><label>DOB:</label> <span>${getVal('ownerDob')}</span></div>
+            <div class="profile-row"><label>Address:</label> <span>${getVal('centreAddress')}</span></div>
+            <div class="profile-row"><label>Opening Date:</label> <span>${getVal('openingDate')}</span></div>
+            <div class="profile-row"><label>Area (sq ft):</label> <span>${getVal('centreArea')}</span></div>
+            <div class="profile-row"><label>Toilet Available:</label> <span>${getVal('toiletAvailable')}</span></div>
+            <div class="profile-row"><label>Authorization For:</label> <span>${getVal('authorizationFor')}</span></div>
+          </div>
+        </div>`;
+
+        // Faculty
+        html += '<h4 style="margin-bottom: 15px;">Faculty Members</h4>';
+        html += '<table class="form-table"><thead><tr><th>Sl. No.</th><th>Name</th><th>Qualification</th><th>Experience</th></tr></thead><tbody>';
+
+        const fNames = formData.getAll('facultyName[]');
+        const fQuals = formData.getAll('facultyQual[]');
+        const fExps = formData.getAll('facultyExp[]');
+
+        let hasFaculty = false;
+        for (let i = 0; i < 3; i++) {
+          if (fNames[i] || fQuals[i] || fExps[i]) {
+            hasFaculty = true;
+            html += `<tr><td>${i + 1}</td><td>${fNames[i] || ''}</td><td>${fQuals[i] || ''}</td><td>${fExps[i] || ''}</td></tr>`;
+          }
+        }
+        if (!hasFaculty) {
+          html += `<tr><td colspan="4" style="text-align:center; color:#999;">No faculty members added</td></tr>`;
+        }
+        html += '</tbody></table>';
+
+        // Payment
+        html += '<h4 style="margin-bottom: 15px; margin-top: 20px;">Payment Details</h4>';
+        html += '<table class="form-table"><thead><tr><th>Fee</th><th>Date</th><th>Mode</th><th>Txn ID</th><th>Remarks</th></tr></thead><tbody>';
+        html += `<tr>
+          <td>${getVal('affiliationFee')}</td>
+          <td>${getVal('paymentDate')}</td>
+          <td>${getVal('paymentMode')}</td>
+          <td>${getVal('txnId')}</td>
+          <td>${getVal('remarks')}</td>
+        </tr>`;
+        html += '</tbody></table>';
+
+        // Signatures 1
+        html += '<div class="signature-section" style="margin-bottom: 40px;">';
+        html += createSigPreview('Sign Of Centre Head', 'signCentreHead');
+        html += createSigPreview('Left Thumb Impression', 'thumbImpression');
+        html += `<div class="sig-box"><div class="sig-header">Date</div><div class="sig-content">${getVal('submissionDate')}</div></div>`;
+        html += `<div class="sig-box"><div class="sig-header">Place</div><div class="sig-content">${getVal('place')}</div></div>`;
+        html += '</div>';
+
+        // Profile
+        html += '<h3 class="section-title" style="font-size: 1.5rem; border-top: 1px solid #eee; padding-top: 30px;">Centre Head/Owner/Director Profile</h3>';
+        html += `<div class="profile-grid">
+          <div class="profile-fields">
+            <div class="profile-row"><label>Name:</label> <span>${getVal('profileName')}</span></div>
+            <div class="profile-row"><label>Father/Husband Name:</label> <span>${getVal('profileRelationName')}</span></div>
+            <div class="profile-row"><label>DOB:</label> <span>${getVal('profileDob')}</span></div>
+            <div class="profile-row"><label>Religion:</label> <span>${getVal('religion')}</span></div>
+            <div class="profile-row"><label>Gender:</label> <span>${getVal('gender')}</span></div>
+            <div class="profile-row"><label>Languages:</label> <span>${getVal('languages')}</span></div>
+            <div class="profile-row"><label>Permanent Address:</label> <span>${getVal('permanentAddress')}</span></div>
+            <div class="profile-row"><label>Qualification:</label> <span>${getVal('qualification')}</span></div>
+            <div class="profile-row"><label>Experience:</label> <span>${getVal('experience')}</span></div>
+            <div class="profile-row"><label>Email:</label> <span>${getVal('email')}</span></div>
+            <div class="profile-row"><label>Contact Numbers:</label> <span>${getVal('contactNumbers')}</span></div>
+            <div class="profile-row"><label>Whatsapp:</label> <span>${getVal('whatsapp')}</span></div>
+            <div class="profile-row"><label>About Family:</label> <span>${getVal('aboutFamily')}</span></div>
+          </div>
+          <div class="photo-upload-container" style="border: 1px solid #ccc; background: #fff;">
+            <div class="photo-label">Profile Photo</div>
+            ${createImagePreview('profilePhoto')}
+          </div>
+        </div>`;
+
+        // Signatures 2
+        html += '<div class="signature-section" style="margin-top: 30px;">';
+        html += createSigPreview('Sign Of Centre Head', 'signCentreHeadProfile');
+        html += createSigPreview('Left Thumb Impression', 'thumbImpressionProfile');
+        html += `<div class="sig-box"><div class="sig-header">Date</div><div class="sig-content">${getVal('submissionDateProfile')}</div></div>`;
+        html += `<div class="sig-box"><div class="sig-header">Place</div><div class="sig-content">${getVal('placeProfile')}</div></div>`;
+        html += '</div>';
+
+        return html;
+      }
+
+      function createSigPreview(title, inputName) {
+        return `<div class="sig-box">
+          <div class="sig-header">${title}</div>
+          <div class="sig-content">${createImagePreview(inputName)}</div>
+        </div>`;
+      }
+
+      function createImagePreview(inputName) {
+        const fileInput = franchiseForm.querySelector(`input[name="${inputName}"]`);
+        if (fileInput && fileInput.files && fileInput.files[0]) {
+          try {
+            const url = URL.createObjectURL(fileInput.files[0]);
+            return `<img src="${url}" style="max-width: 100%; max-height: 90px; object-fit: contain;">`;
+          } catch (e) {
+            console.error('Image preview error', e);
+            return '<span style="color: red;">Image Error</span>';
+          }
+        }
+        return '<span style="color: #999; font-size: 0.8rem;">No Image</span>';
+      }
     });
   </script>
 </body>
