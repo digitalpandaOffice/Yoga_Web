@@ -779,6 +779,21 @@
           if (franchiseForm.checkValidity()) {
             console.log('Form is Valid. Opening Preview Tab...');
             try {
+              // Serialize Form Data for PDF generation
+              const formData = new FormData(franchiseForm);
+              const formJSON = {};
+              for (const [key, value] of formData.entries()) {
+                if (formJSON[key]) {
+                  if (!Array.isArray(formJSON[key])) {
+                    formJSON[key] = [formJSON[key]];
+                  }
+                  formJSON[key].push(value);
+                } else {
+                  formJSON[key] = value;
+                }
+              }
+              sessionStorage.setItem('franchiseFormData', JSON.stringify(formJSON));
+
               const html = generatePreviewHTML();
               sessionStorage.setItem('franchisePreviewHTML', html);
 

@@ -200,17 +200,58 @@
                 window.close();
             });
 
-            submitBtn.addEventListener('click', () => {
-                // 1. Send signal to parent to reset info (optional but good for cleanup)
-                if (window.opener && !window.opener.closed) {
-                    window.opener.postMessage('triggerFinalSubmit', '*');
+            submitBtn.addEventListener('click', async () => {
+                const submitBtn = document.getElementById('finalSubmitBtn');
+                const originalText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Submitting...';
+
+                try {
+                    // 1. Generate random Ref
+                    const ref = 'EDV-' + Math.floor(100000 + Math.random() * 900000);
+
+                    // 2. Get Data
+                    const dataStr = sessionStorage.getItem('franchiseFormData');
+                    if (!dataStr) throw new Error("No data found. Please fill the form again.");
+                    const formData = JSON.parse(dataStr);
+
+                    // 3. Send to Backend
+                    const response = await fetch('http://localhost/Yoga_Web/Yoga_Backend/Franchise/submit', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            reference_no: ref,
+                            form_data: formData
+                        })
+                    });
+
+                    // Handle non-JSON responses (e.g. 404 HTML)
+                    const text = await response.text();
+                    let result;
+                    try {
+                        result = JSON.parse(text);
+                    } catch (e) {
+                        console.error('SERVER RESPONSE:', text);
+                        throw new Error(`Server Error (${response.status}): Invalid JSON response`);
+                    }
+
+                    if (!response.ok) {
+                        throw new Error(result.error || 'Submission failed');
+                    }
+
+                    // 4. Success: Signal Parent and Redirect
+                    if (window.opener && !window.opener.closed) {
+                        window.opener.postMessage('triggerFinalSubmit', '*');
+                    }
+
+                    window.location.href = 'franchiseSuccess.html?ref=' + ref;
+
+                } catch (error) {
+                    console.error('Submission Error:', error);
+                    alert('Error submitting form: ' + error.message);
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
                 }
-
-                // 2. Generate random Ref
-                const ref = 'EDV-' + Math.floor(100000 + Math.random() * 900000);
-
-                // 3. Redirect to Success Page
-                window.location.href = 'franchiseSuccess.html?ref=' + ref;
             });
         });
     </script>

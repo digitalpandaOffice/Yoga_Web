@@ -9,6 +9,7 @@
         href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Montserrat:wght@300;400;600;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="mainstyles.css">
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <style>
         body {
             background-color: #f9f9f9;
@@ -114,6 +115,10 @@
             transform: translateY(-2px);
         }
 
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
         .btn-secondary {
             background: var(--gold);
             color: var(--deep-blue);
@@ -148,13 +153,16 @@
 
         <div class="ref-box">
             <div class="ref-label">Temporary Reference No</div>
-            <div class="ref-number" id="refDisplay">Generating...</div>
+            <div class="ref-number" id="refDisplay">Loading...</div>
+            <div id="statusMessage" style="font-size: 0.8rem; color: #777; margin-top: 5px;"></div>
         </div>
 
         <div class="action-buttons">
-            <button onclick="downloadApplication()" class="download-btn btn-primary">
+            <!-- Removed onclick, added ID -->
+            <button id="downloadPdfBtn" class="download-btn btn-primary" disabled>
                 <span>📄</span> Download Submitted Form
             </button>
+            <!-- Annexure Link -->
             <a href="assets/annexure_I_form.pdf" download class="download-btn btn-secondary"
                 onclick="alert('Demo: Annexure PDF download started')">
                 <span>📎</span> Download Required Annexure I Form
@@ -167,45 +175,190 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Get Ref No from URL or generate random
+        console.log('Success Page Script Loaded');
+
+        let fetchedApplicationData = null;
+        let currentRefNo = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 1. Get Ref Number from URL
             const urlParams = new URLSearchParams(window.location.search);
-            const refNo = urlParams.get('ref') || 'TEMP-' + Math.floor(Math.random() * 100000);
-            document.getElementById('refDisplay').textContent = refNo;
+            const refFromUrl = urlParams.get('ref');
+
+            const refDisplay = document.getElementById('refDisplay');
+            const statusMsg = document.getElementById('statusMessage');
+            const downloadBtn = document.getElementById('downloadPdfBtn');
+
+            if (!refFromUrl) {
+                refDisplay.textContent = 'ERROR';
+                statusMsg.textContent = 'No reference number found in URL.';
+                return;
+            }
+
+            currentRefNo = refFromUrl;
+            refDisplay.textContent = currentRefNo; // Show immediately
+            statusMsg.textContent = 'Verifying application...';
+
+            // 2. Fetch Data from Backend
+            try {
+                const response = await fetch(`http://localhost/Yoga_Web/Yoga_Backend/Franchise/get_application_data?ref=${currentRefNo}`);
+                const result = await response.json();
+
+                if (response.ok && result.status === 'success') {
+                    fetchedApplicationData = result.application.form_data;
+                    statusMsg.textContent = 'Application confirmed. Ready to download.';
+                    statusMsg.style.color = 'green';
+                    downloadBtn.disabled = false; // Enable button
+                    console.log('Data fetched successfully:', fetchedApplicationData);
+                } else {
+                    throw new Error(result.error || 'Application not found');
+                }
+            } catch (err) {
+                console.error('Fetch Error:', err);
+                statusMsg.textContent = 'Error: ' + err.message;
+                statusMsg.style.color = 'red';
+            }
+
+            // 3. Attach PDF Download Listener
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', handlePdfDownload);
+                console.log('PDF Download Listener Attached');
+            }
         });
 
-        function downloadApplication() {
-            // New window for printing
-            const printWindow = window.open('', '_blank');
-            const htmlContent = sessionStorage.getItem('franchisePreviewHTML');
+        // Main Handler Function
+        async function handlePdfDownload() {
+            const btn = document.getElementById('downloadPdfBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span>⏳</span> Processing...';
+            btn.disabled = true;
 
-            if (htmlContent) {
-                printWindow.document.write(`
-          <html>
-            <head>
-              <title>Franchise Application Form</title>
-              <link rel="stylesheet" href="mainstyles.css">
-              <style>
-                body { padding: 40px; }
-                .btn, .form-buttons { display: none !important; }
-                input { border: none; background: transparent; }
-                @media print {
-                  body { -webkit-print-color-adjust: exact; }
+            try {
+                if (typeof PDFLib === 'undefined') {
+                    throw new Error("PDF Library failed to load. Please check your internet connection.");
                 }
-              </style>
-            </head>
-            <body>
-              <h1 style="text-align:center;">Franchise Application Form</h1>
-              ${htmlContent}
-              <script>
-                window.onload = function() { window.print(); }
-              <\/script>
-            </body>
-          </html>
-        `);
-                printWindow.document.close();
-            } else {
-                alert('Error: Application data not found.');
+
+                // 1. Data Source: Use fetched data
+                const data = fetchedApplicationData;
+                if (!data) throw new Error("Application data not available. Please verify the Reference ID.");
+
+                // 2. Load PDF Template
+                const pdfUrl = 'http://localhost/Yoga_Web/Yoga_Backend/public/Documents/FranchiseFormDownloadFormat.pdf';
+                console.log('Fetching PDF from:', pdfUrl);
+
+                const existingPdfBytes = await fetch(pdfUrl).then(res => {
+                    if (!res.ok) throw new Error(`Could not load PDF template from ${pdfUrl} (Status: ${res.status})`);
+                    return res.arrayBuffer();
+                });
+
+                // 3. Interactive Form Filling
+                const { PDFDocument } = PDFLib;
+                const pdfDoc = await PDFDocument.load(existingPdfBytes);
+                const form = pdfDoc.getForm();
+
+                // DEBUG VERIFICATION:
+                try {
+                    const fields = form.getFields();
+                    const fieldNames = fields.map(f => f.getName());
+                    console.log('Detected Fields:', fieldNames);
+
+                    if (fields.length === 0) {
+                        alert("WARNING: The PDF file has no interactive form fields yet!\n\nPlease edit the PDF in Adobe Acrobat or LibreOffice to add fields named 'CentreName', 'OwnerName', etc.");
+                    }
+                } catch (e) { }
+
+                // SAFE MAPPING HELPER
+                const safeSet = (fieldName, value) => {
+                    if (!value) return;
+                    try {
+                        const field = form.getField(fieldName);
+                        // Handle Checkboxes vs Text
+                        if (field.constructor.name === 'PDFCheckBox') {
+                            if (value === 'Yes' || value === true || value === 'on') field.check();
+                        } else {
+                            field.setText(String(value));
+                            field.enableReadOnly(); // Optional: Make read-only after filling
+                        }
+                    } catch (e) {
+                        // console.warn(`Field '${fieldName}' not found in PDF.`);
+                    }
+                };
+
+                // --- DATA MAPPING START ---
+
+                // 1. Centre Details
+                safeSet('CentreName', data.centreName);
+                safeSet('OwnerName', data.ownerName);
+                safeSet('OwnerRelation', data.ownerRelation);
+                safeSet('OwnerDOB', data.ownerDob);
+                safeSet('CentreAddress', data.centreAddress);
+                safeSet('OpeningDate', data.openingDate);
+                safeSet('CentreArea', data.centreArea);
+                safeSet('ToiletAvailable', data.toiletAvailable); // Yes/No
+                safeSet('AuthorizationFor', data.authorizationFor);
+
+                // 2. Faculty Details (Handling Arrays)
+                // data.facultyName will be array of strings if multiple lines, or string if single.
+                // Helper to get item safely
+                const getArrayItem = (arr, index) => {
+                    if (Array.isArray(arr)) return arr[index] || '';
+                    if (index === 0 && arr) return arr;
+                    return '';
+                };
+
+                for (let i = 0; i < 3; i++) {
+                    const suffix = `_${i + 1}`; // _1, _2, _3
+                    safeSet('FacultyName' + suffix, getArrayItem(data.facultyName, i));
+                    safeSet('FacultyQual' + suffix, getArrayItem(data.facultyQual, i));
+                    safeSet('FacultyExp' + suffix, getArrayItem(data.facultyExp, i));
+                }
+
+                // 3. Payment Details
+                safeSet('AffiliationFee', data.affiliationFee);
+                safeSet('PaymentDate', data.paymentDate);
+                safeSet('PaymentMode', data.paymentMode);
+                safeSet('TxnId', data.txnId);
+                safeSet('Remarks', data.remarks);
+
+                // 4. Submission Details (Section 1)
+                safeSet('SubmissionDate', data.submissionDate);
+                safeSet('Place', data.place);
+
+                // 5. Centre Head Profile
+                safeSet('ProfileName', data.profileName);
+                safeSet('ProfileRelationName', data.profileRelationName);
+                safeSet('ProfileDOB', data.profileDob);
+                safeSet('Religion', data.religion);
+                safeSet('Gender', data.gender);
+                safeSet('Languages', data.languages);
+                safeSet('PermanentAddress', data.permanentAddress);
+                safeSet('Qualification', data.qualification);
+                safeSet('ProfileExperience', data.experience);
+                safeSet('Email', data.email);
+                safeSet('ContactNumbers', data.contactNumbers);
+                safeSet('Whatsapp', data.whatsapp);
+                safeSet('AboutFamily', data.aboutFamily);
+
+                // 6. Submission Details (Section 2)
+                safeSet('SubmissionDateProfile', data.submissionDateProfile);
+                safeSet('PlaceProfile', data.placeProfile);
+
+                // --- DATA MAPPING END ---
+
+                // 4. Download
+                const pdfBytes = await pdfDoc.save();
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `Edvayu_Franchise_Form_${currentRefNo}.pdf`;
+                link.click();
+
+            } catch (error) {
+                console.error('PDF Generation Error:', error);
+                alert('Failed to generate PDF: ' + error.message);
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
             }
         }
     </script>
