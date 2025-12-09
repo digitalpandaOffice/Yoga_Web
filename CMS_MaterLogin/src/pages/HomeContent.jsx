@@ -52,6 +52,12 @@ const HomeContent = () => {
         { id: 2, title: 'Student Art Exhibition', date: 'February 2025', location: 'Campus Gallery', image: 'https://govtcollegeofart.assam.gov.in/sites/default/files/swf_utility_folder/departments/artncraftcollege_medhassu_in_oid_8/this_comm/c41.JPG' }
     ]);
 
+    const [authorityData, setAuthorityData] = useState([
+        { id: 1, name: 'Dr. Rajesh Kumar', role: 'Founder & Chairman', bio: 'A distinguished educationist with over 30 years of experience in preserving Indian classical arts.', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=60' },
+        { id: 2, name: 'Prof. Meera Sharma', role: 'Director (Academics)', bio: 'Renowned for her contributions to curriculum development in performing arts education.', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=60' },
+        { id: 3, name: 'Mr. Amit Verma', role: 'General Secretary', bio: 'Driving operational excellence and expanding our cultural footprint across the nation.', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=60' }
+    ]);
+
     const [footerData, setFooterData] = useState({
         address: 'Morigaon 782105, Assam, India',
         phone: '+91 98765 43210',
@@ -78,6 +84,7 @@ const HomeContent = () => {
                 if (data.features && data.features.length > 0) setFeaturesData(data.features);
                 if (data.values && data.values.length > 0) setValuesData(data.values);
                 if (data.highlights && data.highlights.length > 0) setHighlightsData(data.highlights);
+                if (data.authority && data.authority.length > 0) setAuthorityData(data.authority);
                 if (data.footer && Object.keys(data.footer).length > 0) setFooterData(data.footer);
             }
         } catch (err) {
@@ -100,6 +107,7 @@ const HomeContent = () => {
             features: featuresData,
             values: valuesData,
             highlights: highlightsData,
+            authority: authorityData,
             footer: footerData
         };
 
@@ -160,7 +168,7 @@ const HomeContent = () => {
 
             {showSuccess && (
                 <div className="success-banner">
-                    Changes saved successfully! (Mock)
+                    Changes saved successfully!
                 </div>
             )}
 
@@ -183,6 +191,9 @@ const HomeContent = () => {
                     </button>
                     <button className={`tab-btn ${activeTab === 'highlights' ? 'active' : ''}`} onClick={() => setActiveTab('highlights')}>
                         <Calendar size={18} /> Highlights
+                    </button>
+                    <button className={`tab-btn ${activeTab === 'authority' ? 'active' : ''}`} onClick={() => setActiveTab('authority')}>
+                        <Star size={18} /> Authority
                     </button>
                     <button className={`tab-btn ${activeTab === 'footer' ? 'active' : ''}`} onClick={() => setActiveTab('footer')}>
                         <Layout size={18} /> Footer
@@ -422,6 +433,43 @@ const HomeContent = () => {
                                 ))}
                                 <button className="add-btn" onClick={() => addItem(setHighlightsData, highlightsData, { title: 'New Event', date: 'Date', location: 'Location', image: '' })}>
                                     <Plus size={18} /> Add Highlight
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* AUTHORITY SECTION */}
+                    {activeTab === 'authority' && (
+                        <div className="form-section">
+                            <h3>Directors & Authority</h3>
+                            <div className="dynamic-list">
+                                {authorityData.map(item => (
+                                    <div key={item.id} className="list-item-card">
+                                        <button className="remove-btn" onClick={() => removeItem(setAuthorityData, authorityData, item.id)}>
+                                            <Trash2 size={14} /> Remove
+                                        </button>
+                                        <div className="form-grid">
+                                            <div className="form-group">
+                                                <label>Name</label>
+                                                <input type="text" value={item.name} onChange={(e) => updateItem(setAuthorityData, authorityData, item.id, 'name', e.target.value)} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Role / Job Title</label>
+                                                <input type="text" value={item.role} onChange={(e) => updateItem(setAuthorityData, authorityData, item.id, 'role', e.target.value)} />
+                                            </div>
+                                            <div className="form-group full-width">
+                                                <label>Bio / Description</label>
+                                                <textarea rows="2" value={item.bio} onChange={(e) => updateItem(setAuthorityData, authorityData, item.id, 'bio', e.target.value)}></textarea>
+                                            </div>
+                                            <div className="form-group full-width">
+                                                <label>Headshot Image URL</label>
+                                                <input type="text" value={item.image} onChange={(e) => updateItem(setAuthorityData, authorityData, item.id, 'image', e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                                <button className="add-btn" onClick={() => addItem(setAuthorityData, authorityData, { name: 'Name', role: 'Role', bio: 'Bio...', image: '' })}>
+                                    <Plus size={18} /> Add Authority
                                 </button>
                             </div>
                         </div>

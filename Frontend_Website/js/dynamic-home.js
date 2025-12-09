@@ -16,6 +16,7 @@ async function fetchHomeContent() {
             updateFeatures(data.features);
             updateValues(data.values);
             updateHighlights(data.highlights);
+            updateAuthority(data.authority);
             updateFooter(data.footer);
         }
     } catch (error) {
@@ -159,4 +160,21 @@ function updateFooter(footer) {
         if (footer.youtube) socialHtml += `<li><a href="${footer.youtube}" aria-label="YouTube">YouTube</a></li>`;
         socialUl.innerHTML = socialHtml;
     }
+}
+
+function updateAuthority(authority) {
+    if (!authority || !Array.isArray(authority)) return;
+    const container = document.querySelector('.authority-grid');
+    if (!container) return;
+
+    container.innerHTML = authority.map(item => `
+        <div class="authority-card">
+            <img src="${item.image}" alt="${item.name}">
+            <div class="authority-content">
+                <h3>${item.name}</h3>
+                <span class="role">${item.role}</span>
+                <p>${item.bio}</p>
+            </div>
+        </div>
+    `).join('');
 }
