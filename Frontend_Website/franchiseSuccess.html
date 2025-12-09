@@ -252,8 +252,13 @@
                 });
 
                 // 3. Interactive Form Filling
-                const { PDFDocument } = PDFLib;
+                // Destructure TextAlignment here
+                const { PDFDocument, StandardFonts, TextAlignment } = PDFLib;
                 const pdfDoc = await PDFDocument.load(existingPdfBytes);
+
+                // Embed Helvetica to match document style
+                const customFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
                 const form = pdfDoc.getForm();
 
                 // DEBUG VERIFICATION:
@@ -272,12 +277,18 @@
                     if (!value) return;
                     try {
                         const field = form.getField(fieldName);
-                        // Handle Checkboxes vs Text
-                        if (field.constructor.name === 'PDFCheckBox') {
+
+                        if (field instanceof PDFLib.PDFCheckBox) {
                             if (value === 'Yes' || value === true || value === 'on') field.check();
-                        } else {
+                        } else if (field instanceof PDFLib.PDFTextField) {
+                            // Apply formatting for Text Fields
                             field.setText(String(value));
-                            field.enableReadOnly(); // Optional: Make read-only after filling
+                            field.setFontSize(10); // Standard Size
+                            field.setAlignment(TextAlignment.Center); // CENTER TEXT
+                            field.updateAppearances(customFont); // Apply Standard Helvetica
+                        } else {
+                            // Fallback
+                            try { field.setText(String(value)); } catch (e) { }
                         }
                     } catch (e) {
                         // console.warn(`Field '${fieldName}' not found in PDF.`);
@@ -298,8 +309,6 @@
                 safeSet('AuthorizationFor', data.authorizationFor);
 
                 // 2. Faculty Details (Handling Arrays)
-                // data.facultyName will be array of strings if multiple lines, or string if single.
-                // Helper to get item safely
                 const getArrayItem = (arr, index) => {
                     if (Array.isArray(arr)) return arr[index] || '';
                     if (index === 0 && arr) return arr;
@@ -344,6 +353,13 @@
                 safeSet('PlaceProfile', data.placeProfile);
 
                 // --- DATA MAPPING END ---
+
+                // Make PDF Read-Only (Flatten Form)
+                try {
+                    form.flatten();
+                } catch (e) {
+                    console.warn("Could not flatten form (fields might differ from expectations):", e);
+                }
 
                 // 4. Download
                 const pdfBytes = await pdfDoc.save();

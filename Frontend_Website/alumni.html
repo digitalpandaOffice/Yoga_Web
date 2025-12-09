@@ -11,7 +11,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="mainstyles.css">
     <link rel="stylesheet" href="alumni.css">
-  <link rel="icon" type="image/png" href="images/AdvayuLogo.png">
+    <link rel="icon" type="image/png" href="images/AdvayuLogo.png">
 </head>
 
 <body>
@@ -97,44 +97,10 @@
                 <p>Inspiring stories of success and cultural contribution.</p>
             </div>
 
-            <div class="alumni-grid">
-                <div class="alumni-card">
-                    <div class="alumni-img"
-                        style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80');">
-                    </div>
-                    <div class="alumni-info">
-                        <h3>Priya Sharma</h3>
-                        <span class="batch">Class of 2015</span>
-                        <p class="designation">Classical Dancer & Choreographer</p>
-                        <p class="bio">Founder of 'Nritya Kala Academy', Priya has performed on international stages and
-                            continues to train over 200 students annually.</p>
-                    </div>
-                </div>
-
-                <div class="alumni-card">
-                    <div class="alumni-img"
-                        style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80');">
-                    </div>
-                    <div class="alumni-info">
-                        <h3>Rahul Verma</h3>
-                        <span class="batch">Class of 2018</span>
-                        <p class="designation">Visual Artist</p>
-                        <p class="bio">Rahul's paintings have been exhibited in major galleries across India. He
-                            specializes in blending traditional folk art with modern themes.</p>
-                    </div>
-                </div>
-
-                <div class="alumni-card">
-                    <div class="alumni-img"
-                        style="background-image: url('https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80');">
-                    </div>
-                    <div class="alumni-info">
-                        <h3>Anjali Das</h3>
-                        <span class="batch">Class of 2020</span>
-                        <p class="designation">Music Teacher</p>
-                        <p class="bio">Anjali is a dedicated music educator at a prestigious school in Guwahati,
-                            inspiring the next generation of vocalists.</p>
-                    </div>
+            <div class="alumni-grid" id="alumni-grid">
+                <!-- Dynamic Content -->
+                <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                    <p>Loading alumni profiles...</p>
                 </div>
             </div>
         </section>
@@ -190,6 +156,7 @@
         <div class="copyright">© 2025 Edvayu Educational Foundations.</div>
     </footer>
 
+    <script src="js/dynamic-alumni.js"></script>
     <script src="script.js"></script>
 </body>
 

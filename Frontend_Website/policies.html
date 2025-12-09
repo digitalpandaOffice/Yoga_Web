@@ -11,7 +11,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="mainstyles.css">
     <link rel="stylesheet" href="policies.css">
-  <link rel="icon" type="image/png" href="images/AdvayuLogo.png">
+    <link rel="icon" type="image/png" href="images/AdvayuLogo.png">
 </head>
 
 <body>
@@ -93,58 +93,15 @@
 
         <section class="policies-content container">
             <div class="policies-nav">
-                <ul>
-                    <li><a href="#privacy" class="active">Privacy Policy</a></li>
-                    <li><a href="#terms">Terms of Service</a></li>
-                    <li><a href="#student-code">Student Code of Conduct</a></li>
-                    <li><a href="#refund">Refund Policy</a></li>
+                <ul id="policies-nav-list">
+                    <!-- Dynamic Links -->
+                    <li>Loading policies...</li>
                 </ul>
             </div>
 
-            <div class="policies-text">
-                <article id="privacy" class="policy-section">
-                    <h2>Privacy Policy</h2>
-                    <p>At Edvayu Educational Foundations, we are committed to protecting your privacy. This Privacy
-                        Policy explains how we collect, use, and safeguard your information when you visit our website
-                        or enroll in our programs.</p>
-                    <h3>Information We Collect</h3>
-                    <p>We collect information that you provide directly to us, such as when you apply for admission,
-                        register for an exam, or sign up for our newsletter. This may include your name, email address,
-                        phone number, and educational background.</p>
-                    <h3>How We Use Your Information</h3>
-                    <ul>
-                        <li>To process your admissions and exam registrations.</li>
-                        <li>To communicate with you about your academic progress and institute updates.</li>
-                        <li>To improve our educational programs and website functionality.</li>
-                    </ul>
-                </article>
-
-                <article id="terms" class="policy-section">
-                    <h2>Terms of Service</h2>
-                    <p>By accessing this website and enrolling in our courses, you agree to be bound by these Terms of
-                        Service and all applicable laws and regulations.</p>
-                    <h3>Intellectual Property</h3>
-                    <p>All course materials, including syllabi, study guides, and video lectures, are the intellectual
-                        property of Edvayu Educational Foundations. Unauthorized distribution or reproduction is
-                        strictly prohibited.</p>
-                </article>
-
-                <article id="student-code" class="policy-section">
-                    <h2>Student Code of Conduct</h2>
-                    <p>We expect all students to maintain high standards of integrity and respect. This includes:</p>
-                    <ul>
-                        <li>Respecting faculty, staff, and fellow students.</li>
-                        <li>Adhering to academic honesty in all examinations and assignments.</li>
-                        <li>Preserving the sanctity of our cultural and artistic traditions.</li>
-                    </ul>
-                </article>
-
-                <article id="refund" class="policy-section">
-                    <h2>Refund Policy</h2>
-                    <p>Application fees are non-refundable. Tuition fees may be refunded partially if a withdrawal
-                        request is made within 15 days of the course start date, subject to administrative deductions.
-                    </p>
-                </article>
+            <div class="policies-text" id="policies-content-container">
+                <!-- Dynamic Articles -->
+                <div style="padding: 20px; text-align: center;">Loading content...</div>
             </div>
         </section>
     </main>
@@ -167,6 +124,7 @@
         <div class="copyright">© 2025 Edvayu Educational Foundations.</div>
     </footer>
 
+    <script src="js/dynamic-policies.js"></script>
     <script src="script.js"></script>
     <script>
         // Sticky navigation for policies

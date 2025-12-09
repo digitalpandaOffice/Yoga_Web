@@ -106,7 +106,7 @@
             background: #1e3a8a;
         }
     </style>
-  <link rel="icon" type="image/png" href="images/AdvayuLogo.png">
+    <link rel="icon" type="image/png" href="images/AdvayuLogo.png">
 </head>
 
 <body>
@@ -181,71 +181,20 @@
 
     <main>
         <!-- PAGE HERO -->
-        <section class="page-hero">
+        <section class="page-hero" id="page-hero">
             <div class="container">
-                <h1>Upcoming Events</h1>
-                <p>Join us for workshops, festivals, and cultural celebrations</p>
+                <h1 id="page-hero-title">Upcoming Events</h1>
+                <p id="page-hero-subtitle">Join us for workshops, festivals, and cultural celebrations</p>
             </div>
         </section>
 
         <!-- EVENTS LIST SECTION -->
         <section class="events-section">
             <div class="container">
-                <div class="events-grid">
-                    <!-- Event 1 -->
-                    <div class="event-card">
-                        <img src="https://www.thepresidiumschool.com/common/images/gallery/pages/Events/Annual-Fest/annual-day-0001.jpg"
-                            alt="Annual Dance Festival" class="event-image">
-                        <div class="event-content">
-                            <span class="event-date">March 15-20, 2025</span>
-                            <h3 class="event-title">Annual Dance Festival</h3>
-                            <div class="event-location">📍 Main Auditorium, New Delhi</div>
-                            <p class="event-description">A week-long celebration of classical Indian dance forms
-                                featuring student performances and guest artists.</p>
-                            <a href="#" class="btn-event">Register Now</a>
-                        </div>
-                    </div>
-
-                    <!-- Event 2 -->
-                    <div class="event-card">
-                        <img src="https://govtcollegeofart.assam.gov.in/sites/default/files/swf_utility_folder/departments/artncraftcollege_medhassu_in_oid_8/this_comm/c41.JPG"
-                            alt="Student Art Exhibition" class="event-image">
-                        <div class="event-content">
-                            <span class="event-date">February 10, 2025</span>
-                            <h3 class="event-title">Student Art Exhibition</h3>
-                            <div class="event-location">📍 Campus Gallery, Morigaon</div>
-                            <p class="event-description">Showcasing the finest works of our Fine Arts diploma students.
-                                Open to public.</p>
-                            <a href="#" class="btn-event">View Details</a>
-                        </div>
-                    </div>
-
-                    <!-- Event 3 -->
-                    <div class="event-card">
-                        <img src="https://images.unsplash.com/photo-1472653431158-6364773b2a56?auto=format&fit=crop&w=1000&q=60"
-                            alt="Instrumental Workshop" class="event-image">
-                        <div class="event-content">
-                            <span class="event-date">January 25, 2025</span>
-                            <h3 class="event-title">Classical Music Workshop</h3>
-                            <div class="event-location">📍 Music Studio, Block B</div>
-                            <p class="event-description">An intensive one-day workshop on Hindustani Classical vocals
-                                and instruments.</p>
-                            <a href="#" class="btn-event">Book Seat</a>
-                        </div>
-                    </div>
-
-                    <!-- Event 4 -->
-                    <div class="event-card">
-                        <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1000&q=60"
-                            alt="Cultural Festival" class="event-image">
-                        <div class="event-content">
-                            <span class="event-date">December 20, 2024</span>
-                            <h3 class="event-title">Winter Cultural Fest</h3>
-                            <div class="event-location">📍 Main Campus Grounds</div>
-                            <p class="event-description">Food, music, dance, and art come together in our annual winter
-                                celebration.</p>
-                            <a href="#" class="btn-event">Learn More</a>
-                        </div>
+                <div class="events-grid" id="events-container">
+                    <!-- Dynamic Events will be loaded here -->
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                        <p>Loading events...</p>
                     </div>
                 </div>
             </div>
@@ -271,6 +220,7 @@
         </footer>
     </main>
 
+    <script src="js/dynamic-events.js"></script>
     <script src="script.js"></script>
 </body>
 

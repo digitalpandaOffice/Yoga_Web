@@ -137,6 +137,29 @@ class Content extends Controller {
         ]);
     }
 
+    // GET /content/events
+    public function events() {
+        $this->handleGetContent('events', [
+            'hero' => [
+                'title' => 'Upcoming Events',
+                'subtitle' => 'Join us for workshops, festivals, and cultural celebrations',
+                'backgroundImage' => 'https://images.unsplash.com/photo-1514525253440-b393452e3383?auto=format&fit=crop&w=1600&q=80'
+            ]
+        ]);
+    }
+
+    // GET /content/contact
+    public function contact() {
+        $this->handleGetContent('contact', [
+            'hero' => [
+                'title' => 'Get in Touch',
+                'subtitle' => 'We are here to answer your questions and help you start your cultural journey.'
+            ],
+            'info_intro' => 'Reach out to us via phone, email, or visit our campus.',
+            'map_url' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57272.77259458231!2d92.3056266!3d26.2547161!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x375a59c904797175%3A0x88960161884c7185!2sMorigaon%2C%20Assam!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin'
+        ]);
+    }
+
     // GET /content/gallery-section
     public function gallerySection() {
         $this->handleGetContent('gallery-section', [

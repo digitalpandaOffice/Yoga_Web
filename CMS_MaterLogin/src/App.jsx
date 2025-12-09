@@ -19,6 +19,10 @@ import AdmitCardManager from './pages/AdmitCardManager';
 import GalleryManager from './pages/GalleryManager';
 import Admissions from './pages/Admissions';
 import PlaceholderPage from './pages/PlaceholderPage';
+import EventsManager from './pages/EventsManager';
+import PoliciesManager from './pages/PoliciesManager';
+import AlumniManager from './pages/AlumniManager';
+import ContactManager from './pages/ContactManager';
 
 function App() {
   return (
@@ -57,10 +61,12 @@ function App() {
 
           {/* Gallery & Events */}
           <Route path="gallery" element={<GalleryManager />} />
-          <Route path="events" element={<PlaceholderPage />} />
+          <Route path="events" element={<EventsManager />} />
 
           {/* Other */}
-          <Route path="other" element={<PlaceholderPage />} />
+          <Route path="other/policies" element={<PoliciesManager />} />
+          <Route path="other/alumni" element={<AlumniManager />} />
+          <Route path="other/contact" element={<ContactManager />} />
           <Route path="other/*" element={<PlaceholderPage />} />
 
           <Route path="*" element={<div className="p-4">Page under construction</div>} />
