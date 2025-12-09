@@ -49,4 +49,29 @@ class Message extends Controller {
             }
         }
     }
+
+    // GET /message/unreadCount
+    public function unreadCount() {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $model = $this->model('Message');
+            $count = $model->getUnreadCount();
+            $this->json(['count' => $count]);
+        }
+    }
+
+    // POST /message/markRead
+    public function markRead() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_GET['id'] ?? null;
+            if (!$id) {
+                $this->json(['error' => 'ID required'], 400);
+            }
+            $model = $this->model('Message');
+            if ($model->markAsRead($id)) {
+                $this->json(['message' => 'Message marked as read']);
+            } else {
+                 $this->json(['error' => 'Failed to mark as read'], 500);
+            }
+        }
+    }
 }

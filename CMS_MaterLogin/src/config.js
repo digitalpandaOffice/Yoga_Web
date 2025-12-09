@@ -59,4 +59,6 @@ export const endpoints = {
     alumniDelete: `${API_BASE_URL}/alumni/delete`,
     messagesList: `${API_BASE_URL}/message`,
     messagesDelete: `${API_BASE_URL}/message/delete`,
+    messagesUnreadCount: `${API_BASE_URL}/message/unreadCount`,
+    messagesMarkRead: `${API_BASE_URL}/message/markRead`,
 };

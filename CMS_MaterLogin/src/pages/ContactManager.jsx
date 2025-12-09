@@ -126,6 +126,73 @@ const ContactManager = () => {
         } catch (err) { console.error(err); }
     };
 
+    const handleMarkRead = async (id) => {
+        try {
+            await fetch(`${endpoints.messagesMarkRead}?id=${id}`, { method: 'POST' });
+            setMessages(prev => prev.map(m => m.id === id ? { ...m, is_read: 1 } : m));
+        } catch (err) { console.error(err); }
+    };
+
+    const MessageItem = ({ msg, onDelete, onRead }) => {
+        const [expanded, setExpanded] = useState(false);
+
+        const toggleExpand = () => {
+            const newExpanded = !expanded;
+            setExpanded(newExpanded);
+            if (newExpanded && !msg.is_read) {
+                onRead(msg.id);
+            }
+        };
+
+        return (
+            <div style={{
+                border: '1px solid #eee',
+                borderRadius: '8px',
+                padding: '20px',
+                background: msg.is_read ? 'white' : '#f0f7ff',
+                borderLeft: msg.is_read ? '1px solid #eee' : '4px solid #007bff'
+            }}>
+                <div
+                    onClick={toggleExpand}
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        marginBottom: expanded ? '15px' : '0',
+                        alignItems: 'center',
+                        cursor: 'pointer'
+                    }}
+                >
+                    <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <h4 style={{ margin: 0, fontWeight: msg.is_read ? '600' : '700' }}>{msg.subject}</h4>
+                            {!msg.is_read && <span style={{ fontSize: '0.7rem', background: '#007bff', color: 'white', padding: '2px 6px', borderRadius: '4px' }}>New</span>}
+                        </div>
+                        <div style={{ fontSize: '0.85rem', color: '#666', marginTop: '5px' }}>
+                            From: <strong>{msg.name}</strong> ({msg.email})
+                            <span style={{ marginLeft: '10px', color: '#999' }}>{new Date(msg.created_at).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+                </div>
+
+                {expanded && (
+                    <div style={{ borderTop: '1px solid #eee', paddingTop: '15px' }}>
+                        <div style={{ fontSize: '0.95rem', lineHeight: '1.6', color: '#333' }}>
+                            {msg.message}
+                        </div>
+                        <div style={{ marginTop: '15px', display: 'flex', justifyContent: 'flex-end' }}>
+                            <button
+                                onClick={(e) => { e.stopPropagation(); onDelete(msg.id); }}
+                                style={{ color: '#dc3545', background: 'none', border: '1px solid #dc3545', padding: '5px 10px', borderRadius: '4px', cursor: 'pointer', fontSize: '0.85rem' }}
+                            >
+                                Delete Message
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
+    };
+
     return (
         <div className="content-page">
             <div className="page-header">
@@ -248,26 +315,7 @@ const ContactManager = () => {
                         <p style={{ textAlign: 'center', color: '#666', padding: '40px' }}>No inquiries received yet.</p>
                     ) : (
                         messages.map(msg => (
-                            <div key={msg.id} style={{ border: '1px solid #eee', borderRadius: '8px', padding: '20px', background: 'white' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', alignItems: 'flex-start' }}>
-                                    <div>
-                                        <h4 style={{ margin: '0 0 5px 0' }}>{msg.subject}</h4>
-                                        <div style={{ fontSize: '0.85rem', color: '#666' }}>
-                                            From: <strong>{msg.name}</strong> ({msg.email})
-                                            <span style={{ marginLeft: '10px', color: '#999' }}>{new Date(msg.created_at).toLocaleDateString()}</span>
-                                        </div>
-                                    </div>
-                                    <button
-                                        onClick={() => handleDeleteMessage(msg.id)}
-                                        style={{ color: '#dc3545', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.85rem' }}
-                                    >
-                                        Delete
-                                    </button>
-                                </div>
-                                <div style={{ background: '#f9f9f9', padding: '15px', borderRadius: '4px', fontSize: '0.95rem', lineHeight: '1.5' }}>
-                                    {msg.message}
-                                </div>
-                            </div>
+                            <MessageItem key={msg.id} msg={msg} onDelete={handleDeleteMessage} onRead={handleMarkRead} />
                         ))
                     )}
                 </div>

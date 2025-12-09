@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import {
     LayoutDashboard,
@@ -15,15 +15,36 @@ import {
     X,
     Folder,
     ChevronDown,
-    ChevronRight
+    ChevronRight,
+    MessageSquare
 } from 'lucide-react';
 import logo from '../assets/images/AdvayuLogo.png';
+import { endpoints } from '../config';
 
 const DashboardLayout = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [expandedSections, setExpandedSections] = useState({});
+    const [unreadMessages, setUnreadMessages] = useState(0);
     const location = useLocation();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchUnreadCount();
+        const interval = setInterval(fetchUnreadCount, 30000); // Poll every 30s
+        return () => clearInterval(interval);
+    }, [location.pathname]); // Also refresh on navigation
+
+    const fetchUnreadCount = async () => {
+        try {
+            const res = await fetch(endpoints.messagesUnreadCount);
+            if (res.ok) {
+                const data = await res.json();
+                setUnreadMessages(data.count);
+            }
+        } catch (error) {
+            console.error("Failed to fetch unread messages", error);
+        }
+    };
 
     const handleLogout = () => {
         // In a real app, clear auth tokens here
@@ -91,11 +112,16 @@ const DashboardLayout = () => {
             icon: MoreHorizontal,
             label: 'Other',
             path: '/dashboard/other',
+            badge: unreadMessages > 0 ? unreadMessages : null,
             subItems: [
                 { label: 'Policies', path: '/dashboard/other/policies' },
                 { label: 'Alumni', path: '/dashboard/other/alumni' },
                 { label: 'Careers', path: '/dashboard/other/careers' },
-                { label: 'Contact', path: '/dashboard/other/contact' },
+                {
+                    label: 'Contact',
+                    path: '/dashboard/other/contact',
+                    badge: unreadMessages > 0 ? unreadMessages : null
+                },
             ]
         },
     ];
@@ -121,6 +147,18 @@ const DashboardLayout = () => {
                     <div className="nav-item-content">
                         <item.icon size={20} />
                         <span>{item.label}</span>
+                        {item.badge && (
+                            <span className="nav-badge" style={{
+                                background: '#dc3545',
+                                color: 'white',
+                                fontSize: '0.7rem',
+                                padding: '2px 6px',
+                                borderRadius: '10px',
+                                marginLeft: '8px'
+                            }}>
+                                {item.badge}
+                            </span>
+                        )}
                     </div>
                     {hasSubItems && (
                         <span className="nav-chevron">
@@ -137,8 +175,21 @@ const DashboardLayout = () => {
                                 to={subItem.path}
                                 className={`sub-nav-item ${location.pathname === subItem.path ? 'active' : ''}`}
                                 onClick={() => setIsSidebarOpen(false)}
+                                style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                             >
-                                {subItem.label}
+                                <span>{subItem.label}</span>
+                                {subItem.badge && (
+                                    <span style={{
+                                        background: '#dc3545',
+                                        color: 'white',
+                                        fontSize: '0.7rem',
+                                        padding: '2px 6px',
+                                        borderRadius: '10px',
+                                        marginLeft: '5px'
+                                    }}>
+                                        {subItem.badge}
+                                    </span>
+                                )}
                             </Link>
                         ))}
                     </div>

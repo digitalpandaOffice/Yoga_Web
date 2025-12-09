@@ -29,4 +29,14 @@ class Message extends Model {
         $stmt = $this->conn->prepare("DELETE FROM {$this->table} WHERE id = :id");
         return $stmt->execute(['id' => $id]);
     }
+
+    public function getUnreadCount() {
+        $stmt = $this->conn->query("SELECT COUNT(*) as count FROM {$this->table} WHERE is_read = 0");
+        return $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+    }
+
+    public function markAsRead($id) {
+        $stmt = $this->conn->prepare("UPDATE {$this->table} SET is_read = 1 WHERE id = :id");
+        return $stmt->execute(['id' => $id]);
+    }
 }
