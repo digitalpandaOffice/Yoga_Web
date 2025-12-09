@@ -5,8 +5,8 @@ import { endpoints } from '../config';
 const ContactManager = () => {
     const [isSaving, setIsSaving] = useState(false);
 
-    // Messages State
-    const [activeTab, setActiveTab] = useState('settings'); // 'settings' or 'messages'
+    // Tabs State: 'settings', 'content', 'messages'
+    const [activeTab, setActiveTab] = useState('settings');
     const [messages, setMessages] = useState([]);
 
     // Global Settings (Phone, Email, Address, Office Hours)
@@ -84,28 +84,42 @@ const ContactManager = () => {
         }));
     };
 
-    const handleSubmit = async (e) => {
+    // Handler for updating Contact Information
+    const handleUpdateSettings = async (e) => {
         e.preventDefault();
         setIsSaving(true);
         try {
-            // 1. Update Settings
-            const settingsRes = await fetch(endpoints.settings, {
+            const res = await fetch(endpoints.settings, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(settings)
             });
+            if (res.ok) {
+                alert('Contact Information updated successfully!');
+            } else {
+                alert('Failed to update contact information.');
+            }
+        } catch (err) {
+            alert('Network error');
+        } finally {
+            setIsSaving(false);
+        }
+    };
 
-            // 2. Update Page Content
-            const contentRes = await fetch(`${endpoints.updateContent}?page=contact`, {
+    // Handler for updating Page Content
+    const handleUpdateContent = async (e) => {
+        e.preventDefault();
+        setIsSaving(true);
+        try {
+            const res = await fetch(`${endpoints.updateContent}?page=contact`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(pageContent)
             });
-
-            if (settingsRes.ok && contentRes.ok) {
-                alert('Contact page updated successfully!');
+            if (res.ok) {
+                alert('Page Content updated successfully!');
             } else {
-                alert('Some updates failed.');
+                alert('Failed to update page content.');
             }
         } catch (err) {
             alert('Network error');
@@ -202,39 +216,50 @@ const ContactManager = () => {
                 </div>
             </div>
 
-            <div className="tabs" style={{ display: 'flex', gap: '20px', marginBottom: '30px', borderBottom: '1px solid #ddd' }}>
+            <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>
                 <button
                     onClick={() => setActiveTab('settings')}
                     style={{
-                        padding: '10px 20px',
+                        padding: '8px 16px',
+                        borderRadius: '6px',
                         border: 'none',
-                        background: 'none',
-                        borderBottom: activeTab === 'settings' ? '2px solid #007bff' : 'none',
-                        color: activeTab === 'settings' ? '#007bff' : '#666',
-                        fontWeight: activeTab === 'settings' ? '600' : '400',
+                        background: activeTab === 'settings' ? '#047a76ff' : '#f0f0f0',
+                        color: activeTab === 'settings' ? '#fff' : '#333',
                         cursor: 'pointer'
                     }}
                 >
-                    Settings & Content
+                    Update Contact Information
+                </button>
+                <button
+                    onClick={() => setActiveTab('content')}
+                    style={{
+                        padding: '8px 16px',
+                        borderRadius: '6px',
+                        border: 'none',
+                        background: activeTab === 'content' ? '#047a76ff' : '#f0f0f0',
+                        color: activeTab === 'content' ? '#fff' : '#333',
+                        cursor: 'pointer'
+                    }}
+                >
+                    Update Page Content
                 </button>
                 <button
                     onClick={() => setActiveTab('messages')}
                     style={{
-                        padding: '10px 20px',
+                        padding: '8px 16px',
+                        borderRadius: '6px',
                         border: 'none',
-                        background: 'none',
-                        borderBottom: activeTab === 'messages' ? '2px solid #007bff' : 'none',
-                        color: activeTab === 'messages' ? '#007bff' : '#666',
-                        fontWeight: activeTab === 'messages' ? '600' : '400',
+                        background: activeTab === 'messages' ? '#047a76ff' : '#f0f0f0',
+                        color: activeTab === 'messages' ? '#fff' : '#333',
                         cursor: 'pointer'
                     }}
                 >
-                    Inquiries ({messages.length})
+                    Inquiry Messages ({messages.length})
                 </button>
             </div>
 
-            {activeTab === 'settings' ? (
-                <form onSubmit={handleSubmit} className="form-section">
+            {activeTab === 'settings' && (
+                <form onSubmit={handleUpdateSettings} className="form-section">
 
                     {/* SECTION 1: GLOBAL CONTACT INFO */}
                     <div style={{ marginBottom: '40px' }}>
@@ -277,6 +302,17 @@ const ContactManager = () => {
                         </div>
                     </div>
 
+                    <div className="form-actions">
+                        <button type="submit" className="save-btn" disabled={isSaving}>
+                            <Save size={18} style={{ marginRight: '8px' }} />
+                            {isSaving ? 'Saving...' : 'Save Contact Information'}
+                        </button>
+                    </div>
+                </form>
+            )}
+
+            {activeTab === 'content' && (
+                <form onSubmit={handleUpdateContent} className="form-section">
                     {/* SECTION 2: PAGE CONTENT */}
                     <div style={{ marginBottom: '40px' }}>
                         <h3 style={{ borderBottom: '1px solid #eee', paddingBottom: '10px', marginBottom: '20px' }}>Page Content</h3>
@@ -305,11 +341,13 @@ const ContactManager = () => {
                     <div className="form-actions">
                         <button type="submit" className="save-btn" disabled={isSaving}>
                             <Save size={18} style={{ marginRight: '8px' }} />
-                            {isSaving ? 'Saving...' : 'Save All Changes'}
+                            {isSaving ? 'Saving...' : 'Save Page Content'}
                         </button>
                     </div>
                 </form>
-            ) : (
+            )}
+
+            {activeTab === 'messages' && (
                 <div className="messages-list" style={{ display: 'grid', gap: '20px' }}>
                     {messages.length === 0 ? (
                         <p style={{ textAlign: 'center', color: '#666', padding: '40px' }}>No inquiries received yet.</p>
