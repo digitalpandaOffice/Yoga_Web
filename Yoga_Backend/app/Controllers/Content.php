@@ -14,7 +14,8 @@ class Content extends Controller {
             'features' => [],
             'values' => [],
             'highlights' => [],
-            'footer' => []
+            'footer' => [],
+            'backgroundImages' => []
         ]);
     }
 
