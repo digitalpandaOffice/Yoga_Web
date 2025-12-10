@@ -18,6 +18,7 @@ async function fetchHomeContent() {
             updateHighlights(data.highlights);
             updateAuthority(data.authority);
             updateFooter(data.footer);
+            updateNotifications(data.notifications);
         }
     } catch (error) {
     }
@@ -217,5 +218,29 @@ function updateAuthority(authority) {
                 <p>${item.bio}</p>
             </div>
         </div>
+        </div>
     `).join('');
+}
+
+function updateNotifications(notifications) {
+    if (!notifications || !Array.isArray(notifications) || notifications.length === 0) return;
+    const container = document.getElementById('notifications-content');
+    if (!container) return;
+
+    // Build html: <span class="ticker-item"><a href="...">Text</a></span><span class="separator">|</span>...
+    let html = '';
+    notifications.forEach((item, index) => {
+        let content = item.text;
+        if (item.link) {
+            content = `<a href="${item.link}" style="color: inherit; text-decoration: none; cursor: pointer;">${item.text}</a>`;
+        }
+
+        html += `<span class="ticker-item">${content}</span>`;
+        if (index < notifications.length - 1) {
+            html += `<span class="separator">|</span>`;
+        }
+    });
+
+    // Make it loop seamlessly by duplicating content if needed, but for now simple list
+    container.innerHTML = html;
 }

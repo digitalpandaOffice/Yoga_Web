@@ -15,7 +15,12 @@ class Content extends Controller {
             'values' => [],
             'highlights' => [],
             'footer' => [],
-            'backgroundImages' => []
+            'backgroundImages' => [],
+            'notifications' => [
+                ['id' => 1, 'text' => '📢 Admissions Open for session 2025-26 Apply Now!', 'link' => 'admissions.html'],
+                ['id' => 2, 'text' => '🏆 Annual Art Festival dates announced for March 2025', 'link' => 'upcoming_events.html'],
+                ['id' => 3, 'text' => '📝 Download Hall Tickets for upcoming diploma exams', 'link' => 'admit_card.html']
+            ]
         ]);
     }
 

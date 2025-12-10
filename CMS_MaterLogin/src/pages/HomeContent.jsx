@@ -68,6 +68,12 @@ const HomeContent = () => {
         youtube: '#'
     });
 
+    const [notificationsData, setNotificationsData] = useState([
+        { id: 1, text: '📢 Admissions Open for session 2025-26 Apply Now!', link: 'admissions.html' },
+        { id: 2, text: '🏆 Annual Art Festival dates announced for March 2025', link: 'upcoming_events.html' },
+        { id: 3, text: '📝 Download Hall Tickets for upcoming diploma exams', link: 'admit_card.html' }
+    ]);
+
     useEffect(() => {
         fetchContent();
     }, []);
@@ -90,8 +96,10 @@ const HomeContent = () => {
                 if (data.features && data.features.length > 0) setFeaturesData(data.features);
                 if (data.values && data.values.length > 0) setValuesData(data.values);
                 if (data.highlights && data.highlights.length > 0) setHighlightsData(data.highlights);
+                if (data.highlights && data.highlights.length > 0) setHighlightsData(data.highlights);
                 if (data.authority && data.authority.length > 0) setAuthorityData(data.authority);
                 if (data.footer && Object.keys(data.footer).length > 0) setFooterData(data.footer);
+                if (data.notifications && data.notifications.length > 0) setNotificationsData(data.notifications);
             }
         } catch (err) {
             console.error("Failed to fetch content:", err);
@@ -113,8 +121,10 @@ const HomeContent = () => {
             features: featuresData,
             values: valuesData,
             highlights: highlightsData,
+            highlights: highlightsData,
             authority: authorityData,
-            footer: footerData
+            footer: footerData,
+            notifications: notificationsData
         };
 
         try {
@@ -200,6 +210,9 @@ const HomeContent = () => {
                     </button>
                     <button className={`tab-btn ${activeTab === 'authority' ? 'active' : ''}`} onClick={() => setActiveTab('authority')}>
                         <Star size={18} /> Authority
+                    </button>
+                    <button className={`tab-btn ${activeTab === 'notifications' ? 'active' : ''}`} onClick={() => setActiveTab('notifications')}>
+                        <Layout size={18} /> Notifications
                     </button>
                     <button className={`tab-btn ${activeTab === 'footer' ? 'active' : ''}`} onClick={() => setActiveTab('footer')}>
                         <Layout size={18} /> Footer
@@ -520,6 +533,49 @@ const HomeContent = () => {
                                 <button className="add-btn" onClick={() => addItem(setAuthorityData, authorityData, { name: 'Name', role: 'Role', bio: 'Bio...', image: '' })}>
                                     <Plus size={18} /> Add Authority
                                 </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === 'notifications' && (
+                        <div className="form-section">
+                            <h3>Latest Notifications</h3>
+                            <p className="field-hint">Add scrolling notifications for the homepage ticker.</p>
+                            <div className="dynamic-list">
+                                {notificationsData.map(item => (
+                                    <div key={item.id} className="list-item-card">
+                                        <button className="remove-btn" onClick={() => removeItem(setNotificationsData, notificationsData, item.id)}>
+                                            <Trash2 size={14} /> Remove
+                                        </button>
+                                        <div className="form-grid">
+                                            <div className="form-group full-width">
+                                                <label>Notification Text</label>
+                                                <textarea
+                                                    rows="2"
+                                                    value={item.text}
+                                                    onChange={(e) => updateItem(setNotificationsData, notificationsData, item.id, 'text', e.target.value)}
+                                                ></textarea>
+                                            </div>
+                                            <div className="form-group full-width">
+                                                <label>Link (Required)</label>
+                                                <input
+                                                    type="text"
+                                                    value={item.link || ''}
+                                                    onChange={(e) => updateItem(setNotificationsData, notificationsData, item.id, 'link', e.target.value)}
+                                                    placeholder="e.g., admissions.html"
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                                {notificationsData.length < 8 ? (
+                                    <button className="add-btn" onClick={() => addItem(setNotificationsData, notificationsData, { text: 'New Notification...', link: '' })}>
+                                        <Plus size={18} /> Add Notification
+                                    </button>
+                                ) : (
+                                    <p className="limit-reached-msg">Maximum 8 notifications allowed.</p>
+                                )}
                             </div>
                         </div>
                     )}

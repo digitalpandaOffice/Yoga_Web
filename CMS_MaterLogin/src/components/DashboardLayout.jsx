@@ -16,7 +16,8 @@ import {
     Folder,
     ChevronDown,
     ChevronRight,
-    MessageSquare
+    FileInput,
+    MessageSquare,
 } from 'lucide-react';
 import logo from '../assets/images/AdvayuLogo.png';
 import { endpoints } from '../config';
@@ -106,6 +107,7 @@ const DashboardLayout = () => {
             ]
         },
         { icon: Image, label: 'Gallery', path: '/dashboard/gallery' },
+        { icon: FileInput, label: 'Courses & Programs', path: '/dashboard/courses-programs' },
         { icon: Calendar, label: 'Events', path: '/dashboard/events' },
         { icon: Folder, label: 'File Manager', path: '/dashboard/file-manager' },
         {
