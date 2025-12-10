@@ -86,16 +86,18 @@
     <main>
         <section class="page-header careers-header">
             <div class="container">
-                <h1>Career Pathways</h1>
-                <p>Your journey with Edvayu is just the beginning. Discover the vast opportunities waiting for you in
+                <h1 id="careers-header-title">Career Pathways</h1>
+                <p id="careers-header-desc">Your journey with Edvayu is just the beginning. Discover the vast
+                    opportunities waiting for you in
                     the world of arts and culture.</p>
             </div>
         </section>
 
         <section class="careers-intro container">
             <div class="intro-content">
-                <h2>Beyond the Classroom</h2>
-                <p>At Edvayu Educational Foundations, we don't just teach art; we prepare you for a lifelong career. Our
+                <h2 id="intro-title">Beyond the Classroom</h2>
+                <p id="intro-desc">At Edvayu Educational Foundations, we don't just teach art; we prepare you for a
+                    lifelong career. Our
                     comprehensive curriculum and industry connections ensure that you graduate with the skills,
                     confidence, and network needed to thrive in the creative economy.</p>
             </div>
@@ -103,13 +105,14 @@
 
         <section class="career-scopes container" style="padding-bottom: 80px;">
             <h2 class="section-heading">Where Your Degree Can Take You</h2>
-            <div class="perks-grid">
+            <div class="perks-grid" id="scopes-grid">
                 <div class="perk-item">
                     <span class="perk-icon">🎭</span>
                     <h4>Professional Performer</h4>
                     <p>Launch a career as a solo artist or company member in dance, music, or theatre, performing on
                         national and international stages.</p>
                 </div>
+                <!-- ... (other items will be dynamically rendered, but keeping placeholders is fine or can be cleared) -->
                 <div class="perk-item">
                     <span class="perk-icon">👩‍🏫</span>
                     <h4>Arts Educator</h4>
@@ -146,7 +149,7 @@
         <section class="industry-connect" style="background: #f9f9f9; padding: 80px 20px;">
             <div class="container">
                 <h2 class="section-heading">How We Support You</h2>
-                <div class="jobs-list">
+                <div class="jobs-list" id="support-list">
                     <div class="job-card">
                         <div class="job-header">
                             <h3>Industry Internships</h3>
@@ -174,10 +177,11 @@
 
         <section class="cta-section">
             <div class="container">
-                <h3>Start Your Career in the Arts</h3>
-                <p>Admission is open for the upcoming academic session. Take the first step towards your dream career.
+                <h3 id="cta-title">Start Your Career in the Arts</h3>
+                <p id="cta-desc">Admission is open for the upcoming academic session. Take the first step towards your
+                    dream career.
                 </p>
-                <a href="admissions.html" class="btn primary">Apply for Admission</a>
+                <a href="admissions.html" class="btn primary" id="cta-btn">Apply for Admission</a>
             </div>
         </section>
     </main>
@@ -200,7 +204,7 @@
         <div class="copyright">© 2025 Edvayu Educational Foundations.</div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="js/dynamic-careers.js"></script>
 </body>
 
 </html>

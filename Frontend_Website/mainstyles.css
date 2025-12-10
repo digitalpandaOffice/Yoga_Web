@@ -223,12 +223,17 @@ body {
   text-align: center;
   max-width: 800px;
   margin: 0 auto 60px;
-  margin-top: 50px;
+  margin-top: 100px;
 }
 
 .about-header h2 {
   font-family: 'Merriweather', serif;
   display: inline-block;
+  font-size: 2.5rem;
+}
+
+.about-intro h3 {
+  font-size: 1.5rem;
 }
 
 .about-intro h3::after {
@@ -240,6 +245,7 @@ body {
   height: 3px;
   background: var(--gold);
 }
+
 
 .about-intro p {
   color: var(--muted);
@@ -288,6 +294,11 @@ body {
   font-size: 0.95rem;
 }
 
+.about-cta .outline {
+  border: 2px solid var(--deep-blue);
+  color: var(--deep-blue);
+}
+
 .section-about-container {
   max-width: 1200px;
   margin: 0 auto 50px;
@@ -313,7 +324,7 @@ body {
 .key-features h4 {
   color: var(--deep-blue);
   font-family: 'Merriweather', serif;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   margin-bottom: 30px;
 }
 

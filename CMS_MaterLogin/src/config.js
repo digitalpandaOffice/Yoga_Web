@@ -20,6 +20,7 @@ export const endpoints = {
     galleryContent: `${API_BASE_URL}/content/gallerySection`,
     eventsContent: `${API_BASE_URL}/content/events`,
     contactContent: `${API_BASE_URL}/content/contact`,
+    careersContent: `${API_BASE_URL}/content/careers`,
     galleryList: `${API_BASE_URL}/Gallery`,
     galleryCreate: `${API_BASE_URL}/Gallery/create`,
     galleryDelete: `${API_BASE_URL}/Gallery/delete`,

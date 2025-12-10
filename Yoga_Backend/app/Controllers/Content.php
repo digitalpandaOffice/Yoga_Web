@@ -182,6 +182,39 @@ class Content extends Controller {
         ]);
     }
 
+    // GET /content/careers
+    public function careers() {
+        $this->handleGetContent('careers', [
+            'hero' => [
+                'title' => 'Career Pathways',
+                'subtitle' => 'Your journey with Edvayu is just the beginning. Discover the vast opportunities waiting for you in the world of arts and culture.'
+            ],
+            'intro' => [
+                'title' => 'Beyond the Classroom',
+                'description' => 'At Edvayu Educational Foundations, we don\'t just teach art; we prepare you for a lifelong career. Our comprehensive curriculum and industry connections ensure that you graduate with the skills, confidence, and network needed to thrive in the creative economy.'
+            ],
+            'scopes' => [
+                ['id' => 1, 'icon' => '🎭', 'title' => 'Professional Performer', 'desc' => 'Launch a career as a solo artist or company member in dance, music, or theatre, performing on national and international stages.'],
+                ['id' => 2, 'icon' => '👩‍🏫', 'title' => 'Arts Educator', 'desc' => 'Inspire the next generation by teaching in schools, universities, private academies, or by establishing your own institution.'],
+                ['id' => 3, 'icon' => '🎬', 'title' => 'Choreographer / Composer', 'desc' => 'Create original works for stage productions, films, television, and cultural festivals, defining the artistic landscape.'],
+                ['id' => 4, 'icon' => '🌍', 'title' => 'Cultural Ambassador', 'desc' => 'Represent Indian heritage in international cultural exchange programs, festivals, and diplomatic missions.'],
+                ['id' => 5, 'icon' => '🏛️', 'title' => 'Arts Management', 'desc' => 'Work behind the scenes in administration, curation, and event management for museums, cultural centers, and art galleries.'],
+                ['id' => 6, 'icon' => '🧘', 'title' => 'Wellness & Therapy', 'desc' => 'Combine your artistic skills with holistic health to become a yoga instructor, dance movement therapist, or wellness coach.']
+            ],
+            'support' => [
+                ['id' => 1, 'title' => 'Industry Internships', 'desc' => 'We partner with leading cultural organizations to provide hands-on internship opportunities for our final-year students.'],
+                ['id' => 2, 'title' => 'Placement Assistance', 'desc' => 'Our dedicated placement cell helps connect you with schools, universities, and performing arts companies looking for talent.'],
+                ['id' => 3, 'title' => 'Alumni Network', 'desc' => 'Join a global community of successful alumni who provide mentorship, guidance, and networking opportunities.']
+            ],
+            'cta' => [
+                'title' => 'Start Your Career in the Arts',
+                'text' => 'Admission is open for the upcoming academic session. Take the first step towards your dream career.',
+                'buttonText' => 'Apply for Admission',
+                'buttonLink' => 'admissions.html'
+            ]
+        ]);
+    }
+
     private function handleGetContent($page, $defaultStructure) {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
             $this->json(['error' => 'Method not allowed'], 405);

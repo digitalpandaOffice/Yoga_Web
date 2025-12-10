@@ -23,6 +23,7 @@ import EventsManager from './pages/EventsManager';
 import PoliciesManager from './pages/PoliciesManager';
 import AlumniManager from './pages/AlumniManager';
 import ContactManager from './pages/ContactManager';
+import CareersContent from './pages/CareersContent';
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
           <Route path="events" element={<EventsManager />} />
 
           {/* Other */}
+          <Route path="other/careers" element={<CareersContent />} />
           <Route path="other/policies" element={<PoliciesManager />} />
           <Route path="other/alumni" element={<AlumniManager />} />
           <Route path="other/contact" element={<ContactManager />} />
