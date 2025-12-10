@@ -42,13 +42,54 @@ function updateHero(hero) {
         if (ctaLinkEl) ctaLinkEl.setAttribute('href', hero.ctaLink);
     }
 
-    // Update background image via CSS variable or direct style
-    if (hero.backgroundImage) {
-        const heroSection = document.getElementById('hero');
-        if (heroSection) {
+    // Update background
+    const heroSection = document.getElementById('hero');
+    if (heroSection) {
+        if (hero.backgroundImages && Array.isArray(hero.backgroundImages) && hero.backgroundImages.length > 0) {
+            // Slideshow mode
+            heroSection.style.backgroundImage = 'none';
+
+            let slideshowContainer = heroSection.querySelector('.hero-slideshow');
+            if (!slideshowContainer) {
+                slideshowContainer = document.createElement('div');
+                slideshowContainer.className = 'hero-slideshow';
+                const overlay = heroSection.querySelector('.hero-overlay');
+                if (overlay) {
+                    heroSection.insertBefore(slideshowContainer, overlay);
+                } else {
+                    heroSection.prepend(slideshowContainer);
+                }
+            }
+
+            // Only update if images changed (simple check) or just rebuild
+            slideshowContainer.innerHTML = hero.backgroundImages.map((img, index) =>
+                `<div class="hero-slide ${index === 0 ? 'active' : ''}" style="background-image: url('${img}')"></div>`
+            ).join('');
+
+            // Start rotation
+            if (heroSection._slideInterval) clearInterval(heroSection._slideInterval);
+
+            const slides = slideshowContainer.querySelectorAll('.hero-slide');
+            let currentSlide = 0;
+
+            if (slides.length > 1) {
+                heroSection._slideInterval = setInterval(() => {
+                    slides[currentSlide].classList.remove('active');
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    slides[currentSlide].classList.add('active');
+                }, 5000);
+            }
+
+        } else if (hero.backgroundImage) {
+            // Single image mode
             heroSection.style.backgroundImage = `url('${hero.backgroundImage}')`;
             heroSection.style.backgroundSize = 'cover';
             heroSection.style.backgroundPosition = 'center';
+
+            // Cleanup slideshow if exists
+            const existingSlideshow = heroSection.querySelector('.hero-slideshow');
+            if (existingSlideshow) existingSlideshow.remove();
+            if (heroSection._slideInterval) clearInterval(heroSection._slideInterval);
         }
     }
 }

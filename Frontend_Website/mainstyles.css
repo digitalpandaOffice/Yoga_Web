@@ -176,6 +176,8 @@ body {
 
 /* Hero */
 .hero {
+  position: relative;
+  /* Ensure hero is relative for absolute children */
   background: linear-gradient(rgba(11, 37, 69, 0.55), rgba(11, 37, 69, 0.65)), url('https://mapmygenome.in/cdn/shop/articles/The_Science_Behind_Yoga_and_Its_Benefits_for_Mental_Health.jpg?v=1738302589&width=1780') center/cover no-repeat;
   height: 90vh;
   display: flex;
@@ -183,6 +185,53 @@ body {
   justify-content: center;
   color: var(--ivory);
   text-align: center;
+  overflow: hidden;
+  /* Prevent spillover */
+}
+
+.hero-slideshow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.hero-slide.active {
+  opacity: 1;
+}
+
+/* Ensure overlay is consistent if used, or relies on slide's own overlay if built-in.
+   But typically we want a dark overlay ON TOP of the image but BELOW content.
+*/
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(11, 37, 69, 0.55), rgba(11, 37, 69, 0.65));
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Content z-index adjustment */
+.hero-content {
+  position: relative;
+  z-index: 2;
 }
 
 .hero h1 {

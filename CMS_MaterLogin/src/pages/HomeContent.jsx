@@ -15,7 +15,8 @@ const HomeContent = () => {
         subtitle: 'Diploma courses and training programs in Indian Art, Music & Culture — where heritage meets contemporary practice.',
         ctaText: 'Explore Courses',
         ctaLink: '/courses',
-        backgroundImage: 'https://mapmygenome.in/cdn/shop/articles/The_Science_Behind_Yoga_and_Its_Benefits_for_Mental_Health.jpg'
+        backgroundImage: 'https://mapmygenome.in/cdn/shop/articles/The_Science_Behind_Yoga_and_Its_Benefits_for_Mental_Health.jpg',
+        backgroundImages: []
     });
 
     const [aboutData, setAboutData] = useState({
@@ -78,7 +79,12 @@ const HomeContent = () => {
             const data = await response.json();
 
             if (data) {
-                if (data.hero && Object.keys(data.hero).length > 0) setHeroData(data.hero);
+                if (data.hero && Object.keys(data.hero).length > 0) {
+                    setHeroData({
+                        ...data.hero,
+                        backgroundImages: data.hero.backgroundImages || (data.hero.backgroundImage ? [data.hero.backgroundImage] : [])
+                    });
+                }
                 if (data.about && Object.keys(data.about).length > 0) setAboutData(data.about);
                 if (data.stats && Object.keys(data.stats).length > 0) setStatsData(data.stats);
                 if (data.features && data.features.length > 0) setFeaturesData(data.features);
@@ -224,15 +230,58 @@ const HomeContent = () => {
                                         <input type="text" value={heroData.ctaLink} onChange={(e) => setHeroData({ ...heroData, ctaLink: e.target.value })} placeholder="/courses or https://..." />
                                     </div>
                                     <div className="form-group full-width">
-                                        <label>Background Image URL</label>
-                                        <div className="url-input-group">
-                                            <input type="text" value={heroData.backgroundImage} onChange={(e) => setHeroData({ ...heroData, backgroundImage: e.target.value })} />
-                                            <button className="secondary-btn small">Update</button>
+                                        <label>Background Images (Slider - Max 3)</label>
+                                        <p className="field-hint">Add up to 3 images for the hero slider. The 3rd image will be used if set.</p>
+                                        <div className="dynamic-list-simple">
+                                            {heroData.backgroundImages && heroData.backgroundImages.map((img, index) => (
+                                                <div key={index} className="url-input-group" style={{ marginBottom: '10px' }}>
+                                                    <input
+                                                        type="text"
+                                                        value={img}
+                                                        onChange={(e) => {
+                                                            const newImages = [...(heroData.backgroundImages || [])];
+                                                            newImages[index] = e.target.value;
+                                                            setHeroData({ ...heroData, backgroundImages: newImages });
+                                                        }}
+                                                        placeholder="Image URL"
+                                                    />
+                                                    <button
+                                                        className="remove-btn icon-only"
+                                                        onClick={() => {
+                                                            const newImages = heroData.backgroundImages.filter((_, i) => i !== index);
+                                                            setHeroData({ ...heroData, backgroundImages: newImages });
+                                                        }}
+                                                    >
+                                                        <Trash2 size={16} />
+                                                    </button>
+                                                </div>
+                                            ))}
+                                            {(!heroData.backgroundImages || heroData.backgroundImages.length < 3) && (
+                                                <button
+                                                    className="add-btn"
+                                                    onClick={() => setHeroData({
+                                                        ...heroData,
+                                                        backgroundImages: [...(heroData.backgroundImages || []), '']
+                                                    })}
+                                                >
+                                                    <Plus size={16} /> Add Image
+                                                </button>
+                                            )}
                                         </div>
-                                        {heroData.backgroundImage && (
-                                            <div className="image-preview-box">
-                                                <p className="preview-label">Preview:</p>
-                                                <img src={heroData.backgroundImage} alt="Hero Background" className="preview-img" />
+
+                                        {/* Preview of all images */}
+                                        {heroData.backgroundImages && heroData.backgroundImages.length > 0 && (
+                                            <div className="previews-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginTop: '15px' }}>
+                                                {heroData.backgroundImages.map((img, idx) => (
+                                                    img && (
+                                                        <div key={idx} className="preview-item">
+                                                            <p className="preview-label" style={{ fontSize: '0.8rem', marginBottom: '5px' }}>Slide {idx + 1}:</p>
+                                                            <div className="aspect-ratio-box" style={{ width: '100%', height: '100px', backgroundColor: '#eee', borderRadius: '6px', overflow: 'hidden' }}>
+                                                                <img src={img} alt={`Slide ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                ))}
                                             </div>
                                         )}
                                     </div>
