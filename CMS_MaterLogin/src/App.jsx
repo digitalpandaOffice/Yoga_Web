@@ -24,6 +24,7 @@ import PoliciesManager from './pages/PoliciesManager';
 import AlumniManager from './pages/AlumniManager';
 import ContactManager from './pages/ContactManager';
 import CareersContent from './pages/CareersContent';
+import CoursesPrograms from './pages/CoursesPrograms';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route index element={<DashboardHome />} />
           <Route path="home-content" element={<HomeContent />} />
           <Route path="file-manager" element={<FileManager />} />
+          <Route path="courses-programs" element={<CoursesPrograms />} />
 
           {/* Student Area */}
           <Route path="student-area/admissions" element={<Admissions />} />

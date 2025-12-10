@@ -19,6 +19,7 @@ async function fetchHomeContent() {
             updateAuthority(data.authority);
             updateFooter(data.footer);
             updateNotifications(data.notifications);
+            updateCourses(data.courses);
         }
     } catch (error) {
     }
@@ -243,4 +244,38 @@ function updateNotifications(notifications) {
 
     // Make it loop seamlessly by duplicating content if needed, but for now simple list
     container.innerHTML = html;
+}
+
+function updateCourses(courses) {
+    if (!courses || !Array.isArray(courses)) return;
+    const container = document.getElementById('coursesGrid');
+    if (!container) return;
+
+    container.innerHTML = courses.map(course => {
+        // Build tags html
+        const tagsHtml = (course.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('');
+
+        return `
+        <article class="course-card" data-category="${course.category}" data-level="${course.level}" data-duration="${course.duration}">
+          <div class="badge">${course.level.charAt(0).toUpperCase() + course.level.slice(1)}</div>
+          <img src="${course.image}" alt="${course.title}">
+          <div class="card-body">
+            <h3>${course.title}</h3>
+            <p>${course.description}</p>
+            <div class="course-meta">
+              <span>Duration: ${course.duration}</span>
+              <span>Mode: ${course.mode}</span>
+            </div>
+            <div class="tags">
+              ${tagsHtml}
+            </div>
+            <button class="btn sm view-details" 
+                data-title="${course.title}"
+                data-description="${course.details}"
+                data-duration="${course.duration}" 
+                data-level="${course.level.charAt(0).toUpperCase() + course.level.slice(1)}">View Details</button>
+          </div>
+        </article>
+        `;
+    }).join('');
 }

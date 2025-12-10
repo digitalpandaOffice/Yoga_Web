@@ -20,6 +20,56 @@ class Content extends Controller {
                 ['id' => 1, 'text' => '📢 Admissions Open for session 2025-26 Apply Now!', 'link' => 'admissions.html'],
                 ['id' => 2, 'text' => '🏆 Annual Art Festival dates announced for March 2025', 'link' => 'upcoming_events.html'],
                 ['id' => 3, 'text' => '📝 Download Hall Tickets for upcoming diploma exams', 'link' => 'admit_card.html']
+            ],
+            'courses' => [
+                [
+                    'id' => 1,
+                    'title' => 'Fine Arts Diploma',
+                    'category' => 'art',
+                    'level' => 'beginner',
+                    'duration' => '6 months',
+                    'mode' => 'Offline/Online',
+                    'image' => 'https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=800&q=60',
+                    'description' => 'Foundations in drawing, painting, and mixed media for expressive development.',
+                    'details' => 'A structured foundation program covering drawing techniques, painting, color theory, and composition. Includes weekly studio sessions and critiques.',
+                    'tags' => ['Sketching', 'Painting', 'Color Theory']
+                ],
+                [
+                    'id' => 2,
+                    'title' => 'Classical Dance Diploma',
+                    'category' => 'dance',
+                    'level' => 'intermediate',
+                    'duration' => '9 months',
+                    'mode' => 'Studio',
+                    'image' => 'https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=800&q=60',
+                    'description' => 'Rigorous training in classical forms, choreography and performance.',
+                    'details' => 'Performance-centric curriculum focusing on classical repertoire, technique, abhinaya, and choreography.',
+                    'tags' => ['Bharatanatyam', 'Kathak', 'Choreography']
+                ],
+                [
+                    'id' => 3,
+                    'title' => 'Music Production',
+                    'category' => 'music',
+                    'level' => 'advanced',
+                    'duration' => '12 months',
+                    'mode' => 'Hybrid',
+                    'image' => 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=800&q=60',
+                    'description' => 'Advanced techniques in sound engineering, composition and production.',
+                    'details' => 'Master the art of music production with hands-on training in industry-standard software and studio equipment.',
+                    'tags' => ['Production', 'Sound Engineering', 'Composition']
+                ],
+                [
+                    'id' => 4,
+                    'title' => 'Theatre Arts',
+                    'category' => 'theatre',
+                    'level' => 'beginner',
+                    'duration' => '6 months',
+                    'mode' => 'Offline',
+                    'image' => 'https://images.unsplash.com/photo-1507676184212-d0370baf122a?auto=format&fit=crop&w=800&q=60',
+                    'description' => 'Introduction to acting, voice modulation, and stage presence.',
+                    'details' => 'Explore the fundamentals of theatre arts, including acting techniques, character building, and stagecraft.',
+                    'tags' => ['Acting', 'Voice', 'Stagecraft']
+                ]
             ]
         ]);
     }
@@ -231,6 +281,9 @@ class Content extends Controller {
 
         if (empty($data)) {
             $data = $defaultStructure;
+        } else {
+            // Merge defaults to ensure new fields (like 'courses') appear in existing data
+            $data = array_merge($defaultStructure, $data);
         }
 
         $this->json($data);
