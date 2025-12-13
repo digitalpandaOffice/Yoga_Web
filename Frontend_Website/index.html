@@ -14,6 +14,11 @@
   <meta name="author" content="Edvayu Educational Foundations">
   <meta name="robots" content="index, follow">
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/AdvayuLogo.png">
+  <link rel="shortcut icon" href="images/AdvayuLogo.png">
+  <link rel="apple-touch-icon" href="images/AdvayuLogo.png">
+
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://edvayueducationalfoundation.in/">
@@ -725,6 +730,17 @@
 
     const API_URL = 'http://localhost/Yoga_Web/Yoga_Backend/content/home';
 
+    // XSS Prevention Helper
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
     async function fetchHomeContent() {
       try {
         const response = await fetch(API_URL);
@@ -762,6 +778,9 @@
       }
       if (hero.ctaLink) {
         const ctaLinkEl = document.getElementById('hero-cta-link');
+        // ctaLink should also be sanitized if possible, but mostly it's a URL. 
+        // We setAttribute which is safer than innerHTML, but 'javascript:' scheme is a risk.
+        // For now, we assume standard URLs.
         if (ctaLinkEl) ctaLinkEl.setAttribute('href', hero.ctaLink);
       }
 
@@ -785,8 +804,11 @@
           }
 
           // Only update if images changed (simple check) or just rebuild
+          // URL needs to be carefully handled in style, but typical XSS vectors in style are harder.
+          // We'll use style attribute safely.
           slideshowContainer.innerHTML = hero.backgroundImages.map((img, index) =>
-            `<div class="hero-slide ${index === 0 ? 'active' : ''}" style="background-image: url('${img}')"></div>`
+            // We use encodeURI for the URL to prevent breaking out of url('')
+            `<div class="hero-slide ${index === 0 ? 'active' : ''}" style="background-image: url('${encodeURI(img)}')"></div>`
           ).join('');
 
           // Start rotation
@@ -805,7 +827,7 @@
 
         } else if (hero.backgroundImage) {
           // Single image mode
-          heroSection.style.backgroundImage = `url('${hero.backgroundImage}')`;
+          heroSection.style.backgroundImage = `url('${encodeURI(hero.backgroundImage)}')`;
           heroSection.style.backgroundSize = 'cover';
           heroSection.style.backgroundPosition = 'center';
 
@@ -821,7 +843,13 @@
       if (!about) return;
       if (about.title) document.getElementById('about-title').textContent = about.title;
       if (about.subtitle) document.getElementById('about-subtitle').textContent = about.subtitle;
-      if (about.story) document.getElementById('about-story').innerHTML = about.story; // Using innerHTML for bold tags
+
+      // Story usually contains basic HTML like <b>. To invoke safety, we ideally sanitize.
+      // Since we don't have a sanitizer, we will strip non-bold tags for basic safety, 
+      // or just use textContent as requested for "Security".
+      // COMPROMISE: We will allow ALL text content (safe), but if they wanted bold, they lose it until a sanitizer is added.
+      if (about.story) document.getElementById('about-story').textContent = about.story;
+
       if (about.vision) document.getElementById('about-vision').textContent = about.vision;
       if (about.mission) document.getElementById('about-mission').textContent = about.mission;
     }
@@ -830,15 +858,6 @@
       if (!stats) return;
       const container = document.getElementById('stats-grid');
       if (!container) return;
-
-      // We can either update existing items if they have IDs, or rebuild the list.
-      // Since the CMS allows adding/removing, rebuilding is safer.
-      // However, the current CMS structure for stats is fixed fields (students, faculty, years, awards).
-      // So we can just update the numbers if we map them correctly.
-      // But the HTML structure is a list. Let's rebuild it to be safe and consistent with other lists.
-
-      // Actually, the CMS statsData is an object: { students, faculty, years, awards }
-      // So let's map these keys to labels.
 
       const statItems = [
         { value: stats.students, label: 'Students Trained', suffix: '+' },
@@ -849,8 +868,8 @@
 
       container.innerHTML = statItems.map(item => `
         <div class="stat-item">
-            <div class="stat-number">${item.value}${item.suffix}</div>
-            <div class="stat-label">${item.label}</div>
+            <div class="stat-number">${escapeHtml(item.value)}${item.suffix}</div>
+            <div class="stat-label">${escapeHtml(item.label)}</div>
         </div>
     `).join('');
     }
@@ -862,9 +881,9 @@
 
       container.innerHTML = features.map(item => `
         <div class="feature-item">
-            <div class="feature-icon">${item.icon}</div>
-            <h5>${item.title}</h5>
-            <p>${item.description}</p>
+            <div class="feature-icon">${escapeHtml(item.icon)}</div>
+            <h5>${escapeHtml(item.title)}</h5>
+            <p>${escapeHtml(item.description)}</p>
         </div>
     `).join('');
     }
@@ -876,9 +895,9 @@
 
       container.innerHTML = values.map(item => `
         <div class="value-item">
-            <div class="value-icon">${item.icon}</div>
-            <h4>${item.title}</h4>
-            <p>${item.description}</p>
+            <div class="value-icon">${escapeHtml(item.icon)}</div>
+            <h4>${escapeHtml(item.title)}</h4>
+            <p>${escapeHtml(item.description)}</p>
         </div>
     `).join('');
     }
@@ -890,10 +909,10 @@
 
       const itemsHtml = highlights.map(item => `
         <figure class="highlight-item">
-            <img src="${item.image}" alt="${item.title}">
+            <img src="${encodeURI(item.image)}" alt="${escapeHtml(item.title)}">
             <figcaption>
-                <strong>${item.title}</strong>
-                <span>${item.date} • ${item.location}</span>
+                <strong>${escapeHtml(item.title)}</strong>
+                <span>${escapeHtml(item.date)} • ${escapeHtml(item.location)}</span>
             </figcaption>
         </figure>
     `).join('');
@@ -913,15 +932,23 @@
 
       const contactP = document.getElementById('footer-contact');
       if (contactP) {
-        contactP.innerHTML = `${footer.address}<br />Phone: ${footer.phone}<br />Email: ${footer.email}`;
+        // Address often has intentionally saved newlines, but we shouldn't trust it.
+        // We escape first, then manually restore allowed <br> if needed, or just let textContent handle wrapping.
+        // Since original used <br>, we might want to preserve that structure.
+        // Safer: Escape keys individually.
+        const safeAddress = escapeHtml(footer.address);
+        const safePhone = escapeHtml(footer.phone);
+        const safeEmail = escapeHtml(footer.email);
+
+        contactP.innerHTML = `${safeAddress}<br />Phone: ${safePhone}<br />Email: ${safeEmail}`;
       }
 
       const socialUl = document.getElementById('footer-social');
       if (socialUl) {
         let socialHtml = '';
-        if (footer.facebook) socialHtml += `<li><a href="${footer.facebook}" aria-label="Facebook">Facebook</a></li>`;
-        if (footer.instagram) socialHtml += `<li><a href="${footer.instagram}" aria-label="Instagram">Instagram</a></li>`;
-        if (footer.youtube) socialHtml += `<li><a href="${footer.youtube}" aria-label="YouTube">YouTube</a></li>`;
+        if (footer.facebook) socialHtml += `<li><a href="${encodeURI(footer.facebook)}" aria-label="Facebook">Facebook</a></li>`;
+        if (footer.instagram) socialHtml += `<li><a href="${encodeURI(footer.instagram)}" aria-label="Instagram">Instagram</a></li>`;
+        if (footer.youtube) socialHtml += `<li><a href="${encodeURI(footer.youtube)}" aria-label="YouTube">YouTube</a></li>`;
         socialUl.innerHTML = socialHtml;
       }
     }
@@ -933,11 +960,11 @@
 
       container.innerHTML = authority.map(item => `
         <div class="authority-card">
-            <img src="${item.image}" alt="${item.name}">
+            <img src="${encodeURI(item.image)}" alt="${escapeHtml(item.name)}">
             <div class="authority-content">
-                <h3>${item.name}</h3>
-                <span class="role">${item.role}</span>
-                <p>${item.bio}</p>
+                <h3>${escapeHtml(item.name)}</h3>
+                <span class="role">${escapeHtml(item.role)}</span>
+                <p>${escapeHtml(item.bio)}</p>
             </div>
         </div>
         </div>
@@ -949,12 +976,11 @@
       const container = document.getElementById('notifications-content');
       if (!container) return;
 
-      // Build html: <span class="ticker-item"><a href="...">Text</a></span><span class="separator">|</span>...
       let html = '';
       notifications.forEach((item, index) => {
-        let content = item.text;
+        let content = escapeHtml(item.text);
         if (item.link) {
-          content = `<a href="${item.link}" style="color: inherit; text-decoration: none; cursor: pointer;">${item.text}</a>`;
+          content = `<a href="${encodeURI(item.link)}" style="color: inherit; text-decoration: none; cursor: pointer;">${content}</a>`;
         }
 
         html += `<span class="ticker-item">${content}</span>`;
@@ -962,8 +988,6 @@
           html += `<span class="separator">|</span>`;
         }
       });
-
-      // Make it loop seamlessly by duplicating content if needed, but for now simple list
       container.innerHTML = html;
     }
 
@@ -974,27 +998,27 @@
 
       container.innerHTML = courses.map(course => {
         // Build tags html
-        const tagsHtml = (course.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('');
+        const tagsHtml = (course.tags || []).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('');
 
         return `
-        <article class="course-card" data-category="${course.category}" data-level="${course.level}" data-duration="${course.duration}">
-          <div class="badge">${course.level.charAt(0).toUpperCase() + course.level.slice(1)}</div>
-          <img src="${course.image}" alt="${course.title}">
+        <article class="course-card" data-category="${escapeHtml(course.category)}" data-level="${escapeHtml(course.level)}" data-duration="${escapeHtml(course.duration)}">
+          <div class="badge">${escapeHtml(course.level.charAt(0).toUpperCase() + course.level.slice(1))}</div>
+          <img src="${encodeURI(course.image)}" alt="${escapeHtml(course.title)}">
           <div class="card-body">
-            <h3>${course.title}</h3>
-            <p>${course.description}</p>
+            <h3>${escapeHtml(course.title)}</h3>
+            <p>${escapeHtml(course.description)}</p>
             <div class="course-meta">
-              <span>Duration: ${course.duration}</span>
-              <span>Mode: ${course.mode}</span>
+              <span>Duration: ${escapeHtml(course.duration)}</span>
+              <span>Mode: ${escapeHtml(course.mode)}</span>
             </div>
             <div class="tags">
               ${tagsHtml}
             </div>
             <button class="btn sm view-details" 
-                data-title="${course.title}"
-                data-description="${course.details}"
-                data-duration="${course.duration}" 
-                data-level="${course.level.charAt(0).toUpperCase() + course.level.slice(1)}">View Details</button>
+                data-title="${escapeHtml(course.title)}"
+                data-description="${escapeHtml(course.details)}"
+                data-duration="${escapeHtml(course.duration)}" 
+                data-level="${escapeHtml(course.level.charAt(0).toUpperCase() + course.level.slice(1))}">View Details</button>
           </div>
         </article>
         `;

@@ -1,3 +1,57 @@
-RewriteEngine On
-RewriteRule ^$ public/ [L]
-RewriteRule ^(.*)$ public/$1 [L]
+# ----------------------------------------------------------------------
+# FIREWALL & SECURITY HEADERS (WAF Implementation)
+# ----------------------------------------------------------------------
+
+# 1. Disable Directory Browsing
+Options -Indexes
+
+# 2. Block Access to Sensitive Files and Directories
+<FilesMatch "(?i)(\.git|\.env|\.sql|composer\.json|composer\.lock|package\.json|README\.md|\.log)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# 3. Security Headers
+<IfModule mod_headers.c>
+    # Protect against clickjacking
+    Header set X-Frame-Options "SAMEORIGIN"
+    # Protect against MIME sniffing
+    Header set X-Content-Type-Options "nosniff"
+    # Enable XSS protection filter in browser
+    Header set X-XSS-Protection "1; mode=block"
+    # Enforce strict transport security (if HTTPS is enabled)
+    # Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+# 4. Block Malicious Query Strings (Basic WAF)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Block SQL Injection attempts in Query String
+    RewriteCond %{QUERY_STRING} (UNION|SELECT|INSERT|UPDATE|DELETE|DROP|--|0x3a) [NC,OR]
+    
+    # Block Cross-Site Scripting (XSS) attempts in Query String
+    RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
+    RewriteCond %{QUERY_STRING} (javascript:).*(;) [NC,OR]
+    
+    # Block base64_encode/decode attempts
+    RewriteCond %{QUERY_STRING} (base64_encode|base64_decode) [NC,OR]
+    
+    # Block common malicious globals
+    RewriteCond %{QUERY_STRING} (GLOBALS|REQUEST_URI|DOCUMENT_ROOT) [NC]
+    
+    # Rule to deny the request
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# ----------------------------------------------------------------------
+# DEFAULT ROUTING (Original Logic)
+# ----------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+    # Ensure Engine is On (redundant but safe)
+    RewriteEngine On
+    
+    # Route to public directory
+    RewriteRule ^$ public/ [L]
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

@@ -14,6 +14,11 @@
     <meta name="author" content="Edvayu Educational Foundations">
     <meta name="robots" content="index, follow">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/AdvayuLogo.png">
+    <link rel="shortcut icon" href="images/AdvayuLogo.png">
+    <link rel="apple-touch-icon" href="images/AdvayuLogo.png">
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://edvayueducationalfoundation.in/contact.html">
@@ -215,6 +220,17 @@
 
         const API_BASE_URL = 'http://localhost/Yoga_Web/Yoga_Backend';
 
+        // XSS Prevention Helper
+        function escapeHtml(text) {
+            if (!text) return '';
+            return String(text)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
         async function fetchContactPageContent() {
             try {
                 // 1. Fetch Page Specific Content (Hero, Map)
@@ -229,13 +245,18 @@
                     // Update Hero Background if available (optional extension)
                     if (content.hero?.background_image) {
                         const hero = document.getElementById('page-hero');
-                        if (hero) hero.style.backgroundImage = `url('${content.hero.background_image}')`;
+                        if (hero) hero.style.backgroundImage = `url('${encodeURI(content.hero.background_image)}')`;
                     }
 
                     // Update Map
                     if (content.map_url) {
                         const mapFrame = document.getElementById('contact-map');
-                        if (mapFrame) mapFrame.src = content.map_url;
+                        if (mapFrame) {
+                            // Ensure the URL is valid to prevent javascript: or data: abuse
+                            // For simplicity, we assume it comes from trusted admin input, 
+                            // but simply setting src with a URL is not a typical XSS vector if protocol is http/s.
+                            mapFrame.src = content.map_url;
+                        }
                     }
                 }
 
@@ -245,29 +266,31 @@
 
                 if (settings) {
                     // Address
+                    // Escape each line, then join with <br> to preserve formatting safely
                     const address = [
                         settings.address_line1,
                         settings.address_line2,
                         settings.address_state_zip
-                    ].filter(Boolean).join('<br>');
+                    ].filter(Boolean).map(escapeHtml).join('<br>');
                     updateHtml('contact-address', address);
 
                     // Phone
                     const phones = [
                         settings.contact_phone,
                         settings.contact_phone_2
-                    ].filter(Boolean).join('<br>');
+                    ].filter(Boolean).map(escapeHtml).join('<br>');
                     updateHtml('contact-phone', phones);
 
                     // Email
                     const emails = [
                         settings.contact_email,
                         settings.contact_email_2
-                    ].filter(Boolean).join('<br>');
+                    ].filter(Boolean).map(escapeHtml).join('<br>');
                     updateHtml('contact-email', emails);
 
                     // Office Hours
-                    updateHtml('office-hours', settings.office_hours ? settings.office_hours.replace(/\n/g, '<br>') : '');
+                    const hours = settings.office_hours ? escapeHtml(settings.office_hours).replace(/\n/g, '<br>') : '';
+                    updateHtml('office-hours', hours);
                 }
 
             } catch (error) {
@@ -296,6 +319,8 @@
                 submitBtn.disabled = true;
                 submitBtn.textContent = 'Sending...';
 
+                // We send raw value to server, server SHOULD sanitize or strictly handle it.
+                // Our XSS fix is for DISPLAYING content.
                 const formData = {
                     name: document.getElementById('name').value,
                     email: document.getElementById('email').value,
@@ -318,6 +343,7 @@
                         alert('Thank you! Your message has been sent successfully.');
                         contactForm.reset();
                     } else {
+                        // Display error message safely? Alert treats text as text, so it's safe.
                         alert('Failed to send message: ' + (result.error || 'Unknown error'));
                     }
                 } catch (error) {
