@@ -1,0 +1,266 @@
+:root {
+    --primary: #123640;
+    --accent: #bf8d13;
+    --text: #333;
+    --light-bg: #f9f9f9;
+}
+
+body {
+    background-color: #525659;
+    margin: 0;
+    padding: 20px 0;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text);
+}
+
+.preview-container {
+    max-width: 210mm;
+    /* A4 width */
+    margin: 0 auto;
+    background: #fff;
+    padding: 40px 50px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    min-height: 297mm;
+}
+
+/* Header */
+.preview-header {
+    text-align: center;
+    border-bottom: 3px double #eee;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.preview-header h1 {
+    font-family: 'Merriweather', serif;
+    color: var(--primary);
+    font-size: 24px;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.preview-header p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.form-title {
+    background: var(--primary);
+    color: #fff;
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 15px;
+    text-transform: uppercase;
+}
+
+/* Sections */
+.preview-section {
+    margin-bottom: 25px;
+}
+
+.section-header {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.section-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+/* Grids */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 30px;
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+.field-box {
+    margin-bottom: 5px;
+}
+
+.field-label {
+    display: block;
+    font-size: 11px;
+    color: #777;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+    font-weight: 600;
+}
+
+.field-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    border-bottom: 1px dashed #eee;
+    padding-bottom: 2px;
+    min-height: 20px;
+}
+
+/* Photo & Personal Layout */
+.personal-layout {
+    display: flex;
+    gap: 30px;
+}
+
+.layout-details {
+    flex: 1;
+}
+
+.layout-photo {
+    width: 130px;
+    flex-shrink: 0;
+}
+
+.photo-box {
+    width: 130px;
+    height: 160px;
+    border: 1px solid #ccc;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-label {
+    text-align: center;
+    font-size: 10px;
+    color: #999;
+    margin-top: 5px;
+}
+
+/* Address Grid */
+.address-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    background: #fdfdfd;
+    border: 1px solid #f0f0f0;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.addr-col h4 {
+    margin: 0 0 10px 0;
+    font-size: 13px;
+    color: var(--primary);
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+/* Declaration */
+.declaration-box {
+    background: #fff8e1;
+    padding: 15px;
+    border: 1px solid #ffe082;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #555;
+    margin-top: 20px;
+}
+
+.signatures {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 0 50px;
+}
+
+.sig-block {
+    text-align: center;
+}
+
+.sig-line {
+    width: 200px;
+    border-top: 1px solid #333;
+    margin-top: 10px;
+    padding-top: 5px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.sig-img {
+    height: 60px;
+    margin-bottom: -10px;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Actions */
+.action-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    padding: 15px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    z-index: 100;
+}
+
+.btn {
+    padding: 12px 30px;
+    border-radius: 4px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-edit {
+    background: #eee;
+    color: #333;
+}
+
+.btn-submit {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn-submit:hover {
+    background: #0c242b;
+}
+
+@media print {
+    body {
+        background: #fff;
+        padding: 0;
+    }
+
+    .preview-container {
+        box-shadow: none;
+        margin: 0;
+        width: 100%;
+        border: none;
+    }
+
+    .action-bar {
+        display: none;
+    }
+}

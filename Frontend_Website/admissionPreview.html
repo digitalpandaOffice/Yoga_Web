@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Preview Application - Edvayu Educational Foundations</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Montserrat:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="preview.css">
+</head>
+
+<body>
+    <div class="preview-container">
+        <!-- Static Header -->
+        <div class="preview-header">
+            <h1>Edvayu Educational Foundations</h1>
+            <p>Morigaon 782105, Assam, India</p>
+            <div class="form-title">Admission Application Form</div>
+        </div>
+
+        <div id="previewBody">
+            <!-- Dynamic Content -->
+            <p style="text-align: center; color: #999;">Generating Preview...</p>
+        </div>
+    </div>
+
+    <div class="action-bar">
+        <button class="btn btn-edit" onclick="window.close()">Edit Application</button>
+        <button class="btn btn-submit" id="finalSubmitBtn">Final Submit Application</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const previewHTML = sessionStorage.getItem('admissionPreviewHTML');
+            if (previewHTML) {
+                document.getElementById('previewBody').innerHTML = previewHTML;
+            } else {
+                document.getElementById('previewBody').innerHTML = '<p style="color:red; text-align:center; padding: 50px;">No preview data found. Please fill the form first.</p>';
+            }
+
+            document.getElementById('finalSubmitBtn').addEventListener('click', () => {
+                if (window.opener && !window.opener.closed) {
+                    const btn = document.getElementById('finalSubmitBtn');
+                    btn.textContent = 'Submitting...';
+                    btn.disabled = true;
+                    btn.style.opacity = '0.7';
+                    window.opener.postMessage('TRIGGER_SUBMISSION', '*');
+                } else {
+                    alert('Parent window is closed. Please restart the application.');
+                }
+            });
+
+            window.addEventListener('message', (event) => {
+                if (typeof event.data === 'string') {
+                    if (event.data.startsWith('SUBMISSION_SUCCESS')) {
+                        const refNo = event.data.split(':')[1] || '---';
+
+                        // Show Success UI
+                        document.body.innerHTML = `
+                            <div style="font-family: 'Montserrat', sans-serif; height: 100vh; display: flex; align-items: center; justify-content: center; background: #f4f6f8;">
+                                <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; max-width: 500px;">
+                                    <div style="color: #27ae60; font-size: 50px; margin-bottom: 20px;">✓</div>
+                                    <h2 style="color: #123640; margin-bottom: 10px;">Application Submitted Successfully!</h2>
+                                    <p style="color: #666; font-size: 16px;">Thank you for your application.</p>
+                                    
+                                    <div style="background: #f8f9fa; border: 1px dashed #ccc; padding: 15px; margin: 20px 0; border-radius: 8px;">
+                                        <div style="font-size: 12px; text-transform: uppercase; color: #888;">Reference Number</div>
+                                        <div style="font-size: 24px; font-weight: 700; color: #e67e22; letter-spacing: 1px;">${refNo}</div>
+                                    </div>
+
+                                    <p style="font-size: 13px; color: #777; margin-bottom: 30px;">
+                                        A confirmation email has been sent to your registered email address.<br>
+                                        Please download a copy of your application for future reference.
+                                    </p>
+
+                                    <div style="display: flex; gap: 15px; justify-content: center;">
+                                        <button onclick="window.print()" style="background: #123640; color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: 600;">Download Application</button>
+                                        <button onclick="window.close()" style="background: #eee; color: #333; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: 600;">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (event.data.startsWith('SUBMISSION_ERROR')) {
+                        alert('Submission Failed: ' + event.data.split(':')[1]);
+                        const btn = document.getElementById('finalSubmitBtn');
+                        btn.textContent = 'Final Submit Application';
+                        btn.disabled = false;
+                        btn.style.opacity = '1';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
