@@ -791,7 +791,16 @@
                     console.log('Submitting to backend...');
                     const ref = 'ADM-' + Math.floor(100000 + Math.random() * 900000);
 
-                    const response = await fetch('http://localhost/Yoga_Web/Yoga_Backend/Admission/submit', {
+                    // Dynamic URL adjustment for Live Server vs Localhost
+                    // Assuming 'Frontend_Website' and 'Yoga_Backend' are siblings:
+                    const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                        ? 'http://localhost/Yoga_Web/Yoga_Backend/Admission/submit' // Keep local fallback if needed, or just use relative
+                        : '../Yoga_Backend/Admission/submit';
+
+                    // Actually, relative path works best for both if structure is same
+                    const finalUrl = '../Yoga_Backend/Admission/submit';
+
+                    const response = await fetch(finalUrl, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
