@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Filter, Check, X, Eye, UserPlus, Download, ChevronDown } from 'lucide-react';
+import { endpoints } from '../config';
 
 const Admissions = () => {
     const [activeTab, setActiveTab] = useState('pending');
@@ -11,49 +12,131 @@ const Admissions = () => {
     const [classFilter, setClassFilter] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
 
-    // Mock Data - Pending Applications
-    const [applications, setApplications] = useState([
-        { id: 101, name: 'Riya Sharma', email: 'riya.s@example.com', phone: '+91 98765 43210', course: 'Fine Arts Diploma', date: '2025-11-20', status: 'pending', details: 'Interested in painting and sketching. Has basic prior experience.' },
-        { id: 102, name: 'Arjun Das', email: 'arjun.d@example.com', phone: '+91 98765 12345', course: 'Classical Dance', date: '2025-11-21', status: 'pending', details: 'Wants to learn Kathak. No prior formal training.' },
-        { id: 103, name: 'Meera Patel', email: 'meera.p@example.com', phone: '+91 98765 67890', course: 'Indian Classical Music', date: '2025-11-22', status: 'pending', details: 'Vocal training requested. Has 2 years of experience.' },
-    ]);
+    // Data State
+    const [applications, setApplications] = useState([]);
+    const [students, setStudents] = useState([]); // Still mock for now or empty? default manual entry
 
-    // Mock Data - Enrolled Students
-    const [students, setStudents] = useState([
-        { id: 'ST-2025-001', name: 'Ananya Gupta', course: 'Fine Arts Diploma', class: 'Batch A', joinDate: '2025-01-15', status: 'active' },
-        { id: 'ST-2025-002', name: 'Rahul Verma', course: 'Classical Dance', class: 'Batch B', joinDate: '2025-02-10', status: 'active' },
-        { id: 'ST-2025-003', name: 'Sita Devi', course: 'Indian Classical Music', class: 'Batch A', joinDate: '2025-03-05', status: 'active' },
-        { id: 'ST-2025-004', name: 'Vikram Singh', course: 'Theatre & Performance', class: 'Batch C', joinDate: '2025-04-20', status: 'active' },
-        { id: 'ST-2025-005', name: 'Priya Nair', course: 'Fine Arts Diploma', class: 'Batch B', joinDate: '2025-05-12', status: 'active' },
-    ]);
+    // Fetch Content
+    // Fetch Content
+    React.useEffect(() => {
+        fetchApplications();
+        fetchStudents();
+    }, []);
+
+    const fetchApplications = async () => {
+        try {
+            const response = await fetch(endpoints.admissionList);
+            const data = await response.json();
+            if (data.status === 'success') {
+                const mappedApps = data.data.map(item => ({
+                    id: item.id,
+                    refNo: item.reference_no,
+                    name: item.applicant_name,
+                    email: item.email,
+                    phone: item.phone,
+                    course: item.course_name,
+                    date: item.submitted_at || 'N/A',
+                    status: item.status || 'Pending',
+                    details: 'Details from form...',
+                    formData: item.form_data
+                }));
+                // Only showing Pending in the first tab
+                setApplications(mappedApps.filter(app => !app.status || app.status.toLowerCase() === 'pending'));
+            }
+        } catch (error) {
+            console.error("Error fetching applications:", error);
+        }
+    };
+
+    const fetchStudents = async () => {
+        try {
+            const response = await fetch(endpoints.enrolledList);
+            const data = await response.json();
+            if (data.status === 'success') {
+                const mappedStudents = data.data.map(item => ({
+                    id: item.student_id, // Use generated ST-ID
+                    dbId: item.id,
+                    name: item.name,
+                    course: item.course,
+                    class: item.batch,
+                    joinDate: item.joining_date,
+                    status: item.status,
+                    phone: item.phone,
+                    email: item.email
+                }));
+                setStudents(mappedStudents);
+            }
+        } catch (error) {
+            console.error("Error fetching students:", error);
+        }
+    };
+
+    // Mock Data removed - using real data from fetchApplications
+    // React.useEffect(() => { setStudents([...]); }, []);
+
+    // State for modal
+    const [allottedBatch, setAllottedBatch] = useState('');
 
     const handleViewApplication = (app) => {
+        setAllottedBatch(''); // Reset batch selection
         setSelectedApplication(app);
         setShowModal(true);
     };
 
-    const handleApprove = (app) => {
-        // Move from applications to students
-        const newStudent = {
-            id: `ST-2025-${students.length + 100}`, // Generate mock ID
-            name: app.name,
-            course: app.course,
-            class: 'Batch A', // Default assignment
-            joinDate: new Date().toISOString().split('T')[0],
-            status: 'active'
-        };
+    const handleApprove = async (app) => {
+        if (!allottedBatch) {
+            alert("Please select a Class/Batch before approving.");
+            return;
+        }
 
-        setStudents([...students, newStudent]);
-        setApplications(applications.filter(a => a.id !== app.id));
-        setShowModal(false);
-        setSelectedApplication(null);
-        alert(`Application for ${app.name} approved! Student enrolled.`);
+        try {
+            const response = await fetch(endpoints.admissionApprove, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: app.id,
+                    batch: allottedBatch
+                })
+            });
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                // Move logic (Optional: Add to enrolled list via API later)
+                alert(result.message || `Application for ${app.name} approved!`);
+                setShowModal(false);
+                setSelectedApplication(null);
+                setAllottedBatch('');
+                fetchApplications(); // Refresh list to remove approved item
+                fetchStudents();
+            } else {
+                alert('Failed to approve: ' + (result.error || 'Unknown error'));
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Error approving application');
+        }
     };
 
-    const handleReject = (appId) => {
-        if (window.confirm('Are you sure you want to reject this application?')) {
-            setApplications(applications.filter(a => a.id !== appId));
-            setShowModal(false);
+    const handleReject = async (appId) => {
+        if (!window.confirm('Are you sure you want to reject this application?')) return;
+
+        try {
+            const response = await fetch(endpoints.admissionReject, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: appId })
+            });
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                setShowModal(false);
+                fetchApplications(); // Refresh list
+            } else {
+                alert('Failed to reject: ' + (result.error || 'Unknown error'));
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Error rejecting application');
         }
     };
 
@@ -234,39 +317,200 @@ const Admissions = () => {
                             <button className="close-btn" onClick={() => setShowModal(false)}><X size={20} /></button>
                         </div>
                         <div className="modal-body">
-                            <div className="detail-row">
-                                <label>Applicant Name:</label>
-                                <span>{selectedApplication.name}</span>
-                            </div>
-                            <div className="detail-row">
-                                <label>Email:</label>
-                                <span>{selectedApplication.email}</span>
-                            </div>
-                            <div className="detail-row">
-                                <label>Phone:</label>
-                                <span>{selectedApplication.phone}</span>
-                            </div>
-                            <div className="detail-row">
-                                <label>Course Applied:</label>
-                                <span>{selectedApplication.course}</span>
-                            </div>
-                            <div className="detail-row">
-                                <label>Application Date:</label>
-                                <span>{selectedApplication.date}</span>
-                            </div>
-                            <div className="detail-row">
-                                <label>Additional Details:</label>
-                                <p>{selectedApplication.details}</p>
+                            {/* Professional Form Layout */}
+                            <div className="form-preview-container">
+                                {/* Section 0: Office Use */}
+                                <div className="preview-section" style={{ background: '#fdfdfd', borderLeft: '4px solid var(--deep-blue)' }}>
+                                    <h4 className="section-head">Office Use</h4>
+                                    <div className="info-grid">
+                                        <div className="field-group">
+                                            <label>Sl. No.</label>
+                                            <div className="field-value" style={{ fontWeight: 'bold' }}>{selectedApplication.id}</div>
+                                        </div>
+                                        <div className="field-group">
+                                            <label>Date</label>
+                                            <div className="field-value">{selectedApplication.date}</div>
+                                        </div>
+                                        <div className="field-group">
+                                            <label>Reference No.</label>
+                                            <div className="field-value">{selectedApplication.refNo}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Section 1: Personal Information */}
+                                <div className="preview-section">
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                                        <h4 className="section-head">Personal Information</h4>
+                                        {selectedApplication.formData?.student_photo && (
+                                            <img
+                                                src={selectedApplication.formData.student_photo}
+                                                alt="Student"
+                                                style={{ width: '100px', height: '120px', objectFit: 'cover', border: '1px solid #ddd', borderRadius: '4px', marginBottom: '10px' }}
+                                            />
+                                        )}
+                                    </div>
+                                    <div className="info-grid">
+                                        <div className="field-group">
+                                            <label>Full Name</label>
+                                            <div className="field-value">{selectedApplication.formData?.full_name || selectedApplication.name}</div>
+                                        </div>
+                                        <div className="field-group">
+                                            <label>Father's Name</label>
+                                            <div className="field-value">{selectedApplication.formData?.father_name || '-'}</div>
+                                        </div>
+                                        <div className="field-group">
+                                            <label>Mother's Name</label>
+                                            <div className="field-value">{selectedApplication.formData?.mother_name || '-'}</div>
+                                        </div>
+                                        <div className="field-group">
+                                            <label>Date of Birth</label>
+                                            <div className="field-value">{selectedApplication.formData?.dob || '-'}</div>
+                                        </div>
+                                        <div className="field-group">
+                                            <label>Gender</label>
+                                            <div className="field-value">{selectedApplication.formData?.gender || '-'}</div>
+                                        </div>
+                                        <div class="field-group">
+                                            <label>Nationality</label>
+                                            <div className="field-value">{selectedApplication.formData?.nationality || 'Indian'}</div>
+                                        </div>
+                                        <div class="field-group">
+                                            <label>Marital Status</label>
+                                            <div className="field-value">{selectedApplication.formData?.marital_status || '-'}</div>
+                                        </div>
+                                        <div className="field-group">
+                                            <label>Category</label>
+                                            <div className="field-value">{selectedApplication.formData?.category || '-'}</div>
+                                        </div>
+                                        <div className="field-group">
+                                            <label>Blood Group</label>
+                                            <div className="field-value">{selectedApplication.formData?.blood_group || '-'}</div>
+                                        </div>
+                                        <div className="field-group">
+                                            <label>Aadhaar No.</label>
+                                            <div className="field-value">{selectedApplication.formData?.aadhaar || '-'}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Section 2: Contact & Address */}
+                                <div className="preview-section">
+                                    <h4 className="section-head">Contact & Address</h4>
+                                    <div className="info-grid">
+                                        <div className="field-group">
+                                            <label>Mobile No</label>
+                                            <div className="field-value">{selectedApplication.formData?.mobile_no || selectedApplication.phone}</div>
+                                        </div>
+                                        <div className="field-group">
+                                            <label>Email ID</label>
+                                            <div className="field-value">{selectedApplication.formData?.email || selectedApplication.email}</div>
+                                        </div>
+                                    </div>
+                                    <div className="address-grid">
+                                        <div className="address-box">
+                                            <h5>Correspondence Address</h5>
+                                            <p>
+                                                {selectedApplication.formData?.corr_street}, {selectedApplication.formData?.corr_po}<br />
+                                                Dist: {selectedApplication.formData?.corr_dist}, {selectedApplication.formData?.corr_state} - {selectedApplication.formData?.corr_pin}
+                                            </p>
+                                        </div>
+                                        <div className="address-box">
+                                            <h5>Permanent Address</h5>
+                                            <p>
+                                                {selectedApplication.formData?.perm_street}, {selectedApplication.formData?.perm_po}<br />
+                                                Dist: {selectedApplication.formData?.perm_dist}, {selectedApplication.formData?.perm_state} - {selectedApplication.formData?.perm_pin}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Section 3: Academic & Course */}
+                                <div className="preview-section">
+                                    <h4 className="section-head">Academic & Course Details</h4>
+                                    <div className="info-grid">
+                                        <div className="field-group">
+                                            <label>Highest Qualification</label>
+                                            <div className="field-value">{selectedApplication.formData?.highest_qual || '-'}</div>
+                                        </div>
+                                        <div className="field-group">
+                                            <label>Passing Year</label>
+                                            <div className="field-value">{selectedApplication.formData?.passing_year || '-'}</div>
+                                        </div>
+                                        <div className="field-group full-width">
+                                            <label>Institution/University</label>
+                                            <div className="field-value">{selectedApplication.formData?.institution_name || '-'}</div>
+                                        </div>
+                                        <div className="field-group">
+                                            <label>Selected Course</label>
+                                            <div className="field-value highlight">{selectedApplication.formData?.course_name || selectedApplication.course}</div>
+                                        </div>
+                                        <div className="field-group">
+                                            <label>Preferred Batch</label>
+                                            <div className="field-value">{selectedApplication.formData?.batch || '-'}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Section 4: Payment Info */}
+                                <div className="preview-section">
+                                    <h4 className="section-head">Payment Information</h4>
+                                    <div className="info-grid">
+                                        <div className="field-group">
+                                            <label>Transaction ID</label>
+                                            <div className="field-value">{selectedApplication.formData?.txn_id || '-'}</div>
+                                        </div>
+                                        <div className="field-group">
+                                            <label>Amount</label>
+                                            <div className="field-value">₹{selectedApplication.formData?.course_fee || '-'}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Section 5: Signatures */}
+                                <div className="preview-section">
+                                    <h4 className="section-head">Signatures</h4>
+                                    <div className="info-grid">
+                                        <div className="field-group">
+                                            <label>Candidate Signature</label>
+                                            <div className="field-value" style={{ border: 'none' }}>
+                                                {selectedApplication.formData?.signature_candidate ? (
+                                                    <img src={selectedApplication.formData.signature_candidate} alt="Candidate Signature" style={{ maxHeight: '60px', border: '1px dashed #ccc' }} />
+                                                ) : <span className="text-muted">Not uploaded</span>}
+                                            </div>
+                                        </div>
+                                        <div className="field-group">
+                                            <label>Guardian Signature</label>
+                                            <div className="field-value" style={{ border: 'none' }}>
+                                                {selectedApplication.formData?.signature_guardian ? (
+                                                    <img src={selectedApplication.formData.signature_guardian} alt="Guardian Signature" style={{ maxHeight: '60px', border: '1px dashed #ccc' }} />
+                                                ) : <span className="text-muted">Not uploaded</span>}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div className="allotment-section">
                                 <h4>Admission Action</h4>
                                 <div className="form-group">
-                                    <label>Allot Class/Batch</label>
-                                    <select className="form-select">
-                                        <option>Batch A (Morning)</option>
-                                        <option>Batch B (Evening)</option>
-                                        <option>Batch C (Weekend)</option>
+                                    <label>
+                                        Allot Class/Batch
+                                        {selectedApplication.formData?.batch &&
+                                            <span style={{ marginLeft: '10px', color: 'var(--deep-blue)', fontSize: '0.85rem' }}>
+                                                (Preferred: {selectedApplication.formData.batch})
+                                            </span>
+                                        }
+                                    </label>
+                                    <select
+                                        className="form-select"
+                                        value={allottedBatch}
+                                        onChange={(e) => setAllottedBatch(e.target.value)}
+                                    >
+                                        <option value="" disabled>Select Batch</option>
+                                        <option value="Batch A (Morning)">Batch A (Morning)</option>
+                                        <option value="Batch B (Evening)">Batch B (Evening)</option>
+                                        <option value="Batch C (Weekend)">Batch C (Weekend)</option>
                                     </select>
                                 </div>
                             </div>
@@ -470,9 +714,12 @@ const Admissions = () => {
                 .modal-content {
                     background: #fff;
                     border-radius: 12px;
-                    width: 500px;
+                    width: 700px;
                     max-width: 90%;
                     box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+                    height: 90vh; /* Fixed height 90% of viewport */
+                    display: flex;
+                    flex-direction: column;
                 }
 
                 .modal-header {
@@ -492,7 +739,11 @@ const Admissions = () => {
                     color: #6b7280;
                 }
 
-                .modal-body { padding: 20px; }
+                .modal-body { 
+                    padding: 20px; 
+                    flex: 1; /* Take remaining space */
+                    overflow-y: auto; /* Enable scrolling */
+                }
 
                 .detail-row {
                     display: flex;
@@ -545,6 +796,86 @@ const Admissions = () => {
                     border: none;
                     border-radius: 6px;
                     cursor: pointer;
+                }
+
+                /* New Detail Modal Styles */
+                .form-preview-container {
+                    padding: 10px;
+                    background: #f8f9fa;
+                    border-radius: 8px;
+                    border: 1px solid #e9ecef;
+                }
+                .preview-section {
+                    margin-bottom: 25px;
+                    background: #fff;
+                    padding: 15px;
+                    border-radius: 8px;
+                    border: 1px solid #eee;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+                }
+                .preview-section:last-child { margin-bottom: 0; }
+                .section-head {
+                    margin: 0 0 15px 0;
+                    font-size: 0.95rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    color: var(--deep-blue);
+                    border-bottom: 2px solid #f0f0f0;
+                    padding-bottom: 8px;
+                }
+                .info-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 15px;
+                }
+                .field-group {
+                    display: flex;
+                    flex-direction: column;
+                }
+                .field-group.full-width { grid-column: 1 / -1; }
+                .field-group label {
+                    font-size: 0.75rem;
+                    text-transform: uppercase;
+                    color: #888;
+                    margin-bottom: 4px;
+                    font-weight: 600;
+                }
+                .field-value {
+                    font-size: 0.95rem;
+                    color: #333;
+                    font-weight: 500;
+                    padding: 4px 0;
+                    border-bottom: 1px dashed #eee;
+                }
+                .field-value.highlight {
+                    color: var(--deep-blue);
+                    font-weight: 700;
+                }
+                .address-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 20px;
+                    margin-top: 15px;
+                }
+                .address-box {
+                    background: #fafafa;
+                    padding: 12px;
+                    border-radius: 6px;
+                    border: 1px solid #eee;
+                }
+                .address-box h5 {
+                    margin: 0 0 8px 0;
+                    font-size: 0.85rem;
+                    color: #666;
+                }
+                .address-box p {
+                    margin: 0;
+                    font-size: 0.9rem;
+                    line-height: 1.4;
+                    color: #444;
+                }
+                .modal-content {
+                    width: 700px; /* Wider modal for form details */
                 }
             `}</style>
         </div>

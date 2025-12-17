@@ -772,20 +772,29 @@
                     }
                 });
 
-                // Handle Files - Simplify for JSON submission (In real app, use FormData directly or upload separately)
-                // For this implementation, we will extract filenames to store in JSON, 
-                // assuming actual file handling is done via standard form submission or separate API in a full implementation.
-                // NOTE: Detailed file upload handling requires 'multipart/form-data' which is not sending JSON.
-                // To keep it consistent with Franchise implementation:
-                // We send JSON. The backend expects JSON. File *contents* won't be sent this way easily without Base64.
-                // For now, we mimic the franchise behavior: Send Metadata. 
+                // Convert Files to Base64
+                const fileFields = ['student_photo', 'signature_candidate', 'signature_guardian'];
 
-                // Remove File objects from JSON to avoid empty {}
-                for (let key in formObject) {
-                    if (formObject[key] instanceof File) {
-                        formObject[key] = formObject[key].name; // Just save name for reference
+                const filePromises = fileFields.map(field => {
+                    const file = formData.get(field);
+                    if (file instanceof File && file.size > 0) {
+                        return new Promise((resolve) => {
+                            const reader = new FileReader();
+                            reader.onload = (e) => {
+                                formObject[field] = e.target.result; // Base64 String
+                                resolve();
+                            };
+                            reader.onerror = () => {
+                                formObject[field] = ''; // Fail gracefully
+                                resolve();
+                            };
+                            reader.readAsDataURL(file);
+                        });
                     }
-                }
+                    return Promise.resolve();
+                });
+
+                await Promise.all(filePromises);
 
                 try {
                     console.log('Submitting to backend...');

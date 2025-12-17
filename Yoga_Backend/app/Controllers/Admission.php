@@ -131,4 +131,120 @@ class Admission extends Controller {
             $this->json(['error' => 'Application not found'], 404);
         }
     }
+    // GET /Admission/get_all
+    public function get_all() {
+        header("Access-Control-Allow-Origin: *");
+        header("Content-Type: application/json");
+
+        $model = $this->model('Admission');
+        $data = $model->getAll();
+
+        if ($data) {
+            // Decode form_data for each item
+            foreach ($data as &$item) {
+                if (isset($item['form_data'])) {
+                    $item['form_data'] = json_decode($item['form_data'], true);
+                }
+            }
+            $this->json(['status' => 'success', 'data' => $data]);
+        } else {
+            $this->json(['status' => 'success', 'data' => []]); // Return empty array if no data
+        }
+    }
+    // POST /Admission/approve
+    public function approve() {
+        $this->handleStatusUpdate('Approved');
+    }
+
+    // POST /Admission/reject
+    public function reject() {
+        $this->handleStatusUpdate('Rejected');
+    }
+
+    private function handleStatusUpdate($status) {
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: POST, OPTIONS");
+        header("Access-Control-Allow-Headers: Content-Type");
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') return;
+
+        header("Content-Type: application/json");
+        $input = json_decode(file_get_contents("php://input"), true);
+        $id = $input['id'] ?? null;
+
+        if (!$id) {
+            $this->json(['error' => 'ID required'], 400);
+            return;
+        }
+
+        $model = $this->model('Admission');
+        
+        // If Approving, move to Enrolled Students
+        if ($status === 'Approved') {
+            // 1. Get Application Details
+            // Since we don't have a direct getById in Model (only getByRef), let's just do a direct query or add getById.
+            // Using a quick query here or modifying model is better. 
+            // Ideally add getById to model. But for speed, let's assume we can fetch it via existing getAll or add a helper.
+            // Let's add a quick fetch here or use existing method.
+            // Actually, we need form_data to get 'batch' etc.
+            
+            // Let's add getById to Admission Model first? Or just do it here if we had direct access (but we are in controller).
+            // Let's rely on Model.
+            $app = $model->getById($id); // Accessing new method we will add
+            
+            if ($app) {
+                // Prepare data for student table
+                $formData = json_decode($app['form_data'], true);
+                
+                require_once __DIR__ . '/../Models/Student.php';
+                $studentModel = new \App\Models\Student();
+                
+                $assignedBatch = $input['batch'] ?? ($formData['batch'] ?? 'Batch A');
+
+                $studentData = [
+                    'admission_id' => $id,
+                    'name' => $app['applicant_name'],
+                    'email' => $app['email'],
+                    'phone' => $app['phone'],
+                    'course' => $app['course_name'],
+                    'batch' => $assignedBatch
+                ];
+
+                $studentId = $studentModel->enroll($studentData);
+                
+                if ($studentId) {
+                    $model->updateStatus($id, 'Approved');
+                    $this->json(['status' => 'success', 'message' => "Application Approved. Student ID: $studentId generated."]);
+                    return;
+                } else {
+                    $this->json(['error' => 'Failed to enroll student'], 500);
+                    return;
+                }
+            } else {
+                $this->json(['error' => 'Application not found'], 404);
+                return;
+            }
+        }
+
+        if ($model->updateStatus($id, $status)) {
+            $this->json(['status' => 'success', 'message' => "Application $status"]);
+        } else {
+            $this->json(['error' => 'Failed to update status'], 500);
+        }
+    }
+    // GET /Admission/get_students
+    public function get_students() {
+        header("Access-Control-Allow-Origin: *");
+        header("Content-Type: application/json");
+
+        require_once __DIR__ . '/../Models/Student.php';
+        $studentModel = new \App\Models\Student();
+        $data = $studentModel->getAll();
+
+        if ($data) {
+            $this->json(['status' => 'success', 'data' => $data]);
+        } else {
+            $this->json(['status' => 'success', 'data' => []]);
+        }
+    }
 }

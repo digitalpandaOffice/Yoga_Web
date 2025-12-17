@@ -23,4 +23,24 @@ class Admission extends Model {
         $stmt->execute([':refNo' => $refNo]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getById($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM admission_applications WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getAll() {
+        $stmt = $this->conn->prepare("SELECT * FROM admission_applications ORDER BY id DESC");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function updateStatus($id, $status) {
+        $stmt = $this->conn->prepare("UPDATE admission_applications SET status = :status WHERE id = :id");
+        return $stmt->execute([
+            ':status' => $status, 
+            ':id' => $id
+        ]);
+    }
 }

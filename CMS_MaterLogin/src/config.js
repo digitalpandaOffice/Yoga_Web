@@ -62,4 +62,8 @@ export const endpoints = {
     messagesDelete: `${API_BASE_URL}/message/delete`,
     messagesUnreadCount: `${API_BASE_URL}/message/unreadCount`,
     messagesMarkRead: `${API_BASE_URL}/message/markRead`,
+    admissionList: `${API_BASE_URL}/Admission/get_all`,
+    admissionApprove: `${API_BASE_URL}/Admission/approve`,
+    admissionReject: `${API_BASE_URL}/Admission/reject`,
+    enrolledList: `${API_BASE_URL}/Admission/get_students`,
 };
