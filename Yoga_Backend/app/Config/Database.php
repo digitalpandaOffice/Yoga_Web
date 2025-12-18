@@ -18,6 +18,7 @@ class Database {
             $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $this->conn->exec("SET time_zone = '+05:30'");
         } catch(PDOException $e) {
             echo "Connection Error: " . $e->getMessage();
         }

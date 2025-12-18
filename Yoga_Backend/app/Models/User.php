@@ -5,15 +5,36 @@ use Core\Model;
 use PDO;
 
 class User extends Model {
-    public function login($username, $password) {
-        $stmt = $this->conn->prepare("SELECT * FROM admins WHERE username = :username");
+    public function getByUsername($username) {
+        $stmt = $this->conn->prepare("SELECT id, username, email FROM admins WHERE username = :username");
         $stmt->bindParam(':username', $username);
         $stmt->execute();
-        $user = $stmt->fetch();
+        return $stmt->fetch();
+    }
 
-        if ($user && password_verify($password, $user['password'])) {
+    public function setOTP($username, $otp) {
+        $expires = date('Y-m-d H:i:s', strtotime('+10 minutes'));
+        $stmt = $this->conn->prepare("UPDATE admins SET otp_code = :otp, otp_expires = :expires WHERE username = :username");
+        $stmt->bindParam(':otp', $otp);
+        $stmt->bindParam(':expires', $expires);
+        $stmt->bindParam(':username', $username);
+        return $stmt->execute();
+    }
+
+    public function verifyOTP($username, $otp) {
+        $stmt = $this->conn->prepare("SELECT * FROM admins WHERE username = :username AND otp_code = :otp AND otp_expires > NOW()");
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':otp', $otp);
+        $stmt->execute();
+        $user = $stmt->fetch();
+        
+        if ($user) {
+            // Clear OTP after successful verification
+            $this->conn->prepare("UPDATE admins SET otp_code = NULL, otp_expires = NULL WHERE username = :username")
+                 ->execute([':username' => $username]);
+            
             unset($user['password']);
-            unset($user['reset_token']); // Hide token
+            unset($user['otp_code']);
             return $user;
         }
         return false;

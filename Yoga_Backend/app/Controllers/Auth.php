@@ -5,30 +5,117 @@ use Core\Controller;
 
 class Auth extends Controller {
     public function login() {
-        // Only allow POST requests
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $this->json(['error' => 'Method not allowed'], 405);
         }
 
-        // Get JSON input
         $data = json_decode(file_get_contents("php://input"));
+        $userModel = $this->model('User');
 
+        // Step 2: Verify OTP
+        if (isset($data->otp)) {
+            if (!isset($data->username)) {
+                $this->json(['error' => 'Username required for OTP verification'], 400);
+            }
+            $user = $userModel->verifyOTP($data->username, $data->otp);
+            if ($user) {
+                $this->json([
+                    'status' => 'success',
+                    'message' => 'Login successful',
+                    'user' => $user,
+                    'token' => bin2hex(random_bytes(32))
+                ]);
+            } else {
+                $this->json(['error' => 'Invalid or expired OTP'], 401);
+            }
+            return;
+        }
+
+        // Step 1: Initial Login (Password Check)
         if (!isset($data->username) || !isset($data->password)) {
             $this->json(['error' => 'Missing credentials'], 400);
         }
 
+        // We need the full user record including password hash
+        $stmt = $userModel->getConnection()->prepare("SELECT * FROM admins WHERE username = :username");
+        $stmt->execute([':username' => $data->username]);
+        $user = $stmt->fetch();
+
+        if ($user && password_verify($data->password, $user['password'])) {
+            // Generate 6-digit OTP
+            $otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+            $userModel->setOTP($data->username, $otp);
+
+            // Send Email
+            require_once __DIR__ . '/../Config/SMTP.php';
+            $smtp = new \App\Config\SMTP();
+            
+            $subject = "CMS Login OTP - Edvayu";
+            $message = "
+                <div style='font-family: Arial, sans-serif; padding: 20px; color: #333;'>
+                    <h2 style='color: #184a55;'>Login Verification</h2>
+                    <p>Your OTP for CMS login is:</p>
+                    <div style='background: #f4f6f8; padding: 15px; font-size: 24px; font-weight: bold; letter-spacing: 5px; text-align: center; border-radius: 8px; border: 1px solid #e1e1e1;'>
+                        $otp
+                    </div>
+                    <p style='margin-top: 20px; font-size: 14px; color: #666;'>This code will expire in 10 minutes.</p>
+                    <p style='font-size: 12px; color: #999;'>If you didn't request this login, please ignore this email.</p>
+                </div>
+            ";
+
+            if ($smtp->send($user['email'], $subject, $message)) {
+                $this->json([
+                    'status' => 'otp_required',
+                    'message' => 'OTP sent to your registered email',
+                    'email_preview' => substr($user['email'], 0, 3) . '***' . strstr($user['email'], '@')
+                ]);
+            } else {
+                $this->json(['error' => 'Failed to send OTP email'], 500);
+            }
+        } else {
+            $this->json(['error' => 'Invalid username or password'], 401);
+        }
+    }
+
+    public function resendOTP() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->json(['error' => 'Method not allowed'], 405);
+        }
+
+        $data = json_decode(file_get_contents("php://input"));
+        if (!isset($data->username)) {
+            $this->json(['error' => 'Username required'], 400);
+        }
+
         $userModel = $this->model('User');
-        $user = $userModel->login($data->username, $data->password);
+        $user = $userModel->getByUsername($data->username);
 
         if ($user) {
-            // In a real app, you would generate a JWT token here
-            $this->json([
-                'message' => 'Login successful',
-                'user' => $user,
-                'token' => 'dummy_token_for_now' 
-            ]);
+            $otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+            $userModel->setOTP($data->username, $otp);
+
+            require_once __DIR__ . '/../Config/SMTP.php';
+            $smtp = new \App\Config\SMTP();
+            
+            $subject = "CMS Login OTP (Resent) - Edvayu";
+            $message = "
+                <div style='font-family: Arial, sans-serif; padding: 20px; color: #333;'>
+                    <h2 style='color: #184a55;'>Login Verification</h2>
+                    <p>Your new OTP for CMS login is:</p>
+                    <div style='background: #f4f6f8; padding: 15px; font-size: 24px; font-weight: bold; letter-spacing: 5px; text-align: center; border-radius: 8px; border: 1px solid #e1e1e1;'>
+                        $otp
+                    </div>
+                    <p style='margin-top: 20px; font-size: 14px; color: #666;'>This code will expire in 10 minutes.</p>
+                </div>
+            ";
+
+            if ($smtp->send($user['email'], $subject, $message)) {
+                $this->json(['status' => 'success', 'message' => 'New OTP sent']);
+            } else {
+                $this->json(['error' => 'Failed to resend OTP'], 500);
+            }
         } else {
-            $this->json(['error' => 'Invalid credentials'], 401);
+            $this->json(['error' => 'User not found'], 404);
         }
     }
 

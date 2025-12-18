@@ -12,4 +12,8 @@ class Model {
         $this->db = new Database();
         $this->conn = $this->db->connect();
     }
+
+    public function getConnection() {
+        return $this->conn;
+    }
 }

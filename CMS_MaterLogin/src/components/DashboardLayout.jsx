@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import logo from '../assets/images/AdvayuLogo.png';
 import { endpoints } from '../config';
+import packageJson from '../../package.json';
 
 const DashboardLayout = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -251,6 +252,8 @@ const DashboardLayout = () => {
                     <Outlet />
                 </div>
             </main>
+
+            <div className="app-version">CMS Version {packageJson.version}</div>
 
             {/* Overlay for mobile */}
             {isSidebarOpen && (

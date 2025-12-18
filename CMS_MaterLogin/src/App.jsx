@@ -18,6 +18,7 @@ import ExamEligibilityContent from './pages/ExamEligibilityContent';
 import AdmitCardManager from './pages/AdmitCardManager';
 import GalleryManager from './pages/GalleryManager';
 import Admissions from './pages/Admissions';
+import ManageFranchise from './pages/ManageFranchise';
 import PlaceholderPage from './pages/PlaceholderPage';
 import EventsManager from './pages/EventsManager';
 import PoliciesManager from './pages/PoliciesManager';
@@ -28,9 +29,10 @@ import CoursesPrograms from './pages/CoursesPrograms';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/cms_portal">
       <Routes>
         <Route path="/" element={<LoginCard />} />
+        <Route path="/index.html" element={<Navigate to="/" replace />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/dashboard" element={<DashboardLayout />}>
@@ -60,6 +62,7 @@ function App() {
 
           {/* Franchise */}
           <Route path="franchise" element={<PlaceholderPage />} />
+          <Route path="franchise/managefranchise" element={<ManageFranchise />} />
           <Route path="franchise/*" element={<PlaceholderPage />} />
 
           {/* Gallery & Events */}

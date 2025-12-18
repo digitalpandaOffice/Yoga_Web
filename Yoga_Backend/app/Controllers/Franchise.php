@@ -105,4 +105,126 @@ class Franchise extends Controller {
             $this->json(['error' => 'Application not found'], 404);
         }
     }
+
+    // GET /Franchise/get_all
+    public function get_all() {
+        // Enable CORS (handled by .htaccess usually, but adding for safety if direct file access)
+        
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            $this->json(['error' => 'Method not allowed'], 405);
+            return;
+        }
+
+        $model = $this->model('Franchise');
+        $data = $model->getAll();
+        
+        $this->json(['status' => 'success', 'data' => $data]);
+    }
+
+    // POST /Franchise/update_status
+    public function update_status() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->json(['error' => 'Method not allowed'], 405);
+            return;
+        }
+
+        $input = json_decode(file_get_contents("php://input"), true);
+        $id = $input['id'] ?? null;
+        $status = $input['status'] ?? null;
+
+        if (!$id || !$status) {
+            $this->json(['error' => 'ID and Status are required'], 400);
+            return;
+        }
+
+        $model = $this->model('Franchise');
+        
+        $result = ($status === 'Approved') ? $model->approveApplication($id) : $model->updateStatus($id, $status);
+
+        if ($result === true) {
+            $this->json(['status' => 'success', 'message' => 'Status updated successfully']);
+        } else {
+            // If result is not true, it might be an error message string or false
+            $errorMsg = is_string($result) ? $result : 'Failed to update status';
+            $this->json(['error' => $errorMsg], 500);
+        }
+    }
+
+    // GET /Franchise/get_active
+    public function get_active() {
+         $model = $this->model('Franchise');
+         $data = $model->getActiveFranchises();
+         $this->json(['status' => 'success', 'data' => $data]);
+    }
+
+    // --- Financials ---
+    public function get_payments() {
+        $model = $this->model('Franchise');
+        $this->json(['status' => 'success', 'data' => $model->getPayments()]);
+    }
+
+    public function add_payment() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') { $this->json(['error' => 'Method not allowed'], 405); return; }
+        $input = json_decode(file_get_contents("php://input"), true);
+        
+        $model = $this->model('Franchise');
+        if ($model->addPayment($input)) {
+            $this->json(['status' => 'success']);
+        } else {
+            $this->json(['error' => 'Failed to add payment'], 500);
+        }
+    }
+
+    // --- Resources ---
+    public function get_resources() {
+        $model = $this->model('Franchise');
+        $this->json(['status' => 'success', 'data' => $model->getResources()]);
+    }
+
+    // Simple file upload for resources
+    public function add_resource() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') { $this->json(['error' => 'Method not allowed'], 405); return; }
+        
+        if (!isset($_FILES['file']) || !isset($_POST['title'])) {
+            $this->json(['error' => 'File and Title are required'], 400);
+            return;
+        }
+
+        $uploadDir = __DIR__ . '/../../public/uploads/resources/';
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+
+        $fileName = basename($_FILES['file']['name']);
+        $targetPath = $uploadDir . $fileName;
+        $publicPath = 'uploads/resources/' . $fileName;
+        $fileSize = round($_FILES['file']['size'] / 1024, 2) . ' KB'; // Size in KB
+
+        if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
+            $model = $this->model('Franchise');
+            if ($model->addResource($_POST['title'], $publicPath, $fileSize)) {
+                $this->json(['status' => 'success']);
+            } else {
+                $this->json(['error' => 'Database error'], 500);
+            }
+        } else {
+            $this->json(['error' => 'Upload failed'], 500);
+        }
+    }
+
+    // --- Settings ---
+    public function get_settings() {
+        $model = $this->model('Franchise');
+        $this->json(['status' => 'success', 'data' => $model->getSettings()]);
+    }
+
+    public function save_settings() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') { $this->json(['error' => 'Method not allowed'], 405); return; }
+        $input = json_decode(file_get_contents("php://input"), true);
+        
+        $model = $this->model('Franchise');
+        if ($model->saveSettings($input)) {
+            $this->json(['status' => 'success']);
+        } else {
+            $this->json(['error' => 'Failed to save settings'], 500);
+        }
+    }
 }

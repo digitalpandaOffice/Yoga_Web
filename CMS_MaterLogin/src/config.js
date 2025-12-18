@@ -1,9 +1,11 @@
-export const API_BASE_URL = 'http://localhost/Yoga_Web/Yoga_Backend';
+// export const API_BASE_URL = 'http://localhost/Yoga_Web/Yoga_Backend';
+export const API_BASE_URL = 'https://edvayueducationalfoundation.in/Api';
 
 export const endpoints = {
     login: `${API_BASE_URL}/auth/login`,
     forgotPassword: `${API_BASE_URL}/auth/forgotPassword`,
     resetPassword: `${API_BASE_URL}/auth/resetPassword`,
+    resendOTP: `${API_BASE_URL}/auth/resendOTP`,
     courses: `${API_BASE_URL}/courses`,
     settings: `${API_BASE_URL}/settings`,
     content: `${API_BASE_URL}/content/home`,
@@ -66,4 +68,13 @@ export const endpoints = {
     admissionApprove: `${API_BASE_URL}/Admission/approve`,
     admissionReject: `${API_BASE_URL}/Admission/reject`,
     enrolledList: `${API_BASE_URL}/Admission/get_students`,
+    franchiseGetAll: `${API_BASE_URL}/Franchise/get_all`,
+    franchiseUpdateStatus: `${API_BASE_URL}/Franchise/update_status`,
+    franchiseGetActive: `${API_BASE_URL}/Franchise/get_active`,
+    franchiseGetPayments: `${API_BASE_URL}/Franchise/get_payments`,
+    franchiseAddPayment: `${API_BASE_URL}/Franchise/add_payment`,
+    franchiseGetResources: `${API_BASE_URL}/Franchise/get_resources`,
+    franchiseAddResource: `${API_BASE_URL}/Franchise/add_resource`,
+    franchiseGetSettings: `${API_BASE_URL}/Franchise/get_settings`,
+    franchiseSaveSettings: `${API_BASE_URL}/Franchise/save_settings`,
 };
